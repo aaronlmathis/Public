@@ -1,6 +1,6 @@
 # PowerShell and Python Administrative Scripts
 
-Welcome to the repository for a collection of PowerShell and Python scripts designed to streamline and enhance your administrative tasks across AWS, Cloud environments, Windows, and Linux systems. This repository aims to provide versatile, efficient, and reliable solutions for system administrators, DevOps engineers, and IT professionals managing diverse infrastructures.
+Welcome to my personal repository of PowerShell and Python scripts designed to assist me in administrative tasks across Windows and Linux systems in both AWS and on-premise environments. This repository aims to provide versatile, efficient, and reliable solutions for system administrators, DevOps engineers, and IT professionals managing diverse infrastructures.
 
 ## Repository Overview
 
