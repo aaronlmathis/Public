@@ -1,4 +1,26 @@
 
+<#
+.SYNOPSIS
+A function to grant an O365 User FullAccess to a group of mailboxes.
+
+.DESCRIPTION
+A function to grant an O365 User FullAccess to a group of mailboxes.
+
+.PARAMETER AdminUPN
+UPN of an administrative account
+
+.PARAMETER accessUPN
+UPN of the account that needs FullAccess
+
+.PARAMETER Ignore
+List of UPN's of mailboxes to ignore.
+
+.EXAMPLE
+./Grant-MailboxFullAccess.ps1 -AdminUPN admin@contoso.org -accessUPN john@contoso.org -Ignore eric@contoso.org,jane@contoso.org,mary@contoso.org
+
+.NOTES
+
+#>
 # Call the function with parameters from the command line
 [CmdletBinding()]
 param (
