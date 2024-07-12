@@ -1,10 +1,10 @@
 
 <#
 .SYNOPSIS
-A function to grant an O365 User FullAccess to a group of mailboxes.
+A script to grant an O365 User FullAccess to a group of mailboxes with Auto-Mapping disabled to prevent Outlook auto-mapping
 
 .DESCRIPTION
-A function to grant an O365 User FullAccess to a group of mailboxes.
+A script to grant an O365 User FullAccess to a group of mailboxes with Auto-Mapping disabled to prevent Outlook auto-mapping
 
 .PARAMETER AdminUPN
 UPN of an administrative account
@@ -78,7 +78,7 @@ Function Grant-MailboxFullAccess(){
             # Skip if the mailbox is the admin's own mailbox
             if ($mailbox.PrimarySmtpAddress -ne $AdminUPN -and -not ($Ignore -contains $mailbox.PrimarySmtpAddress)) {
                 # Add Full Access permissions with auto-mapping disabled
-                #Add-MailboxPermission -Identity $mailbox.PrimarySmtpAddress -User $AdminUPN -AccessRights FullAccess -AutoMapping:$false
+                Add-MailboxPermission -Identity $mailbox.PrimarySmtpAddress -User $AdminUPN -AccessRights FullAccess -AutoMapping:$false
                 Write-Host -foreground Cyan "Granted Full Access (with auto-mapping disabled) to $AdminUPN for mailbox: $($mailbox.PrimarySmtpAddress) [$($count)/$($mailBoxCount)]"
             } else {
                 Write-Host -foreground DarkYellow "Skipping mailbox: $($mailbox.PrimarySmtpAddress) [$($count)/$($mailBoxCount)]"
@@ -95,7 +95,5 @@ Function Grant-MailboxFullAccess(){
     # Disconnect from Exchange Online
     Disconnect-ExchangeOnline -Confirm:$false
 }
-
-
 
 Grant-MailboxFullAccess -AdminUPN $AdminUPN -accessUPN $accessUPN -Ignore $Ignore
