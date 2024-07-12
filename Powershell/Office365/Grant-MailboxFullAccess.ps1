@@ -1,0 +1,79 @@
+
+# Call the function with parameters from the command line
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory = $true, Position = 0, HelpMessage = "Enter the admin users UserPrincipalName")]
+    [ValidateScript({
+        if ($_ -match '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$') {
+            $true
+        } else {
+            throw "The AdminUPN value '$_' is not a valid email address."
+        }
+    })]
+    [string]$AdminUPN,
+
+    [Parameter(Mandatory = $true, Position = 1, HelpMessage = "Enter the UPN of the user that should have access to all mailboxes")]
+    [ValidateScript({
+        if ($_ -match '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$') {
+            $true
+        } else {
+            throw "The accessUPN value '$_' is not a valid email address."
+        }
+    })]
+    [string]$accessUPN,
+
+    [Parameter(Mandatory = $false, Position = 2, HelpMessage = "Enter a list of mailboxes to ignore")]
+    [string[]]$Ignore
+)
+
+
+Function Grant-MailboxFullAccess(){
+
+    param (
+        [string]$AdminUPN,
+        [string]$accessUPN,
+        [string[]]$Ignore
+    )
+
+    try {
+
+ 
+        if (!(Get-Module -ListAvailable -Name ExchangeOnlineManagement)) {
+            Write-Host -ForegroundColor Yellow "ExchangeOnlineManagement module is not installed. Installing now..."
+            Install-Module -Name ExchangeOnlineManagement -Force -Scope CurrentUser
+        }
+
+        Import-Module ExchangeOnlineManagement
+
+        Write-Host -foreground Yellow "Connecting to Exchange Online"
+        Connect-ExchangeOnline -UserPrincipalName $AdminUPN -ShowBanner:$false
+
+        # Get all mailboxes
+        $mailboxes = Get-Mailbox -ResultSize Unlimited
+        $mailBoxCount = $mailboxes.count
+        $count = 1
+        foreach ($mailbox in $mailboxes) {
+            # Skip if the mailbox is the admin's own mailbox
+            if ($mailbox.PrimarySmtpAddress -ne $AdminUPN -and -not ($Ignore -contains $mailbox.PrimarySmtpAddress)) {
+                # Add Full Access permissions with auto-mapping disabled
+                #Add-MailboxPermission -Identity $mailbox.PrimarySmtpAddress -User $AdminUPN -AccessRights FullAccess -AutoMapping:$false
+                Write-Host -foreground Cyan "Granted Full Access (with auto-mapping disabled) to $AdminUPN for mailbox: $($mailbox.PrimarySmtpAddress) [$($count)/$($mailBoxCount)]"
+            } else {
+                Write-Host -foreground DarkYellow "Skipping mailbox: $($mailbox.PrimarySmtpAddress) [$($count)/$($mailBoxCount)]"
+            }
+            $count++
+        }
+        
+        Write-Host -ForegroundColor Green "Script completed successfully."
+    }
+    catch {
+        Write-Host -ForegroundColor Red "An error occurred: $_"
+    }
+
+    # Disconnect from Exchange Online
+    Disconnect-ExchangeOnline -Confirm:$false
+}
+
+
+
+Grant-MailboxFullAccess -AdminUPN $AdminUPN -accessUPN $accessUPN -Ignore $Ignore
