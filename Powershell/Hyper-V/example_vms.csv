@@ -1,0 +1,5 @@
+Name,Ram,CPU,DiskSize,PathToDisk,Image,VSwitch,VLAN,Port
+SRV-Debian-1,4GB,2,20GB,E:\VM\Disks,C:\ISO\debian-12.6.0-amd64-netinst.iso,Default Switch,199,port1
+SRV-Debian-2,4GB,4,20GB,E:\VM\Disks,C:\ISO\debian-12.6.0-amd64-netinst.iso,Default Switch,199,port1
+SRV-Debian-3,4GB,2,20GB,E:\VM\Disks,C:\ISO\debian-12.6.0-amd64-netinst.iso,Default Switch,199,port1
+SRV-Debian-4,4GB,4,20GB,E:\VM\Disks,C:\ISO\debian-12.6.0-amd64-netinst.iso,Default Switch,199,port1
