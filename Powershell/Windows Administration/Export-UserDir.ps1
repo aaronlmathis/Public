@@ -57,7 +57,7 @@ function Export-UserDir (){
     }
     
     # Get all files and directories under C:\Users\
-    $sourceFolder = "C:\Users\aaron\Documents\Books\"
+    $sourceFolder = "C:\Users\"
     $itemsToCopy = Get-ChildItem -Path $sourceFolder -Recurse
     
     $count = 1
