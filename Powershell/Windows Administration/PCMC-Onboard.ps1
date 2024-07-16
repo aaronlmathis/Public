@@ -92,12 +92,12 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 
 write-host -ForegroundColor yellow "Starting PCMC Onboarding Script:"
 
-New-PCMCAccount()
+New-PCMCAccount
 
-Set-CommonConfigs()
+Set-CommonConfigs
 
-Remove-WindowsApps()
+Remove-WindowsApps
 
-Force-WindowsDriverUpdate()
+Force-WindowsDriverUpdate
 
 
