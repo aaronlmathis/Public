@@ -43,7 +43,7 @@ def main():
     db_params = {
         "host": "localhost",
         "user": "root",
-        "password": "Atlantis1984!",
+        "password": "ThisIsADevSecret1!",
         "database": "mysql",
         "port": 3307
     }
