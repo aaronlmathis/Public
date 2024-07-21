@@ -5,7 +5,7 @@ from pySQLExport.cli import CLI
 from pySQLExport.config import load_config
 from pySQLExport.database import Database
 from pySQLExport.query import Query
-from pySQLExport.export import export_to_csv
+from pySQLExport.export import Export
 from pySQLExport.utils import get_db_info_from_user, print_colored
 
 def main():
@@ -49,9 +49,8 @@ def main():
                 args.outfile = input()
 
             try:
-                if args.output == 'csv':
-                    export_to_csv(results, args.outfile)
-                    print_colored(f"Results have been exported to {args.outfile}", "green")
+                exporter = Export(results, args.outfile)
+                exporter.export(args.output)
             except Exception as e:
                 print_colored(f"Failed to export results: {e}", "red")
                 sys.exit(1)
