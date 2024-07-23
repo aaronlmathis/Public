@@ -16,7 +16,7 @@ setup(
     },
     author="Aaron Mathis",
     author_email="aaron.mathis@gmail.com",
-    description="A command line tool to interact with MySQL databases and export to other formats.",
+    description="A command line tool to interact with databases and export to other formats.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/aaronlmathis/pySQLExport",
