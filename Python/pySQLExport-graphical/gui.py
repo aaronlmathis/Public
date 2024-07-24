@@ -231,8 +231,6 @@ class MainWindow(QMainWindow):
         query = self.text_sql_query.toPlainText()
         results, columns = self.main_app.execute_query(query)
         
-        print(results)
-        print(columns)
         self.displayResults(results, columns)
 
     def displayResults(self, results, columns):
@@ -242,6 +240,11 @@ class MainWindow(QMainWindow):
 
         for row in results:
             items = [QtGui.QStandardItem(str(field)) for field in row]
+            for item in items:
+                
+                item.setFlags(item.flags() & ~QtCore.Qt.ItemFlag.ItemIsEditable)  # Make item non-editable
             model.appendRow(items)
 
         self.tableViewResults.setModel(model)
+        header = self.tableViewResults.horizontalHeader()
+        header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
