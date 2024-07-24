@@ -16,3 +16,6 @@ Python/pySQLExport/pyproject.toml
 Python/pySQLExport/pySQLExport/pyproject.toml
 /Powershell/.vs
 /Python/simpleGUI
+/Python/pySQLExport-graphical/__pycache__
+Python/pySQLExport-graphical/main-window-1.py
+Python/pySQLExport-graphical/main-window-1.ui
