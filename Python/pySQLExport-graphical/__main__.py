@@ -1,4 +1,4 @@
-from gui import LoginWindow, MainWindow
+from gui import NewConnectionWindow, MainWindow
 from PyQt6.QtWidgets import QApplication
 import sys
 
@@ -7,7 +7,7 @@ import sys
 def main():
 
     app = QApplication(sys.argv)
-    win = LoginWindow()
+    win = NewConnectionWindow()
     win.show()
     sys.exit(app.exec())
 

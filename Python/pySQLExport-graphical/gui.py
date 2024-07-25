@@ -9,10 +9,10 @@ from PyQt6.QtWidgets import (
 )
 from pySQLExport import PySQLExport
 
-class LoginWindow(QMainWindow):
+class NewConnectionWindow(QMainWindow):
     def __init__(self):
         self.main_app = PySQLExport()
-        super(LoginWindow, self).__init__()
+        super(NewConnectionWindow, self).__init__()
        
         # Set window geometry and title        
         self.setGeometry(200, 200, 400, 200)  
@@ -176,9 +176,9 @@ class MainWindow(QMainWindow):
 
         self.label_sql_query_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.TitleFont)
         self.label_sql_query_font.setPointSize(16)  # Ensure the font size is set
-        self.label_sql_query_font.setBold(True)  # Ensure the font weight is set to bold
+
         self.label_sql_query_2.setFont(self.label_sql_query_font)
-        self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)  # Center the text
+        self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)  # Center the text
     
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_sql_query_2)
 
