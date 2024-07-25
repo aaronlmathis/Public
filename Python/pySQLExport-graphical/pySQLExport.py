@@ -3,7 +3,8 @@ from database import Database
 class PySQLExport:
     def __init__(self):
         self.config = {}
-        self.test = "foofoofoo"
+        self.error = None
+        self.db = None
 
     def connect_db(self, host, user, pw, database, port):
         self.config = {
@@ -17,6 +18,7 @@ class PySQLExport:
             self.db = Database(host, user, pw, database, port)
             return True
         except Exception as e:
+            self.error = e
             return False
         
     def execute_query(self, query):
@@ -27,3 +29,5 @@ class PySQLExport:
 
         return self.results, self.columns
         
+    def close_db(self):
+        self.db.close()

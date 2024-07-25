@@ -5,7 +5,8 @@ from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, 
     QLineEdit, QPushButton, QFormLayout, 
     QVBoxLayout, QLabel, QFrame,
-    QHBoxLayout, QSpacerItem, QSizePolicy
+    QHBoxLayout, QSpacerItem, QSizePolicy,
+    QMessageBox
 )
 from pySQLExport import PySQLExport
 
@@ -32,8 +33,9 @@ class NewConnectionWindow(QMainWindow):
         self.main_layout.addSpacing(0)
         self.renderHLine()
         self.renderInfoText()
-        self.renderErrorText()
+
         self.renderForm() # Render form layout
+        self.setWindowStyle()
 
     def renderHLine(self):
         # Add a horizontal line separator
@@ -110,22 +112,33 @@ class NewConnectionWindow(QMainWindow):
         self.button_layout.addWidget(self.submit_button)
         self.main_layout.addLayout(self.button_layout)        
         # Apply styles
+         
+
+    def setWindowStyle(self):
         self.setStyleSheet("""
 
             QLineEdit { padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
             QPushButton {  padding: 5px 10px;background-color: #007bff;color: white;border: none;border-radius: 5px;}
             QPushButton:hover {background-color: #0056b3;}
             QLabel#errorLabel { color: red; }
-        """)            
+            QHeaderView::section {
+                background-color: #d3d3d3;  /* Gray background for headers */
+            }
+            QTableView {
+                gridline-color: #d3d3d3;  /* Gray grid lines */
+            }
+            QTableView::item {
+                border-left: 1px solid #d3d3d3;  /* Left border of each cell */
+                border-right: 1px solid #d3d3d3; /* Right border of each cell */
+            }                           
+        """)     
+    def renderErrorText(self, message):
 
-    def renderErrorText(self):
-        self.error_label = QLabel("")
-        self.error_label.setObjectName("errorLabel")
-        self.error_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.SmallestReadableFont)
-        self.error_font.setPointSize(12)  # Ensure the font size is set
-        self.error_label.setFont(self.error_font)
-        self.error_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)  # Center the text
-        self.main_layout.addWidget(self.error_label)        
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Icon.Critical)
+        msg_box.setWindowTitle("pySQLExport - Error")
+        msg_box.setText(message)
+        msg_box.exec()            
 
     def handle_login(self):
         # Handle login logic here
@@ -141,7 +154,7 @@ class NewConnectionWindow(QMainWindow):
             self.main_window.show()
             self.close()
         else:
-            self.error_label.setText("Error: Could not connect to the database. Please try again.")
+            self.renderErrorText(f"Could not connect: {self.main_app.error}")
 
 class MainWindow(QMainWindow):
     def __init__(self, main_app):
@@ -164,6 +177,14 @@ class MainWindow(QMainWindow):
         self.renderQueryForm()
         self.renderTabTable()
         self.renderMenuBar()
+        self.setWindowStyle()
+
+    def renderErrorText(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Icon.Critical)
+        msg_box.setWindowTitle("pySQLExport - Error")
+        msg_box.setText(message)
+        msg_box.exec()            
 
     def renderQueryForm(self):
         self.formLayout_2 = QtWidgets.QFormLayout()
@@ -190,13 +211,7 @@ class MainWindow(QMainWindow):
         self.pushButton.clicked.connect(self.run_query) # Connect to function when pressed
 
         self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.pushButton)
-        self.setStyleSheet("""
-
-            QLineEdit { padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
-            QPushButton {  padding: 5px 10px;background-color: #007bff;color: white;border: none;border-radius: 5px;}
-            QPushButton:hover {background-color: #0056b3;}
-            QLabel#errorLabel { color: red; }
-        """) 
+        
         self.button_layout2 = QHBoxLayout()
         self.button_layout2.addStretch()
         self.button_layout2.addWidget(self.pushButton)
@@ -232,25 +247,91 @@ class MainWindow(QMainWindow):
         self.menubar.setObjectName("menubar")
         self.setMenuBar(self.menubar)
 
+        # FILE Menu
         self.menuFile = QtWidgets.QMenu("File", self.menubar)
         self.menuFile.setObjectName("menuFile")
-        self.menuExport = QtWidgets.QMenu("Export", self.menubar)
-        self.menuExport.setObjectName("menuExport")
 
+        #New Connection
         self.actionNewConnection = QtGui.QAction("New Connection", self)
         self.actionNewConnection.setObjectName("actionNewConnection")
+        self.actionNewConnection.setShortcut(QtGui.QKeySequence('Ctrl+N'))
+        self.actionNewConnection.setStatusTip("Create a new connection")
+        self.actionNewConnection.triggered.connect(self.newConnection)
+        self.menuFile.addAction(self.actionNewConnection)
+        
+        #Exit
         self.actionExit = QtGui.QAction("Exit", self)
         self.actionExit.setObjectName("actionExit")
-        self.actionCopy = QtGui.QAction("Copy", self)
-        self.actionCopy.setObjectName("actionCopy")
-        self.actionPaste = QtGui.QAction("Paste", self)
-        self.actionPaste.setObjectName("actionPaste")
+        self.actionExit.setShortcut(QtGui.QKeySequence('Ctrl+Q'))
+        self.actionExit.setStatusTip("Close database and exit pySQLExport")        
+        self.actionExit.triggered.connect(lambda: self.exitApp())
+        self.menuFile.addAction(self.actionExit)        
 
-        self.menuFile.addAction(self.actionNewConnection)
-        self.menuFile.addAction(self.actionExit)
-        self.menuExport.addAction(self.actionCopy)
-        self.menuExport.addAction(self.actionPaste)
+        #Export Menu
+        self.menuExport = QtWidgets.QMenu("Export", self.menubar)
+        self.menuExport.setObjectName("menuExport")
+        #Export Selection
+                
+        # Export Selection submenu
+        self.menuExportSelection = QtWidgets.QMenu("Export Selection", self.menuExport)
+        self.menuExport.addMenu(self.menuExportSelection)
 
+        self.actionExportSelectionToCSV = QtGui.QAction("To CSV", self)
+        self.actionExportSelectionToCSV.setStatusTip("Export selected items to CSV format")
+        self.actionExportSelectionToCSV.triggered.connect(lambda: self.export("selection", "csv"))
+        self.menuExportSelection.addAction(self.actionExportSelectionToCSV)
+
+        self.actionExportSelectionToJSON = QtGui.QAction("To JSON", self)
+        self.actionExportSelectionToJSON.setStatusTip("Export selected items to JSON format")
+        self.actionExportSelectionToJSON.triggered.connect(lambda: self.export("selection", "json"))
+        self.menuExportSelection.addAction(self.actionExportSelectionToJSON)
+
+        self.actionExportSelectionToHTML = QtGui.QAction("To HTML", self)
+        self.actionExportSelectionToHTML.setStatusTip("Export selected items to HTML format")
+        self.actionExportSelectionToHTML.triggered.connect(lambda: self.export("selection", "html"))
+        self.menuExportSelection.addAction(self.actionExportSelectionToHTML)
+
+        self.actionExportSelectionToXML = QtGui.QAction("To XML", self)
+        self.actionExportSelectionToXML.setStatusTip("Export selected items to XML format")
+        self.actionExportSelectionToXML.triggered.connect(lambda: self.export("selection", "xml"))
+        self.menuExportSelection.addAction(self.actionExportSelectionToXML)
+
+        self.actionExportSelectionToExcel = QtGui.QAction("To Excel", self)
+        self.actionExportSelectionToExcel.setStatusTip("Export selected items to Excel format")
+        self.actionExportSelectionToExcel.triggered.connect(lambda: self.export("selection", "excel"))
+        self.menuExportSelection.addAction(self.actionExportSelectionToExcel)
+
+        # Export All submenu
+        self.menuExportAll = QtWidgets.QMenu("Export All", self.menuExport)
+        self.menuExport.addMenu(self.menuExportAll)
+
+        self.actionExportAllToCSV = QtGui.QAction("To CSV", self)
+        self.actionExportAllToCSV.setStatusTip("Export all items to CSV format")
+        self.actionExportAllToCSV.triggered.connect(lambda: self.export("all", "csv"))
+        self.menuExportAll.addAction(self.actionExportAllToCSV)
+
+        self.actionExportAllToJSON = QtGui.QAction("To JSON", self)
+        self.actionExportAllToJSON.setStatusTip("Export all items to JSON format")
+        self.actionExportAllToJSON.triggered.connect(lambda: self.export("all", "json"))
+        self.menuExportAll.addAction(self.actionExportAllToJSON)
+
+        self.actionExportAllToHTML = QtGui.QAction("To HTML", self)
+        self.actionExportAllToHTML.setStatusTip("Export all items to HTML format")
+        self.actionExportAllToHTML.triggered.connect(lambda: self.export("all", "html"))
+        self.menuExportAll.addAction(self.actionExportAllToHTML)
+
+        self.actionExportAllToXML = QtGui.QAction("To XML", self)
+        self.actionExportAllToXML.setStatusTip("Export all items to XML format")
+        self.actionExportAllToXML.triggered.connect(lambda: self.export("all", "xml"))
+        self.menuExportAll.addAction(self.actionExportAllToXML)
+
+        self.actionExportAllToExcel = QtGui.QAction("To Excel", self)
+        self.actionExportAllToExcel.setStatusTip("Export all items to Excel format")
+        self.actionExportAllToExcel.triggered.connect(lambda: self.export("all", "excel"))
+        self.menuExportAll.addAction(self.actionExportAllToExcel)
+       
+
+        #Add MenuFile/MenuExport action to menubar            
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuExport.menuAction())       
 
@@ -258,15 +339,33 @@ class MainWindow(QMainWindow):
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
-        self.actionNewConnection.triggered.connect(lambda: self.newConnection())
-        #self.actionSave.triggered.connect(lambda: self.clicked("Save was clicked"))
-        #self.actionCopy.triggered.connect(lambda: self.clicked("Copy was clicked"))
-        #self.actionPaste.triggered.connect(lambda: self.clicked("Paste was clicked"))
-   
+    def setWindowStyle(self):
+        self.setStyleSheet("""
+
+            QLineEdit { padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
+            QPushButton {  padding: 5px 10px;background-color: #007bff;color: white;border: none;border-radius: 5px;}
+            QPushButton:hover {background-color: #0056b3;}
+
+            QHeaderView::section {
+
+            }
+            QTableView {
+
+            }
+            QTableView::item {
+
+            }                           
+        """)     
+
     def newConnection(self):
+        self.main_app.close_db()
         self.connection_window = NewConnectionWindow()
         self.connection_window.show()
         self.close()
+
+    def exitApp(self):
+        self.main_app.close_db()
+        QApplication.quit()
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate

@@ -19,4 +19,5 @@ class Database:
         return results, columns
     
     def close(self):
-        self.connection.close()
+        if self.connection.is_connected():
+            self.connection.close()
