@@ -1,0 +1,4 @@
+openpyxl
+pandas
+pyqt6
+mysql-connector

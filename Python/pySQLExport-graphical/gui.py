@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QPushButton, QFormLayout, 
     QVBoxLayout, QLabel, QFrame,
     QHBoxLayout, QSpacerItem, QSizePolicy,
-    QMessageBox
+    QMessageBox, QFileDialog
 )
 from pySQLExport import PySQLExport
 
@@ -15,7 +15,7 @@ class NewConnectionWindow(QMainWindow):
         self.main_app = PySQLExport()
         super(NewConnectionWindow, self).__init__()
        
-        # Set window geometry and title        
+        # Set window geometry and title   
         self.setGeometry(200, 200, 400, 200)  
         self.setWindowTitle("pySQLExport")
 
@@ -30,9 +30,11 @@ class NewConnectionWindow(QMainWindow):
         self.central_widget.setLayout(self.main_layout)
 
         self.renderHeader()
-        self.main_layout.addSpacing(0)
+        self.main_layout.addSpacing(20)
         self.renderHLine()
+        self.main_layout.addSpacing(20)
         self.renderInfoText()
+        self.main_layout.addSpacing(40)
 
         self.renderForm() # Render form layout
         self.setWindowStyle()
@@ -166,6 +168,8 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.centralwidget)
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
+        self.results = None
+        self.columns = None
 
     def initUI(self):
         self.centralwidget = QtWidgets.QWidget(self)
@@ -174,8 +178,9 @@ class MainWindow(QMainWindow):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)  # Add margins
         self.verticalLayout.setObjectName("verticalLayout")
-        self.renderQueryForm()
+       
         self.renderTabTable()
+        self.renderQueryForm()
         self.renderMenuBar()
         self.setWindowStyle()
 
@@ -186,36 +191,53 @@ class MainWindow(QMainWindow):
         msg_box.setText(message)
         msg_box.exec()            
 
+    def renderDetailedErrorText(self, e):
+        msg = QMessageBox(self)
+        msg.setIcon(QMessageBox.Icon.Critical)
+        msg.setWindowTitle("pySQLExport - Error")
+        msg.setText("An error occurred:                                            ")
+        msg.setInformativeText("Please see the details below.")
+        msg.setDetailedText(e)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.exec()
+
+    def renderInfoText(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Icon.Information)
+        msg_box.setWindowTitle("pySQLExport - Info")
+        msg_box.setText(message)
+        msg_box.exec()           
+
     def renderQueryForm(self):
-        self.formLayout_2 = QtWidgets.QFormLayout()
-        self.formLayout_2.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
-        self.formLayout_2.setObjectName("formLayout_2")
+        self.formLayout = QtWidgets.QFormLayout()
+        self.formLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
+        self.formLayout.setObjectName("formLayout")
 
-        self.label_sql_query_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_sql_query_2.setObjectName("label_sql_query_2")
+        self.label_sql_query = QtWidgets.QLabel(self.centralwidget)
+        self.label_sql_query.setObjectName("label_sql_query")
 
-        self.label_sql_query_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.GeneralFont)
+        """self.label_sql_query_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.GeneralFont)
         self.label_sql_query_font.setPointSize(12)  # Ensure the font size is set
 
         self.label_sql_query_2.setFont(self.label_sql_query_font)
-        self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)  # Center the text
+        self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)  # Center the text"""
     
-        self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_sql_query_2)
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_sql_query)
 
         self.text_sql_query = QtWidgets.QTextEdit(self.centralwidget)
         self.text_sql_query.setObjectName("text_sql_query")
-        self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.text_sql_query)
-        self.verticalLayout.addLayout(self.formLayout_2, stretch=1)
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.text_sql_query)
+        self.verticalLayout.addLayout(self.formLayout, stretch=1)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.run_query) # Connect to function when pressed
 
-        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.pushButton)
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.pushButton)
         
-        self.button_layout2 = QHBoxLayout()
-        self.button_layout2.addStretch()
-        self.button_layout2.addWidget(self.pushButton)
-        self.verticalLayout.addLayout(self.button_layout2)    
+        self.button_layout = QHBoxLayout()
+        self.button_layout.addStretch()
+        self.button_layout.addWidget(self.pushButton)
+        self.verticalLayout.addLayout(self.button_layout)    
 
         #self.verticalLayout.addLayout(self.formLayout_2, stretch=1)
 
@@ -223,22 +245,23 @@ class MainWindow(QMainWindow):
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName("tabWidget")
 
-        self.tab_3 = QtWidgets.QWidget()
-        self.tab_3.setObjectName("tab_3")
-        self.tab_3_layout = QtWidgets.QVBoxLayout(self.tab_3)  # Create a layout for the tab
-        self.tab_3_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout
+        self.tab_1 = QtWidgets.QWidget()
+        self.tab_1.setObjectName("tab_1")
+        self.tab_1_layout = QtWidgets.QVBoxLayout(self.tab_1)  # Create a layout for the tab
+        self.tab_1_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout
 
-        self.tableViewResults = QtWidgets.QTableView(self.tab_3)
+        self.tab_2 = QtWidgets.QWidget()
+        self.tab_2.setObjectName("tab_1")
+        self.tab_2_layout = QtWidgets.QVBoxLayout(self.tab_2)  # Create a layout for the tab
+        self.tab_2_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout
+
+        self.tableViewResults = QtWidgets.QTableView(self.tab_1)
         self.tableViewResults.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         self.tableViewResults.setObjectName("tableViewResults")
-        self.tab_3_layout.addWidget(self.tableViewResults)  # Add the tableView to the layout
+        self.tab_1_layout.addWidget(self.tableViewResults)  # Add the tableView to the layout
 
-        self.tabWidget.addTab(self.tab_3, "")
-
-       # self.tab_4 = QtWidgets.QWidget()
-        #self.tab_4.setObjectName("tab_4")
-        #self.tabWidget.addTab(self.tab_4, "")
-
+        self.tabWidget.addTab(self.tab_1, "")
+        self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout.addWidget(self.tabWidget, stretch=9)  # Add the tabWidget with stretch factor
         
     def renderMenuBar(self):
@@ -339,10 +362,45 @@ class MainWindow(QMainWindow):
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
+    def export(self, scope, format):
+        if self.results and self.columns:
+            if format == 'csv':
+                # Open a file dialog to choose the save location
+                file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
+                if file_path:
+                    e = self.main_app.exportToCSV(self.results, self.columns, file_path)
+            elif format == 'json':
+                 # Open a file dialog to choose the save location
+                file_path, _ = QFileDialog.getSaveFileName(self, "Save JSON", "", "JSON Files (*.json);;All Files (*)")
+                if file_path:
+                    e = self.main_app.exportToJSON(self.results, self.columns, file_path)
+            elif format == 'html':
+                 # Open a file dialog to choose the save location
+                file_path, _ = QFileDialog.getSaveFileName(self, "Save HTML", "", "HTML Files (*.html);;All Files (*)")
+                if file_path:
+                    e = self.main_app.exportToHTML(self.results, self.columns, file_path)
+            elif format == 'xml':
+                 # Open a file dialog to choose the save location
+                file_path, _ = QFileDialog.getSaveFileName(self, "Save XML", "", "XML Files (*.xml);;All Files (*)")
+                if file_path:
+                    e = self.main_app.exportToXML(self.results, self.columns, file_path)                                                                                                                      
+            elif format == 'excel':
+                # Open a file dialog to choose the save location
+                file_path, _ = QFileDialog.getSaveFileName(self, "Save Excel", "", "Excel Files (*.xlsx);;All Files (*)")
+                if file_path:
+                    e = self.main_app.exportToEXCEL(self.results, self.columns, file_path)                  
+            if e is True:
+                QMessageBox.information(self, "Success", "File was exported successfully.")
+            else:
+                self.renderDetailedErrorText(f"{e}")
+        else:
+            self.renderInfoText("Please run a query first.                         ")
+
+
     def setWindowStyle(self):
         self.setStyleSheet("""
 
-            QLineEdit { padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
+            QLineEdit { padding: 5px;}
             QPushButton {  padding: 5px 10px;background-color: #007bff;color: white;border: none;border-radius: 5px;}
             QPushButton:hover {background-color: #0056b3;}
 
@@ -350,7 +408,7 @@ class MainWindow(QMainWindow):
 
             }
             QTableView {
-
+                border: 1px solid #fff;
             }
             QTableView::item {
 
@@ -370,16 +428,17 @@ class MainWindow(QMainWindow):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "pySQLExport"))
-        self.label_sql_query_2.setText(_translate("MainWindow", "Run Query:"))
+        self.label_sql_query.setText(_translate("MainWindow", "Run Query:"))
         self.pushButton.setText(_translate("MainWindow", "Execute Query"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Results"))
-        #self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Tab 2"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("MainWindow", self.main_app.config['database']))
+        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "(empty)"))
 
     def run_query(self):
         query = self.text_sql_query.toPlainText()
-        results, columns = self.main_app.execute_query(query)
+        self.results, self.columns = self.main_app.execute_query(query)
         
-        self.displayResults(results, columns)
+        self.displayResults(self.results, self.columns)
 
     def displayResults(self, results, columns):
         model = QtGui.QStandardItemModel()
