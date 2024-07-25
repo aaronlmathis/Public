@@ -86,9 +86,9 @@ class LoginWindow(QMainWindow):
         self.port_input.setMaxLength(5)  # Limit input to 8 characters
         self.port_input.setFixedWidth(50)  # Set a fixed width appropriate for 5 characters
         self.server_input.setText("localhost")
-        self.username_input.setText("root")
-        self.password_input.setText("my-secret-pw")
-        self.database_input.setText("employees")
+        self.username_input.setText("aaron")
+        self.password_input.setText("")
+        self.database_input.setText("classicmodels")
 
         self.form_layout.addRow("Server:", self.server_input)
         self.form_layout.addRow("Username:", self.username_input)
@@ -173,19 +173,37 @@ class MainWindow(QMainWindow):
 
         self.label_sql_query_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_sql_query_2.setObjectName("label_sql_query_2")
+
+        self.label_sql_query_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.TitleFont)
+        self.label_sql_query_font.setPointSize(16)  # Ensure the font size is set
+        self.label_sql_query_font.setBold(True)  # Ensure the font weight is set to bold
+        self.label_sql_query_2.setFont(self.label_sql_query_font)
+        self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)  # Center the text
+    
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_sql_query_2)
 
         self.text_sql_query = QtWidgets.QTextEdit(self.centralwidget)
         self.text_sql_query.setObjectName("text_sql_query")
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.text_sql_query)
-
+        self.verticalLayout.addLayout(self.formLayout_2, stretch=1)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.run_query) # Connect to function when pressed
 
         self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.pushButton)
+        self.setStyleSheet("""
 
-        self.verticalLayout.addLayout(self.formLayout_2, stretch=1)
+            QLineEdit { padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
+            QPushButton {  padding: 5px 10px;background-color: #007bff;color: white;border: none;border-radius: 5px;}
+            QPushButton:hover {background-color: #0056b3;}
+            QLabel#errorLabel { color: red; }
+        """) 
+        self.button_layout2 = QHBoxLayout()
+        self.button_layout2.addStretch()
+        self.button_layout2.addWidget(self.pushButton)
+        self.verticalLayout.addLayout(self.button_layout2)    
+
+        #self.verticalLayout.addLayout(self.formLayout_2, stretch=1)
 
     def renderTabTable(self):
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
@@ -207,7 +225,7 @@ class MainWindow(QMainWindow):
         #self.tab_4.setObjectName("tab_4")
         #self.tabWidget.addTab(self.tab_4, "")
 
-        self.verticalLayout.addWidget(self.tabWidget, stretch=3)  # Add the tabWidget with stretch factor
+        self.verticalLayout.addWidget(self.tabWidget, stretch=9)  # Add the tabWidget with stretch factor
         
     def renderMenuBar(self):
         self.menubar = QtWidgets.QMenuBar(self)
