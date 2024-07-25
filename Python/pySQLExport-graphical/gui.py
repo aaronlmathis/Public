@@ -86,9 +86,9 @@ class NewConnectionWindow(QMainWindow):
         self.port_input.setMaxLength(5)  # Limit input to 8 characters
         self.port_input.setFixedWidth(50)  # Set a fixed width appropriate for 5 characters
         self.server_input.setText("localhost")
-        self.username_input.setText("aaron")
-        self.password_input.setText("")
-        self.database_input.setText("classicmodels")
+        self.username_input.setText("root")
+        self.password_input.setText("my-secret-pw")
+        self.database_input.setText("employees")
 
         self.form_layout.addRow("Server:", self.server_input)
         self.form_layout.addRow("Username:", self.username_input)
@@ -161,7 +161,6 @@ class MainWindow(QMainWindow):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)  # Add margins
         self.verticalLayout.setObjectName("verticalLayout")
-
         self.renderQueryForm()
         self.renderTabTable()
         self.renderMenuBar()
@@ -233,9 +232,36 @@ class MainWindow(QMainWindow):
         self.menubar.setObjectName("menubar")
         self.setMenuBar(self.menubar)
 
+        self.menuFile = QtWidgets.QMenu("File", self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        self.menuExport = QtWidgets.QMenu("Export", self.menubar)
+        self.menuExport.setObjectName("menuExport")
+
+        self.actionNewConnection = QtGui.QAction("New Connection", self)
+        self.actionNewConnection.setObjectName("actionNewConnection")
+        self.actionSave = QtGui.QAction("Save", self)
+        self.actionSave.setObjectName("actionSave")
+        self.actionCopy = QtGui.QAction("Copy", self)
+        self.actionCopy.setObjectName("actionCopy")
+        self.actionPaste = QtGui.QAction("Paste", self)
+        self.actionPaste.setObjectName("actionPaste")
+
+        self.menuFile.addAction(self.actionNewConnection)
+        self.menuFile.addAction(self.actionSave)
+        self.menuExport.addAction(self.actionCopy)
+        self.menuExport.addAction(self.actionPaste)
+
+        self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuExport.menuAction())       
+
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
+
+        #self.actionNewConnection.triggered.connect(lambda: self.some_func())
+        #self.actionSave.triggered.connect(lambda: self.clicked("Save was clicked"))
+        #self.actionCopy.triggered.connect(lambda: self.clicked("Copy was clicked"))
+        #self.actionPaste.triggered.connect(lambda: self.clicked("Paste was clicked"))
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
