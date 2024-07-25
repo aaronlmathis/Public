@@ -239,15 +239,15 @@ class MainWindow(QMainWindow):
 
         self.actionNewConnection = QtGui.QAction("New Connection", self)
         self.actionNewConnection.setObjectName("actionNewConnection")
-        self.actionSave = QtGui.QAction("Save", self)
-        self.actionSave.setObjectName("actionSave")
+        self.actionExit = QtGui.QAction("Exit", self)
+        self.actionExit.setObjectName("actionExit")
         self.actionCopy = QtGui.QAction("Copy", self)
         self.actionCopy.setObjectName("actionCopy")
         self.actionPaste = QtGui.QAction("Paste", self)
         self.actionPaste.setObjectName("actionPaste")
 
         self.menuFile.addAction(self.actionNewConnection)
-        self.menuFile.addAction(self.actionSave)
+        self.menuFile.addAction(self.actionExit)
         self.menuExport.addAction(self.actionCopy)
         self.menuExport.addAction(self.actionPaste)
 
@@ -258,10 +258,15 @@ class MainWindow(QMainWindow):
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
-        #self.actionNewConnection.triggered.connect(lambda: self.some_func())
+        self.actionNewConnection.triggered.connect(lambda: self.newConnection())
         #self.actionSave.triggered.connect(lambda: self.clicked("Save was clicked"))
         #self.actionCopy.triggered.connect(lambda: self.clicked("Copy was clicked"))
         #self.actionPaste.triggered.connect(lambda: self.clicked("Paste was clicked"))
+   
+    def newConnection(self):
+        self.connection_window = NewConnectionWindow()
+        self.connection_window.show()
+        self.close()
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
