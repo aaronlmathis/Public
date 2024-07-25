@@ -174,8 +174,8 @@ class MainWindow(QMainWindow):
         self.label_sql_query_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_sql_query_2.setObjectName("label_sql_query_2")
 
-        self.label_sql_query_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.TitleFont)
-        self.label_sql_query_font.setPointSize(16)  # Ensure the font size is set
+        self.label_sql_query_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.GeneralFont)
+        self.label_sql_query_font.setPointSize(12)  # Ensure the font size is set
 
         self.label_sql_query_2.setFont(self.label_sql_query_font)
         self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)  # Center the text
@@ -240,7 +240,7 @@ class MainWindow(QMainWindow):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "pySQLExport"))
-        self.label_sql_query_2.setText(_translate("MainWindow", "SQL Query"))
+        self.label_sql_query_2.setText(_translate("MainWindow", "Run Query:"))
         self.pushButton.setText(_translate("MainWindow", "Execute Query"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Results"))
         #self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Tab 2"))
