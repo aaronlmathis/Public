@@ -58,6 +58,7 @@ class PySQLExport:
         df = pd.DataFrame(results, columns=columns)
         try:
             df.to_xml(outfile, index=False, parser='lxml')
+            return True
         except ImportError:
             df.to_xml(outfile, index=False, parser='etree')
             return True

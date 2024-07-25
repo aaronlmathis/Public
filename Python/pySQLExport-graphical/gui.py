@@ -89,10 +89,10 @@ class NewConnectionWindow(QMainWindow):
         self.port_input.setText("3306")
         self.port_input.setMaxLength(5)  # Limit input to 8 characters
         self.port_input.setFixedWidth(50)  # Set a fixed width appropriate for 5 characters
-        self.server_input.setText("localhost")
+        """self.server_input.setText("localhost")
         self.username_input.setText("root")
         self.password_input.setText("my-secret-pw")
-        self.database_input.setText("employees")
+        self.database_input.setText("employees")"""
 
         self.form_layout.addRow("Server:", self.server_input)
         self.form_layout.addRow("Username:", self.username_input)
@@ -106,7 +106,7 @@ class NewConnectionWindow(QMainWindow):
         # Create and add a submit button
         # Create and configure the establish connection button
         self.submit_button = QPushButton("Establish Connection")
-        self.submit_button.clicked.connect(self.handle_login) # Connect to function when pressed
+        self.submit_button.clicked.connect(self.handleConnect) # Connect to function when pressed
         self.submit_button.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
         # Create a horizontal layout to center the button
         self.button_layout = QHBoxLayout()
@@ -142,8 +142,8 @@ class NewConnectionWindow(QMainWindow):
         msg_box.setText(message)
         msg_box.exec()            
 
-    def handle_login(self):
-        # Handle login logic here
+    def handleConnect(self):
+ 
         username = self.username_input.text()
         password = self.password_input.text()
         database = self.database_input.text()
