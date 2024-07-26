@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QPushButton, QFormLayout, 
     QVBoxLayout, QLabel, QFrame,
     QHBoxLayout, QSpacerItem, QSizePolicy,
-    QMessageBox, QFileDialog
+    QMessageBox, QFileDialog, QAbstractItemView
 )
 from pySQLExport import PySQLExport
 
@@ -89,10 +89,10 @@ class NewConnectionWindow(QMainWindow):
         self.port_input.setText("3306")
         self.port_input.setMaxLength(5)  # Limit input to 8 characters
         self.port_input.setFixedWidth(50)  # Set a fixed width appropriate for 5 characters
-        """self.server_input.setText("localhost")
+        self.server_input.setText("localhost")
         self.username_input.setText("root")
         self.password_input.setText("my-secret-pw")
-        self.database_input.setText("employees")"""
+        self.database_input.setText("employees")
 
         self.form_layout.addRow("Server:", self.server_input)
         self.form_layout.addRow("Username:", self.username_input)
@@ -250,15 +250,24 @@ class MainWindow(QMainWindow):
         self.tab_1_layout = QtWidgets.QVBoxLayout(self.tab_1)  # Create a layout for the tab
         self.tab_1_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout
 
+        self.tableViewResults = QtWidgets.QTableView(self.tab_1)
+        self.tableViewResults.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.tableViewResults.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
+
+        self.tableViewResults.setObjectName("tableViewResults")
+        self.tab_1_layout.addWidget(self.tableViewResults)  # Add the tableView to the layout
+
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_1")
         self.tab_2_layout = QtWidgets.QVBoxLayout(self.tab_2)  # Create a layout for the tab
-        self.tab_2_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout
+        self.tab_2_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout        
+        
+        self.tableViewWorkspace = QtWidgets.QTableView(self.tab_1)
+        self.tableViewWorkspace.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.tableViewWorkspace.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
 
-        self.tableViewResults = QtWidgets.QTableView(self.tab_1)
-        self.tableViewResults.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.tableViewResults.setObjectName("tableViewResults")
-        self.tab_1_layout.addWidget(self.tableViewResults)  # Add the tableView to the layout
+        self.tableViewWorkspace.setObjectName("tableViewWorkspace")
+        self.tab_2_layout.addWidget(self.tableViewWorkspace)  # Add the tableView to the layout
 
         self.tabWidget.addTab(self.tab_1, "")
         self.tabWidget.addTab(self.tab_2, "")
@@ -362,39 +371,116 @@ class MainWindow(QMainWindow):
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
+    def is_tableview_empty(self):
+        table_view = self.get_active_tableview()
+        model = table_view.model()
+        if model is None:
+            return True  # If there is no model, consider the table view empty
+    
+        return model.rowCount() == 0  
+          
     def export(self, scope, format):
-        if self.results and self.columns:
-            if format == 'csv':
-                # Open a file dialog to choose the save location
-                file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
-                if file_path:
-                    e = self.main_app.exportToCSV(self.results, self.columns, file_path)
-            elif format == 'json':
-                 # Open a file dialog to choose the save location
-                file_path, _ = QFileDialog.getSaveFileName(self, "Save JSON", "", "JSON Files (*.json);;All Files (*)")
-                if file_path:
-                    e = self.main_app.exportToJSON(self.results, self.columns, file_path)
-            elif format == 'html':
-                 # Open a file dialog to choose the save location
-                file_path, _ = QFileDialog.getSaveFileName(self, "Save HTML", "", "HTML Files (*.html);;All Files (*)")
-                if file_path:
-                    e = self.main_app.exportToHTML(self.results, self.columns, file_path)
-            elif format == 'xml':
-                 # Open a file dialog to choose the save location
-                file_path, _ = QFileDialog.getSaveFileName(self, "Save XML", "", "XML Files (*.xml);;All Files (*)")
-                if file_path:
-                    e = self.main_app.exportToXML(self.results, self.columns, file_path)                                                                                                                      
-            elif format == 'excel':
-                # Open a file dialog to choose the save location
-                file_path, _ = QFileDialog.getSaveFileName(self, "Save Excel", "", "Excel Files (*.xlsx);;All Files (*)")
-                if file_path:
-                    e = self.main_app.exportToEXCEL(self.results, self.columns, file_path)                  
-            if e is True:
-                QMessageBox.information(self, "Success", "File was exported successfully.")
-            else:
-                self.renderDetailedErrorText(f"{e}")
-        else:
+        if self.is_tableview_empty():
             self.renderInfoText("Please run a query first.                         ")
+        else:            
+            if scope == 'all':
+                if format == 'csv':
+                    # Open a file dialog to choose the save location
+                    file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
+                    if file_path:
+                        e = self.main_app.exportToCSV(self.results, self.columns, file_path)
+                elif format == 'json':
+                    # Open a file dialog to choose the save location
+                    file_path, _ = QFileDialog.getSaveFileName(self, "Save JSON", "", "JSON Files (*.json);;All Files (*)")
+                    if file_path:
+                        e = self.main_app.exportToJSON(self.results, self.columns, file_path)
+                elif format == 'html':
+                    # Open a file dialog to choose the save location
+                    file_path, _ = QFileDialog.getSaveFileName(self, "Save HTML", "", "HTML Files (*.html);;All Files (*)")
+                    if file_path:
+                        e = self.main_app.exportToHTML(self.results, self.columns, file_path)
+                elif format == 'xml':
+                    # Open a file dialog to choose the save location
+                    file_path, _ = QFileDialog.getSaveFileName(self, "Save XML", "", "XML Files (*.xml);;All Files (*)")
+                    if file_path:
+                        e = self.main_app.exportToXML(self.results, self.columns, file_path)                                                                                                                      
+                elif format == 'excel':
+                    # Open a file dialog to choose the save location
+                    file_path, _ = QFileDialog.getSaveFileName(self, "Save Excel", "", "Excel Files (*.xlsx);;All Files (*)")
+                    if file_path:
+                        e = self.main_app.exportToEXCEL(self.results, self.columns, file_path)                  
+                if e is True:
+                    QMessageBox.information(self, "Success", "File was exported successfully.")
+                else:
+                    self.renderDetailedErrorText(f"{e}")
+            elif scope == 'selection':
+                results, columns = self.getSelectedRows()
+                if results and columns:
+                    if format == 'csv':                    
+                    # Open a file dialog to choose the save location
+                        file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
+                        if file_path:
+                            e = self.main_app.exportToCSV(results, columns, file_path)
+                    elif format == 'json':
+                        # Open a file dialog to choose the save location
+                        file_path, _ = QFileDialog.getSaveFileName(self, "Save JSON", "", "JSON Files (*.json);;All Files (*)")
+                        if file_path:
+                            e = self.main_app.exportToJSON(results, columns, file_path)
+                    elif format == 'html':
+                        # Open a file dialog to choose the save location
+                        file_path, _ = QFileDialog.getSaveFileName(self, "Save HTML", "", "HTML Files (*.html);;All Files (*)")
+                        if file_path:
+                            e = self.main_app.exportToHTML(results, columns, file_path)
+                    elif format == 'xml':
+                        # Open a file dialog to choose the save location
+                        file_path, _ = QFileDialog.getSaveFileName(self, "Save XML", "", "XML Files (*.xml);;All Files (*)")
+                        if file_path:
+                            e = self.main_app.exportToXML(results, columns, file_path)                                                                                                                      
+                    elif format == 'excel':
+                        # Open a file dialog to choose the save location
+                        file_path, _ = QFileDialog.getSaveFileName(self, "Save Excel", "", "Excel Files (*.xlsx);;All Files (*)")
+                        if file_path:
+                            e = self.main_app.exportToEXCEL(results, columns, file_path)                  
+                    if e is True:
+                        QMessageBox.information(self, "Success", "File was exported successfully.")
+                    else:
+                        self.renderDetailedErrorText(f"{e}")                      
+                else:
+                    self.renderInfoText("Please make a valid selection.")
+
+
+
+    def getSelectedRows(self):
+        table_view = self.get_active_tableview()
+        selection_model = table_view.selectionModel()
+        selected_rows = selection_model.selectedRows()
+
+        # Get the model associated with the QTableView
+        model = table_view.model()
+
+        # Initialize results and columns
+        selected_results = []
+        selected_columns = [model.headerData(i, QtCore.Qt.Orientation.Horizontal) for i in range(model.columnCount())]
+
+        # Extract data from selected rows
+        for row_index in selected_rows:
+            row_data = []
+            for column_index in range(model.columnCount()):
+                index = model.index(row_index.row(), column_index)
+                row_data.append(model.data(index))
+            selected_results.append(row_data)
+        
+        return selected_results, selected_columns
+        
+
+    def get_active_tableview(self):
+        current_index = self.tabWidget.currentIndex()
+        if current_index == 0:
+            return self.tableViewResults
+        elif current_index == 1:
+            return self.tableViewWorkspace
+        return None
+
 
 
     def setWindowStyle(self):
@@ -448,10 +534,9 @@ class MainWindow(QMainWindow):
         for row in results:
             items = [QtGui.QStandardItem(str(field)) for field in row]
             for item in items:
-                
                 item.setFlags(item.flags() & ~QtCore.Qt.ItemFlag.ItemIsEditable)  # Make item non-editable
             model.appendRow(items)
-
-        self.tableViewResults.setModel(model)
-        header = self.tableViewResults.horizontalHeader()
+        table_view = self.get_active_tableview()
+        table_view.setModel(model)
+        header = table_view.horizontalHeader()
         header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
