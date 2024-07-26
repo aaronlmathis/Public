@@ -28,10 +28,12 @@ class PySQLExport:
     def execute_query(self, query):
         try:
             self.results,  self.columns = self.db.execute(query)
+            return True, self.results, self.columns
         except Exception as e:
             print(f"Failed to execute query: {e}")
+            return False, str(e), []
 
-        return self.results, self.columns
+
         
     def close_db(self):
         self.db.close()

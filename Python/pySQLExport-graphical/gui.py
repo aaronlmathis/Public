@@ -170,6 +170,7 @@ class MainWindow(QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(self)
         self.results = None
         self.columns = None
+        self.clipboard = {"data": [], "columns": []}        
 
     def initUI(self):
         self.centralwidget = QtWidgets.QWidget(self)
@@ -179,9 +180,9 @@ class MainWindow(QMainWindow):
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)  # Add margins
         self.verticalLayout.setObjectName("verticalLayout")
        
-        self.renderTabTable()
-        self.renderQueryForm()
-        self.renderMenuBar()
+        self.render_tab_table()
+        self.render_query_form()
+        self.render_menu_bar()
         self.setWindowStyle()
 
     def renderErrorText(self, message):
@@ -201,17 +202,17 @@ class MainWindow(QMainWindow):
         msg.setStandardButtons(QMessageBox.StandardButton.Ok)
         msg.exec()
 
-    def renderInfoText(self, message):
+    def render_info_text(self, message):
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Icon.Information)
         msg_box.setWindowTitle("pySQLExport - Info")
         msg_box.setText(message)
         msg_box.exec()           
 
-    def renderQueryForm(self):
-        self.formLayout = QtWidgets.QFormLayout()
-        self.formLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
-        self.formLayout.setObjectName("formLayout")
+    def render_query_form(self):
+        self.form_layout = QtWidgets.QFormLayout()
+        self.form_layout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
+        self.form_layout.setObjectName("form_layout")
 
         self.label_sql_query = QtWidgets.QLabel(self.centralwidget)
         self.label_sql_query.setObjectName("label_sql_query")
@@ -222,26 +223,30 @@ class MainWindow(QMainWindow):
         self.label_sql_query_2.setFont(self.label_sql_query_font)
         self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)  # Center the text"""
     
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_sql_query)
+        self.form_layout.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_sql_query)
 
         self.text_sql_query = QtWidgets.QTextEdit(self.centralwidget)
         self.text_sql_query.setObjectName("text_sql_query")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.text_sql_query)
-        self.verticalLayout.addLayout(self.formLayout, stretch=1)
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.run_query) # Connect to function when pressed
+        self.form_layout.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.text_sql_query)
+        self.verticalLayout.addLayout(self.form_layout, stretch=1)
+        self.query_button = QtWidgets.QPushButton(self.centralwidget)
+        self.query_button.setObjectName("query_button")
+        self.query_button.clicked.connect(lambda: self.run_query(self.text_sql_query.toPlainText())) # Connect to function when pressed
 
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.pushButton)
+        self.form_layout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.query_button)
+
+        self.append_check_box = QtWidgets.QCheckBox("Append to table", self.centralwidget)
+        self.append_check_box.setObjectName("append_check_box")
+        self.form_layout.setWidget(2, QtWidgets.QFormLayout.ItemRole.FieldRole, self.append_check_box)
         
         self.button_layout = QHBoxLayout()
         self.button_layout.addStretch()
-        self.button_layout.addWidget(self.pushButton)
+        self.button_layout.addWidget(self.query_button)
         self.verticalLayout.addLayout(self.button_layout)    
 
         #self.verticalLayout.addLayout(self.formLayout_2, stretch=1)
 
-    def renderTabTable(self):
+    def render_tab_table(self):
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName("tabWidget")
 
@@ -250,208 +255,265 @@ class MainWindow(QMainWindow):
         self.tab_1_layout = QtWidgets.QVBoxLayout(self.tab_1)  # Create a layout for the tab
         self.tab_1_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout
 
-        self.tableViewResults = QtWidgets.QTableView(self.tab_1)
-        self.tableViewResults.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.tableViewResults.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
+        self.tableView_1 = QtWidgets.QTableView(self.tab_1)
+        self.tableView_1.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.tableView_1.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
 
-        self.tableViewResults.setObjectName("tableViewResults")
-        self.tab_1_layout.addWidget(self.tableViewResults)  # Add the tableView to the layout
+        self.tableView_1.setObjectName("tableView_1")
+        self.tab_1_layout.addWidget(self.tableView_1)  # Add the tableView to the layout
 
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_1")
         self.tab_2_layout = QtWidgets.QVBoxLayout(self.tab_2)  # Create a layout for the tab
         self.tab_2_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout        
         
-        self.tableViewWorkspace = QtWidgets.QTableView(self.tab_1)
-        self.tableViewWorkspace.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.tableViewWorkspace.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
+        self.tableView_2 = QtWidgets.QTableView(self.tab_1)
+        self.tableView_2.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.tableView_2.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
 
-        self.tableViewWorkspace.setObjectName("tableViewWorkspace")
-        self.tab_2_layout.addWidget(self.tableViewWorkspace)  # Add the tableView to the layout
+        self.tableView_2.setObjectName("tableView_2")
+        self.tab_2_layout.addWidget(self.tableView_2)  # Add the tableView to the layout
 
         self.tabWidget.addTab(self.tab_1, "")
         self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout.addWidget(self.tabWidget, stretch=9)  # Add the tabWidget with stretch factor
-        
-    def renderMenuBar(self):
+    
+    def add_new_tab(self):
+        new_tab = QtWidgets.QWidget()
+        new_tab.setObjectName(f"tab_{self.tabWidget.count() + 1}")
+        new_tab_layout = QtWidgets.QVBoxLayout(new_tab)
+        new_tab_layout.setContentsMargins(0, 0, 0, 0)
+
+        new_table_view = QtWidgets.QTableView(new_tab)
+        new_table_view.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        new_table_view.setObjectName(f"tableView_{self.tabWidget.count() + 1}")
+        new_tab_layout.addWidget(new_table_view)
+
+        self.tabWidget.addTab(new_tab, f"Tab {self.tabWidget.count() + 1}")
+
+    def render_menu_bar(self):
         self.menubar = QtWidgets.QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
         self.menubar.setObjectName("menubar")
         self.setMenuBar(self.menubar)
 
         # FILE Menu
-        self.menuFile = QtWidgets.QMenu("File", self.menubar)
-        self.menuFile.setObjectName("menuFile")
+        self.menu_file = QtWidgets.QMenu("File", self.menubar)
+        self.menu_file.setObjectName("menu_file")
 
         #New Connection
-        self.actionNewConnection = QtGui.QAction("New Connection", self)
-        self.actionNewConnection.setObjectName("actionNewConnection")
-        self.actionNewConnection.setShortcut(QtGui.QKeySequence('Ctrl+N'))
-        self.actionNewConnection.setStatusTip("Create a new connection")
-        self.actionNewConnection.triggered.connect(self.newConnection)
-        self.menuFile.addAction(self.actionNewConnection)
-        
+        self.action_new_connection = QtGui.QAction("New Connection", self)
+        self.action_new_connection.setObjectName("action_new_connection")
+        self.action_new_connection.setShortcut(QtGui.QKeySequence('Ctrl+N'))
+        self.action_new_connection.setStatusTip("Create a new connection")
+        self.action_new_connection.triggered.connect(self.new_connection)
+        self.menu_file.addAction(self.action_new_connection)
+
+        #Copy
+        self.action_copy = QtGui.QAction("Copy", self)
+        self.action_copy.setObjectName("action_copy")
+        self.action_copy.setShortcut(QtGui.QKeySequence('Ctrl+C'))
+        self.action_copy.setStatusTip("Copy selected rows")
+        self.action_copy.triggered.connect(self.copy_selected)
+        self.menu_file.addAction(self.action_copy)
+
+        #Paste
+        self.action_paste = QtGui.QAction("Paste", self)
+        self.action_paste.setObjectName("action_paste")
+        self.action_paste.setShortcut(QtGui.QKeySequence('Ctrl+V'))
+        self.action_paste.setStatusTip("Paste selection into current table")
+        self.action_paste.triggered.connect(self.paste_selected)
+        self.menu_file.addAction(self.action_paste)
+
         #Exit
-        self.actionExit = QtGui.QAction("Exit", self)
-        self.actionExit.setObjectName("actionExit")
-        self.actionExit.setShortcut(QtGui.QKeySequence('Ctrl+Q'))
-        self.actionExit.setStatusTip("Close database and exit pySQLExport")        
-        self.actionExit.triggered.connect(lambda: self.exitApp())
-        self.menuFile.addAction(self.actionExit)        
+        self.action_exit = QtGui.QAction("Exit", self)
+        self.action_exit.setObjectName("action_exit")
+        self.action_exit.setShortcut(QtGui.QKeySequence('Ctrl+Q'))
+        self.action_exit.setStatusTip("Close database and exit pySQLExport")        
+        self.action_exit.triggered.connect(lambda: self.exit_app())
+        self.menu_file.addAction(self.action_exit)        
 
         #Export Menu
-        self.menuExport = QtWidgets.QMenu("Export", self.menubar)
-        self.menuExport.setObjectName("menuExport")
+        self.menu_export = QtWidgets.QMenu("Export", self.menubar)
+        self.menu_export.setObjectName("menu_export")
         #Export Selection
                 
         # Export Selection submenu
-        self.menuExportSelection = QtWidgets.QMenu("Export Selection", self.menuExport)
-        self.menuExport.addMenu(self.menuExportSelection)
+        self.menu_export_selection = QtWidgets.QMenu("Export Selection", self.menu_export)
+        self.menu_export.addMenu(self.menu_export_selection)
 
-        self.actionExportSelectionToCSV = QtGui.QAction("To CSV", self)
-        self.actionExportSelectionToCSV.setStatusTip("Export selected items to CSV format")
-        self.actionExportSelectionToCSV.triggered.connect(lambda: self.export("selection", "csv"))
-        self.menuExportSelection.addAction(self.actionExportSelectionToCSV)
+        self.action_export_selection_to_csv = QtGui.QAction("To CSV", self)
+        self.action_export_selection_to_csv.setStatusTip("Export selected items to CSV format")
+        self.action_export_selection_to_csv.triggered.connect(lambda: self.export("selection", "csv"))
+        self.menu_export_selection.addAction(self.action_export_selection_to_csv)
 
-        self.actionExportSelectionToJSON = QtGui.QAction("To JSON", self)
-        self.actionExportSelectionToJSON.setStatusTip("Export selected items to JSON format")
-        self.actionExportSelectionToJSON.triggered.connect(lambda: self.export("selection", "json"))
-        self.menuExportSelection.addAction(self.actionExportSelectionToJSON)
+        self.action_export_selection_to_json = QtGui.QAction("To JSON", self)
+        self.action_export_selection_to_json.setStatusTip("Export selected items to JSON format")
+        self.action_export_selection_to_json.triggered.connect(lambda: self.export("selection", "json"))
+        self.menu_export_selection.addAction(self.action_export_selection_to_json)
 
-        self.actionExportSelectionToHTML = QtGui.QAction("To HTML", self)
-        self.actionExportSelectionToHTML.setStatusTip("Export selected items to HTML format")
-        self.actionExportSelectionToHTML.triggered.connect(lambda: self.export("selection", "html"))
-        self.menuExportSelection.addAction(self.actionExportSelectionToHTML)
+        self.action_export_selection_to_html = QtGui.QAction("To HTML", self)
+        self.action_export_selection_to_html.setStatusTip("Export selected items to HTML format")
+        self.action_export_selection_to_html.triggered.connect(lambda: self.export("selection", "html"))
+        self.menu_export_selection.addAction(self.action_export_selection_to_html)
 
-        self.actionExportSelectionToXML = QtGui.QAction("To XML", self)
-        self.actionExportSelectionToXML.setStatusTip("Export selected items to XML format")
-        self.actionExportSelectionToXML.triggered.connect(lambda: self.export("selection", "xml"))
-        self.menuExportSelection.addAction(self.actionExportSelectionToXML)
+        self.action_export_selection_to_xml = QtGui.QAction("To XML", self)
+        self.action_export_selection_to_xml.setStatusTip("Export selected items to XML format")
+        self.action_export_selection_to_xml.triggered.connect(lambda: self.export("selection", "xml"))
+        self.menu_export_selection.addAction(self.action_export_selection_to_xml)
 
         self.actionExportSelectionToExcel = QtGui.QAction("To Excel", self)
         self.actionExportSelectionToExcel.setStatusTip("Export selected items to Excel format")
         self.actionExportSelectionToExcel.triggered.connect(lambda: self.export("selection", "excel"))
-        self.menuExportSelection.addAction(self.actionExportSelectionToExcel)
+        self.menu_export_selection.addAction(self.actionExportSelectionToExcel)
 
         # Export All submenu
-        self.menuExportAll = QtWidgets.QMenu("Export All", self.menuExport)
-        self.menuExport.addMenu(self.menuExportAll)
+        self.menu_export_all = QtWidgets.QMenu("Export All", self.menu_export)
+        self.menu_export.addMenu(self.menu_export_all)
 
-        self.actionExportAllToCSV = QtGui.QAction("To CSV", self)
-        self.actionExportAllToCSV.setStatusTip("Export all items to CSV format")
-        self.actionExportAllToCSV.triggered.connect(lambda: self.export("all", "csv"))
-        self.menuExportAll.addAction(self.actionExportAllToCSV)
+        self.action_export_all_to_csv = QtGui.QAction("To CSV", self)
+        self.action_export_all_to_csv.setStatusTip("Export all items to CSV format")
+        self.action_export_all_to_csv.triggered.connect(lambda: self.export("all", "csv"))
+        self.menu_export_all.addAction(self.action_export_all_to_csv)
 
-        self.actionExportAllToJSON = QtGui.QAction("To JSON", self)
-        self.actionExportAllToJSON.setStatusTip("Export all items to JSON format")
-        self.actionExportAllToJSON.triggered.connect(lambda: self.export("all", "json"))
-        self.menuExportAll.addAction(self.actionExportAllToJSON)
+        self.action_export_all_to_json = QtGui.QAction("To JSON", self)
+        self.action_export_all_to_json.setStatusTip("Export all items to JSON format")
+        self.action_export_all_to_json.triggered.connect(lambda: self.export("all", "json"))
+        self.menu_export_all.addAction(self.action_export_all_to_json)
 
-        self.actionExportAllToHTML = QtGui.QAction("To HTML", self)
-        self.actionExportAllToHTML.setStatusTip("Export all items to HTML format")
-        self.actionExportAllToHTML.triggered.connect(lambda: self.export("all", "html"))
-        self.menuExportAll.addAction(self.actionExportAllToHTML)
+        self.action_export_all_to_html = QtGui.QAction("To HTML", self)
+        self.action_export_all_to_html.setStatusTip("Export all items to HTML format")
+        self.action_export_all_to_html.triggered.connect(lambda: self.export("all", "html"))
+        self.menu_export_all.addAction(self.action_export_all_to_html)
 
-        self.actionExportAllToXML = QtGui.QAction("To XML", self)
-        self.actionExportAllToXML.setStatusTip("Export all items to XML format")
-        self.actionExportAllToXML.triggered.connect(lambda: self.export("all", "xml"))
-        self.menuExportAll.addAction(self.actionExportAllToXML)
+        self.action_export_all_to_xml = QtGui.QAction("To XML", self)
+        self.action_export_all_to_xml.setStatusTip("Export all items to XML format")
+        self.action_export_all_to_xml.triggered.connect(lambda: self.export("all", "xml"))
+        self.menu_export_all.addAction(self.action_export_all_to_xml)
 
-        self.actionExportAllToExcel = QtGui.QAction("To Excel", self)
-        self.actionExportAllToExcel.setStatusTip("Export all items to Excel format")
-        self.actionExportAllToExcel.triggered.connect(lambda: self.export("all", "excel"))
-        self.menuExportAll.addAction(self.actionExportAllToExcel)
+        self.action_export_all_to_excel = QtGui.QAction("To Excel", self)
+        self.action_export_all_to_excel.setStatusTip("Export all items to Excel format")
+        self.action_export_all_to_excel.triggered.connect(lambda: self.export("all", "excel"))
+        self.menu_export_all.addAction(self.action_export_all_to_excel)
        
 
         #Add MenuFile/MenuExport action to menubar            
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuExport.menuAction())       
+        self.menubar.addAction(self.menu_file.menuAction())
+        self.menubar.addAction(self.menu_export.menuAction())       
 
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
-    def is_tableview_empty(self):
-        table_view = self.get_active_tableview()
+    def is_tableview_empty(self, table_view):
         model = table_view.model()
         if model is None:
             return True  # If there is no model, consider the table view empty
     
         return model.rowCount() == 0  
-          
-    def export(self, scope, format):
-        if self.is_tableview_empty():
-            self.renderInfoText("Please run a query first.                         ")
-        else:            
-            if scope == 'all':
-                if format == 'csv':
-                    # Open a file dialog to choose the save location
-                    file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
-                    if file_path:
-                        e = self.main_app.exportToCSV(self.results, self.columns, file_path)
-                elif format == 'json':
-                    # Open a file dialog to choose the save location
-                    file_path, _ = QFileDialog.getSaveFileName(self, "Save JSON", "", "JSON Files (*.json);;All Files (*)")
-                    if file_path:
-                        e = self.main_app.exportToJSON(self.results, self.columns, file_path)
-                elif format == 'html':
-                    # Open a file dialog to choose the save location
-                    file_path, _ = QFileDialog.getSaveFileName(self, "Save HTML", "", "HTML Files (*.html);;All Files (*)")
-                    if file_path:
-                        e = self.main_app.exportToHTML(self.results, self.columns, file_path)
-                elif format == 'xml':
-                    # Open a file dialog to choose the save location
-                    file_path, _ = QFileDialog.getSaveFileName(self, "Save XML", "", "XML Files (*.xml);;All Files (*)")
-                    if file_path:
-                        e = self.main_app.exportToXML(self.results, self.columns, file_path)                                                                                                                      
-                elif format == 'excel':
-                    # Open a file dialog to choose the save location
-                    file_path, _ = QFileDialog.getSaveFileName(self, "Save Excel", "", "Excel Files (*.xlsx);;All Files (*)")
-                    if file_path:
-                        e = self.main_app.exportToEXCEL(self.results, self.columns, file_path)                  
-                if e is True:
-                    QMessageBox.information(self, "Success", "File was exported successfully.")
-                else:
-                    self.renderDetailedErrorText(f"{e}")
-            elif scope == 'selection':
-                results, columns = self.getSelectedRows()
-                if results and columns:
-                    if format == 'csv':                    
-                    # Open a file dialog to choose the save location
-                        file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
-                        if file_path:
-                            e = self.main_app.exportToCSV(results, columns, file_path)
-                    elif format == 'json':
-                        # Open a file dialog to choose the save location
-                        file_path, _ = QFileDialog.getSaveFileName(self, "Save JSON", "", "JSON Files (*.json);;All Files (*)")
-                        if file_path:
-                            e = self.main_app.exportToJSON(results, columns, file_path)
-                    elif format == 'html':
-                        # Open a file dialog to choose the save location
-                        file_path, _ = QFileDialog.getSaveFileName(self, "Save HTML", "", "HTML Files (*.html);;All Files (*)")
-                        if file_path:
-                            e = self.main_app.exportToHTML(results, columns, file_path)
-                    elif format == 'xml':
-                        # Open a file dialog to choose the save location
-                        file_path, _ = QFileDialog.getSaveFileName(self, "Save XML", "", "XML Files (*.xml);;All Files (*)")
-                        if file_path:
-                            e = self.main_app.exportToXML(results, columns, file_path)                                                                                                                      
-                    elif format == 'excel':
-                        # Open a file dialog to choose the save location
-                        file_path, _ = QFileDialog.getSaveFileName(self, "Save Excel", "", "Excel Files (*.xlsx);;All Files (*)")
-                        if file_path:
-                            e = self.main_app.exportToEXCEL(results, columns, file_path)                  
-                    if e is True:
-                        QMessageBox.information(self, "Success", "File was exported successfully.")
-                    else:
-                        self.renderDetailedErrorText(f"{e}")                      
-                else:
-                    self.renderInfoText("Please make a valid selection.")
 
-
-
-    def getSelectedRows(self):
+    def copy_selected(self):
         table_view = self.get_active_tableview()
+        
+        if self.is_tableview_empty(table_view):
+            self.render_info_text("Please run a query first.                         ") 
+            return
+
+        results, columns = self.get_selected_rows(table_view)
+            
+        if not results or not columns:
+            self.render_info_text("Please make a valid selection.                        ")
+            return
+        
+        if results:
+            self.clipboard["data"] = results
+            self.clipboard["columns"] = columns
+            self.render_info_text("Selection copied to clipboard.")    
+          
+    def paste_selected(self):
+        active_table_view = self.get_active_tableview()
+        if active_table_view and self.clipboard["data"]:
+            model = active_table_view.model()
+            
+            if model is None:
+                model = QtGui.QStandardItemModel()
+                model.setHorizontalHeaderLabels(self.clipboard["columns"])
+                active_table_view.setModel(model)
+        
+            # Check for selected rows and remove them
+            selection_model = active_table_view.selectionModel()
+            selected_indexes = selection_model.selectedRows()
+
+            if selected_indexes:
+                rows_to_remove = sorted([index.row() for index in selected_indexes], reverse=True)
+                for row in rows_to_remove:
+                    model.removeRow(row)                
+            
+            for row in self.clipboard["data"]:
+                items = [QtGui.QStandardItem(str(field)) for field in row]
+                for item in items:
+                    item.setFlags(item.flags() & ~QtCore.Qt.ItemFlag.ItemIsEditable)
+                model.appendRow(items)
+            
+            header = active_table_view.horizontalHeader()
+            header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
+
+            self.render_info_text("Clipboard pasted to the current table.")
+        else:
+            self.render_info_text("Clipboard is empty or no active table view.")
+
+
+    def export(self, scope, format):
+        active_table_view = self.get_active_tableview()
+        
+        if self.is_tableview_empty(active_table_view):
+            self.render_info_text("Please run a query first.                         ")
+            return
+
+        if scope == 'all':
+            results, columns = self.get_all_rows(active_table_view)
+        elif scope == 'selection':
+            results, columns = self.get_selected_rows(active_table_view)
+            
+            if not results or not columns:
+                self.render_info_text("Please make a valid selection.                        ")
+                return        
+       
+
+        if format == 'csv':
+            # Open a file dialog to choose the save location
+            file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
+            if file_path:
+                e = self.main_app.exportToCSV(results, columns, file_path)
+        elif format == 'json':
+            # Open a file dialog to choose the save location
+            file_path, _ = QFileDialog.getSaveFileName(self, "Save JSON", "", "JSON Files (*.json);;All Files (*)")
+            if file_path:
+                e = self.main_app.exportToJSON(results, columns, file_path)
+        elif format == 'html':
+            # Open a file dialog to choose the save location
+            file_path, _ = QFileDialog.getSaveFileName(self, "Save HTML", "", "HTML Files (*.html);;All Files (*)")
+            if file_path:
+                e = self.main_app.exportToHTML(results, columns, file_path)
+        elif format == 'xml':
+            # Open a file dialog to choose the save location
+            file_path, _ = QFileDialog.getSaveFileName(self, "Save XML", "", "XML Files (*.xml);;All Files (*)")
+            if file_path:
+                e = self.main_app.exportToXML(results, columns, file_path)                                                                                                                      
+        elif format == 'excel':
+            # Open a file dialog to choose the save location
+            file_path, _ = QFileDialog.getSaveFileName(self, "Save Excel", "", "Excel Files (*.xlsx);;All Files (*)")
+            if file_path:
+                e = self.main_app.exportToEXCEL(results, columns, file_path)                  
+        
+        if e is True:
+            QMessageBox.information(self, "Success", "File was exported successfully.")
+        else:
+            self.renderDetailedErrorText(f"{e}")
+                      
+
+    def get_selected_rows(self, table_view):
+
         selection_model = table_view.selectionModel()
         selected_rows = selection_model.selectedRows()
 
@@ -471,15 +533,30 @@ class MainWindow(QMainWindow):
             selected_results.append(row_data)
         
         return selected_results, selected_columns
-        
+    
+    def get_all_rows(self, table_view):
+        model = table_view.model()
+        if model is None:
+            return [], []
+
+        results = []
+        columns = [model.headerData(i, QtCore.Qt.Orientation.Horizontal) for i in range(model.columnCount())]
+
+        for row in range(model.rowCount()):
+            row_data = []
+            for column in range(model.columnCount()):
+                index = model.index(row, column)
+                row_data.append(model.data(index))
+            results.append(row_data)
+
+        return results, columns        
 
     def get_active_tableview(self):
         current_index = self.tabWidget.currentIndex()
-        if current_index == 0:
-            return self.tableViewResults
-        elif current_index == 1:
-            return self.tableViewWorkspace
-        return None
+        current_tab = self.tabWidget.widget(current_index)
+        table_view = current_tab.findChild(QtWidgets.QTableView, f"tableView_{current_index + 1}")
+        return table_view        
+
 
 
 
@@ -501,13 +578,13 @@ class MainWindow(QMainWindow):
             }                           
         """)     
 
-    def newConnection(self):
+    def new_connection(self):
         self.main_app.close_db()
         self.connection_window = NewConnectionWindow()
         self.connection_window.show()
         self.close()
 
-    def exitApp(self):
+    def exit_app(self):
         self.main_app.close_db()
         QApplication.quit()
 
@@ -515,18 +592,25 @@ class MainWindow(QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "pySQLExport"))
         self.label_sql_query.setText(_translate("MainWindow", "Run Query:"))
-        self.pushButton.setText(_translate("MainWindow", "Execute Query"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("MainWindow", self.main_app.config['database']))
+        self.query_button.setText(_translate("MainWindow", "Execute Query"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("MainWindow", "Query 1"))
         self.tabWidget.setCurrentIndex(0)
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "(empty)"))
 
-    def run_query(self):
-        query = self.text_sql_query.toPlainText()
-        self.results, self.columns = self.main_app.execute_query(query)
-        
-        self.displayResults(self.results, self.columns)
+    def run_query(self, query):
+        if query:
+            success, result_or_error, columns = self.main_app.execute_query(query)
+            if success:
+                results = result_or_error
+                columns = columns
+                self.display_results(results, columns)
+                self.text_sql_query.setPlainText("")
+            else:
+                self.renderErrorText(f"Failed to execute query: {result_or_error}")
+        else:
+            self.render_info_text("Query cannot be empty.          ")
 
-    def displayResults(self, results, columns):
+    def display_results(self, results, columns):
         model = QtGui.QStandardItemModel()
         
         model.setHorizontalHeaderLabels(columns)
