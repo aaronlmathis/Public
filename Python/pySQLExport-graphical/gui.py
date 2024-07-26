@@ -164,15 +164,15 @@ class MainWindow(QMainWindow):
         self.main_app = main_app
         self.setGeometry(200, 200, 800, 600)
         self.setWindowTitle("pySQLExport")
-        self.initUI()
+        self.init_ui()
         self.setCentralWidget(self.centralwidget)
-        self.retranslateUi()
+        self.retranslate_ui()
         QtCore.QMetaObject.connectSlotsByName(self)
         self.results = None
         self.columns = None
         self.clipboard = {"data": [], "columns": []}        
 
-    def initUI(self):
+    def init_ui(self):
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
 
@@ -217,12 +217,6 @@ class MainWindow(QMainWindow):
         self.label_sql_query = QtWidgets.QLabel(self.centralwidget)
         self.label_sql_query.setObjectName("label_sql_query")
 
-        """self.label_sql_query_font = QFontDatabase.systemFont(QFontDatabase.SystemFont.GeneralFont)
-        self.label_sql_query_font.setPointSize(12)  # Ensure the font size is set
-
-        self.label_sql_query_2.setFont(self.label_sql_query_font)
-        self.label_sql_query_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)  # Center the text"""
-    
         self.form_layout.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_sql_query)
 
         self.text_sql_query = QtWidgets.QTextEdit(self.centralwidget)
@@ -235,9 +229,13 @@ class MainWindow(QMainWindow):
 
         self.form_layout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.query_button)
 
-        self.append_check_box = QtWidgets.QCheckBox("Append to table", self.centralwidget)
+        self.append_check_box = QtWidgets.QCheckBox("Append results of query to existing dataset", self.centralwidget)
         self.append_check_box.setObjectName("append_check_box")
         self.form_layout.setWidget(2, QtWidgets.QFormLayout.ItemRole.FieldRole, self.append_check_box)
+
+        self.duplicates_check_box = QtWidgets.QCheckBox("Allow duplicate rows of data", self.centralwidget)
+        self.duplicates_check_box.setObjectName("duplicate_check_box")
+        self.form_layout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.duplicates_check_box)
         
         self.button_layout = QHBoxLayout()
         self.button_layout.addStretch()
@@ -588,7 +586,7 @@ class MainWindow(QMainWindow):
         self.main_app.close_db()
         QApplication.quit()
 
-    def retranslateUi(self):
+    def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "pySQLExport"))
         self.label_sql_query.setText(_translate("MainWindow", "Run Query:"))
@@ -602,25 +600,33 @@ class MainWindow(QMainWindow):
             success, result_or_error, columns = self.main_app.execute_query(query)
             if success:
                 results = result_or_error
-                columns = columns
-                self.display_results(results, columns)
+                append = self.append_check_box.isChecked()
+                self.display_results(results, columns, append)
                 self.text_sql_query.setPlainText("")
             else:
                 self.renderErrorText(f"Failed to execute query: {result_or_error}")
         else:
             self.render_info_text("Query cannot be empty.          ")
 
-    def display_results(self, results, columns):
-        model = QtGui.QStandardItemModel()
-        
-        model.setHorizontalHeaderLabels(columns)
+    def display_results(self, results, columns, append=False):
+        table_view = self.get_active_tableview()  # Get the active table view
+        model = table_view.model()
+
+        if model is None or not append:
+            model = QtGui.QStandardItemModel()
+            model.setHorizontalHeaderLabels(columns)
+            table_view.setModel(model)
+        else:
+            existing_columns = model.columnCount()
+            for i, column in enumerate(columns):
+                if i >= existing_columns:
+                    model.setHorizontalHeaderItem(i, QtGui.QStandardItem(column))
 
         for row in results:
             items = [QtGui.QStandardItem(str(field)) for field in row]
             for item in items:
                 item.setFlags(item.flags() & ~QtCore.Qt.ItemFlag.ItemIsEditable)  # Make item non-editable
             model.appendRow(items)
-        table_view = self.get_active_tableview()
-        table_view.setModel(model)
+
         header = table_view.horizontalHeader()
         header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
