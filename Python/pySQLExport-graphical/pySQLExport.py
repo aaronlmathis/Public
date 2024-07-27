@@ -1,4 +1,4 @@
-from database import Database
+from database import get_database
 import pandas as pd
 from pandas.errors import ParserError
 
@@ -19,7 +19,7 @@ class PySQLExport:
             "database": database
         }
         try:
-            self.db = Database(host, user, pw, database, port)
+            self.db = get_database('mysql', host, user, pw, database, port)
             return True
         except Exception as e:
             self.error = e

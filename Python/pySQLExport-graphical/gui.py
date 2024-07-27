@@ -6,7 +6,8 @@ from PyQt6.QtWidgets import (
     QLineEdit, QPushButton, QFormLayout, 
     QVBoxLayout, QLabel, QFrame,
     QHBoxLayout, QSpacerItem, QSizePolicy,
-    QMessageBox, QFileDialog, QAbstractItemView
+    QMessageBox, QFileDialog, QAbstractItemView,
+    QComboBox
 )
 from pySQLExport import PySQLExport
 
@@ -93,12 +94,20 @@ class NewConnectionWindow(QMainWindow):
         self.username_input.setText("aaron")
         self.password_input.setText("")
         self.database_input.setText("classicmodels")
+        # Add a dropdown for selecting database type
+        self.db_type_input = QComboBox()
+        self.db_type_input.addItems(["MySQL", "PostgreSQL"])
+        self.db_type_input.currentIndexChanged.connect(self.update_port)  # Connect the signal to update port
 
+        
+        self.form_layout.addRow("Database Type:", self.db_type_input)
         self.form_layout.addRow("Server:", self.server_input)
         self.form_layout.addRow("Username:", self.username_input)
         self.form_layout.addRow("Password:", self.password_input)
         self.form_layout.addRow("Database:", self.database_input)
         self.form_layout.addRow("Port:", self.port_input)
+
+
 
         #Add form to main layout
         self.main_layout.addLayout(self.form_layout)
@@ -115,6 +124,11 @@ class NewConnectionWindow(QMainWindow):
         self.main_layout.addLayout(self.button_layout)        
         # Apply styles
          
+    def update_port(self):
+        if self.db_type_input.currentText() == "PostgreSQL":
+            self.port_input.setText("5432")
+        else:
+            self.port_input.setText("3306")
 
     def set_window_style(self):
         self.setStyleSheet("""
