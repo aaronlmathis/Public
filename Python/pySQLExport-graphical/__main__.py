@@ -8,6 +8,7 @@ def main():
 
     app = QApplication(sys.argv)
     win = NewConnectionWindow()
+
     win.show()
     sys.exit(app.exec())
 
