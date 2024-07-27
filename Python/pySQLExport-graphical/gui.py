@@ -37,7 +37,7 @@ class NewConnectionWindow(QMainWindow):
         self.main_layout.addSpacing(40)
 
         self.renderForm() # Render form layout
-        self.setWindowStyle()
+        self.set_window_style() 
 
     def renderHLine(self):
         # Add a horizontal line separator
@@ -90,9 +90,9 @@ class NewConnectionWindow(QMainWindow):
         self.port_input.setMaxLength(5)  # Limit input to 8 characters
         self.port_input.setFixedWidth(50)  # Set a fixed width appropriate for 5 characters
         self.server_input.setText("localhost")
-        self.username_input.setText("root")
-        self.password_input.setText("my-secret-pw")
-        self.database_input.setText("employees")
+        self.username_input.setText("aaron")
+        self.password_input.setText("")
+        self.database_input.setText("classicmodels")
 
         self.form_layout.addRow("Server:", self.server_input)
         self.form_layout.addRow("Username:", self.username_input)
@@ -116,7 +116,7 @@ class NewConnectionWindow(QMainWindow):
         # Apply styles
          
 
-    def setWindowStyle(self):
+    def set_window_style(self):
         self.setStyleSheet("""
 
             QLineEdit { padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
@@ -183,7 +183,7 @@ class MainWindow(QMainWindow):
         self.render_tab_table()
         self.render_query_form()
         self.render_menu_bar()
-        self.setWindowStyle()
+        self.set_window_style()
 
     def renderErrorText(self, message):
         msg_box = QMessageBox()
@@ -245,36 +245,32 @@ class MainWindow(QMainWindow):
         #self.verticalLayout.addLayout(self.formLayout_2, stretch=1)
 
     def render_tab_table(self):
-        self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setObjectName("tabWidget")
+        self.tab_widget = QtWidgets.QTabWidget(self.centralwidget)
+        self.tab_widget.setObjectName("tab_widget")
 
         self.tab_1 = QtWidgets.QWidget()
         self.tab_1.setObjectName("tab_1")
         self.tab_1_layout = QtWidgets.QVBoxLayout(self.tab_1)  # Create a layout for the tab
         self.tab_1_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout
-
-        self.tableView_1 = QtWidgets.QTableView(self.tab_1)
-        self.tableView_1.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.tableView_1.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
-
-        self.tableView_1.setObjectName("tableView_1")
-        self.tab_1_layout.addWidget(self.tableView_1)  # Add the tableView to the layout
+        self.table_view_1 = QtWidgets.QTableView(self.tab_1)
+        self.table_view_1.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.table_view_1.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
+        self.table_view_1.setObjectName("tableView_1")
+        self.tab_1_layout.addWidget(self.table_view_1)  # Add the tableView to the layout
+        self.tab_widget.addTab(self.tab_1, "")
 
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_1")
         self.tab_2_layout = QtWidgets.QVBoxLayout(self.tab_2)  # Create a layout for the tab
         self.tab_2_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout        
-        
-        self.tableView_2 = QtWidgets.QTableView(self.tab_1)
-        self.tableView_2.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.tableView_2.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
+        self.table_view_2 = QtWidgets.QTableView(self.tab_1)
+        self.table_view_2.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.table_view_2.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
+        self.table_view_2.setObjectName("tableView_2")
+        self.tab_2_layout.addWidget(self.table_view_2)  # Add the tableView to the layout
+        self.tab_widget.addTab(self.tab_2, "")
 
-        self.tableView_2.setObjectName("tableView_2")
-        self.tab_2_layout.addWidget(self.tableView_2)  # Add the tableView to the layout
-
-        self.tabWidget.addTab(self.tab_1, "")
-        self.tabWidget.addTab(self.tab_2, "")
-        self.verticalLayout.addWidget(self.tabWidget, stretch=9)  # Add the tabWidget with stretch factor
+        self.verticalLayout.addWidget(self.tab_widget, stretch=9)  # Add the tabWidget with stretch factor
     
     def add_new_tab(self):
         new_tab = QtWidgets.QWidget()
@@ -410,56 +406,101 @@ class MainWindow(QMainWindow):
     
         return model.rowCount() == 0  
 
+   
+
+    
     def copy_selected(self):
         table_view = self.get_active_tableview()
         
         if self.is_tableview_empty(table_view):
-            self.render_info_text("Please run a query first.                         ") 
+            self.render_info_text("Please run a query first.")
             return
 
-        results, columns = self.get_selected_rows(table_view)
-            
-        if not results or not columns:
-            self.render_info_text("Please make a valid selection.                        ")
+        selection_model = table_view.selectionModel()
+        selected_indexes = selection_model.selectedIndexes()
+
+        if not selected_indexes:
+            self.render_info_text("Please make a valid selection.")
             return
+
+        # Get the model associated with the QTableView
+        model = table_view.model()
+
+        # Get the selected data
+        selected_data = {}
+        for index in selected_indexes:
+            row, col = index.row(), index.column()
+            if row not in selected_data:
+                selected_data[row] = {}
+            selected_data[row][col] = model.data(index)
+
+        # Convert selected data to a tab-delimited string
+        rows = sorted(selected_data.keys())
+        cols = sorted({col for row_data in selected_data.values() for col in row_data.keys()})
         
-        if results:
-            self.clipboard["data"] = results
-            self.clipboard["columns"] = columns
-            self.render_info_text("Selection copied to clipboard.")    
+        clipboard_string = ""
+        for row in rows:
+            row_data = []
+            for col in cols:
+                row_data.append(selected_data[row].get(col, ""))
+            clipboard_string += "\t".join(row_data) + "\n"
+
+        # Copy to clipboard
+        clipboard = QApplication.clipboard()
+        clipboard.setText(clipboard_string)
+        self.render_info_text("Selection copied to clipboard.")
           
     def paste_selected(self):
         active_table_view = self.get_active_tableview()
-        if active_table_view and self.clipboard["data"]:
-            model = active_table_view.model()
-            
-            if model is None:
-                model = QtGui.QStandardItemModel()
-                model.setHorizontalHeaderLabels(self.clipboard["columns"])
-                active_table_view.setModel(model)
+        if active_table_view is None:
+            self.render_info_text("No active table view.")
+            return
+
+        clipboard = QApplication.clipboard()
+        clipboard_text = clipboard.text()
+        print(f"Clipboard text: {clipboard_text}")
+
+        if not clipboard_text:
+            self.render_info_text("Clipboard is empty.")
+            return
+
+        model = active_table_view.model()
+        if model is None:
+            model = QtGui.QStandardItemModel()
+            active_table_view.setModel(model)
+
+        # Parse clipboard text into a list of lists
+        rows = clipboard_text.split("\n")
+        data = [row.split("\t") for row in rows if row]
         
-            # Check for selected rows and remove them
-            selection_model = active_table_view.selectionModel()
-            selected_indexes = selection_model.selectedRows()
+        
+        # Check for selected rows and remove them
+        selection_model = active_table_view.selectionModel()
+        selection_model = active_table_view.selectionModel()
+        if selection_model is None:
+            self.render_info_text("Table view has no selection model.")
+            return
+                
+        selected_indexes = selection_model.selectedRows()
 
-            if selected_indexes:
-                rows_to_remove = sorted([index.row() for index in selected_indexes], reverse=True)
-                for row in rows_to_remove:
-                    model.removeRow(row)                
-            
-            for row in self.clipboard["data"]:
-                items = [QtGui.QStandardItem(str(field)) for field in row]
-                for item in items:
-                    item.setFlags(item.flags() & ~QtCore.Qt.ItemFlag.ItemIsEditable)
-                model.appendRow(items)
-            
-            header = active_table_view.horizontalHeader()
-            header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
+        if selected_indexes:
+            rows_to_remove = sorted([index.row() for index in selected_indexes], reverse=True)
+            for row in rows_to_remove:
+                model.removeRow(row)
 
-            self.render_info_text("Clipboard pasted to the current table.")
-        else:
-            self.render_info_text("Clipboard is empty or no active table view.")
+        # Remove duplicate rows
+        data = self.remove_duplicate_rows(data, active_table_view)
+        
+        # Append data to the table view
+        for row_data in data:
+            items = [QtGui.QStandardItem(field) for field in row_data]
+            for item in items:
+                item.setFlags(item.flags() & ~QtCore.Qt.ItemFlag.ItemIsEditable)  # Make item non-editable if required
+            model.appendRow(items)
 
+        header = active_table_view.horizontalHeader()
+        header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
+        self.render_info_text("Clipboard pasted to the current table.")
 
     def export(self, scope, format):
         active_table_view = self.get_active_tableview()
@@ -550,15 +591,12 @@ class MainWindow(QMainWindow):
         return results, columns        
 
     def get_active_tableview(self):
-        current_index = self.tabWidget.currentIndex()
-        current_tab = self.tabWidget.widget(current_index)
+        current_index = self.tab_widget.currentIndex()
+        current_tab = self.tab_widget.widget(current_index)
         table_view = current_tab.findChild(QtWidgets.QTableView, f"tableView_{current_index + 1}")
         return table_view        
 
-
-
-
-    def setWindowStyle(self):
+    def set_window_style(self):
         self.setStyleSheet("""
 
             QLineEdit { padding: 5px;}
@@ -591,9 +629,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle(_translate("MainWindow", "pySQLExport"))
         self.label_sql_query.setText(_translate("MainWindow", "Run Query:"))
         self.query_button.setText(_translate("MainWindow", "Execute Query"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("MainWindow", "Query 1"))
-        self.tabWidget.setCurrentIndex(0)
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "(empty)"))
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_1), _translate("MainWindow", "Query 1"))
+        self.tab_widget.setCurrentIndex(0)
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_2), _translate("MainWindow", "(empty)"))
 
     def run_query(self, query):
         if query:
@@ -607,6 +645,26 @@ class MainWindow(QMainWindow):
                 self.renderErrorText(f"Failed to execute query: {result_or_error}")
         else:
             self.render_info_text("Query cannot be empty.          ")
+
+    def remove_duplicate_rows(self, new_data, table_view):
+        model = table_view.model()
+        if model is None:
+            return new_data
+
+        existing_rows = set()
+        for row in range(model.rowCount()):
+            row_data = tuple(model.data(model.index(row, col)) for col in range(model.columnCount()))
+            existing_rows.add(row_data)
+
+        cleaned_data = []
+        for new_row in new_data:
+            row_tuple = tuple(new_row)
+            if row_tuple not in existing_rows:
+                cleaned_data.append(new_row)
+                existing_rows.add(row_tuple)
+
+        return cleaned_data
+
 
     def display_results(self, results, columns, append=False):
         table_view = self.get_active_tableview()  # Get the active table view
