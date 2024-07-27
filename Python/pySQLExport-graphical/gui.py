@@ -488,9 +488,10 @@ class MainWindow(QMainWindow):
             for row in rows_to_remove:
                 model.removeRow(row)
 
-        # Remove duplicate rows
-        data = self.remove_duplicate_rows(data, active_table_view)
-        
+        if not self.duplicates_check_box.isChecked():
+            # Remove duplicate rows
+            data = self.remove_duplicate_rows(data, active_table_view)
+
         # Append data to the table view
         for row_data in data:
             items = [QtGui.QStandardItem(field) for field in row_data]
