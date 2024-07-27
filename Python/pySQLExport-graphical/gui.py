@@ -86,10 +86,12 @@ class NewConnectionWindow(QMainWindow):
         self.password_input = QLineEdit()
         self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
         self.database_input = QLineEdit()
+        
         self.port_input = QLineEdit()
         self.port_input.setText("3306")
         self.port_input.setMaxLength(5)  # Limit input to 8 characters
         self.port_input.setFixedWidth(50)  # Set a fixed width appropriate for 5 characters
+        
         self.server_input.setText("localhost")
         self.username_input.setText("aaron")
         self.password_input.setText("")
@@ -132,7 +134,7 @@ class NewConnectionWindow(QMainWindow):
 
     def set_window_style(self):
         self.setStyleSheet("""
-
+            QComboBox { padding: 5px; border: 1px solid #ccc }
             QLineEdit { padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
             QPushButton {  padding: 5px 10px;background-color: #007bff;color: white;border: none;border-radius: 5px;}
             QPushButton:hover {background-color: #0056b3;}
