@@ -10,8 +10,9 @@ class PySQLExport:
         self.error = None
         self.db = None
 
-    def connect_db(self, host, user, pw, database, port):
+    def connect_db(self, db_type, host, user, pw, database, port):
         self.config = {
+            "db_type": db_type,
             "host": host,
             "user": user,
             "pass": pw,
@@ -19,7 +20,7 @@ class PySQLExport:
             "database": database
         }
         try:
-            self.db = get_database('mysql', host, user, pw, database, port)
+            self.db = get_database(db_type, host, user, pw, database, port)
             return True
         except Exception as e:
             self.error = e

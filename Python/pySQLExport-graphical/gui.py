@@ -159,14 +159,14 @@ class NewConnectionWindow(QMainWindow):
         msg_box.exec()            
 
     def handleConnect(self):
- 
+        db_type = self.db_type_input.currentText()
         username = self.username_input.text()
         password = self.password_input.text()
         database = self.database_input.text()
         port = self.port_input.text()
         server = self.server_input.text()
 
-        if self.main_app.connect_db(server, username, password, database, port):
+        if self.main_app.connect_db(db_type, server, username, password, database, port):
             # Assuming the login is successful
             self.main_window = MainWindow(self.main_app)
             self.main_window.show()
