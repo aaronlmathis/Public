@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, 
     QLineEdit, QPushButton, QFormLayout, 
     QVBoxLayout, QLabel, QFrame,
-    QHBoxLayout, QSpacerItem, QSizePolicy,
+    QHBoxLayout, QSizePolicy,
     QMessageBox, QFileDialog, QAbstractItemView,
     QComboBox
 )
@@ -92,10 +92,6 @@ class NewConnectionWindow(QMainWindow):
         self.port_input.setMaxLength(5)  # Limit input to 8 characters
         self.port_input.setFixedWidth(50)  # Set a fixed width appropriate for 5 characters
         
-        self.server_input.setText("localhost")
-        self.username_input.setText("aaron")
-        self.password_input.setText("")
-        self.database_input.setText("classicmodels")
         # Add a dropdown for selecting database type
         self.db_type_input = QComboBox()
         self.db_type_input.addItems(["MySQL", "PostgreSQL"])
@@ -109,15 +105,13 @@ class NewConnectionWindow(QMainWindow):
         self.form_layout.addRow("Database:", self.database_input)
         self.form_layout.addRow("Port:", self.port_input)
 
-
-
         #Add form to main layout
         self.main_layout.addLayout(self.form_layout)
 
         # Create and add a submit button
         # Create and configure the establish connection button
         self.submit_button = QPushButton("Establish Connection")
-        self.submit_button.clicked.connect(self.handleConnect) # Connect to function when pressed
+        self.submit_button.clicked.connect(self.handle_connect) # Connect to function when pressed
         self.submit_button.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
         # Create a horizontal layout to center the button
         self.button_layout = QHBoxLayout()
@@ -150,7 +144,7 @@ class NewConnectionWindow(QMainWindow):
                 border-right: 1px solid #d3d3d3; /* Right border of each cell */
             }                           
         """)     
-    def renderErrorText(self, message):
+    def render_error_text(self, message):
 
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Icon.Critical)
@@ -158,7 +152,7 @@ class NewConnectionWindow(QMainWindow):
         msg_box.setText(message)
         msg_box.exec()            
 
-    def handleConnect(self):
+    def handle_connect(self):
         db_type = self.db_type_input.currentText()
         username = self.username_input.text()
         password = self.password_input.text()
@@ -172,7 +166,7 @@ class NewConnectionWindow(QMainWindow):
             self.main_window.show()
             self.close()
         else:
-            self.renderErrorText(f"Could not connect: {self.main_app.error}")
+            self.render_error_text(f"Could not connect: {self.main_app.error}")
 
 class MainWindow(QMainWindow):
     def __init__(self, main_app):
@@ -201,7 +195,7 @@ class MainWindow(QMainWindow):
         self.render_menu_bar()
         self.set_window_style()
 
-    def renderErrorText(self, message):
+    def render_error_text(self, message):
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Icon.Critical)
         msg_box.setWindowTitle("pySQLExport - Error")
@@ -252,6 +246,10 @@ class MainWindow(QMainWindow):
         self.duplicates_check_box = QtWidgets.QCheckBox("Allow duplicate rows of data", self.centralwidget)
         self.duplicates_check_box.setObjectName("duplicate_check_box")
         self.form_layout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.duplicates_check_box)
+
+        self.new_tab_check_box = QtWidgets.QCheckBox("Open results of query in a new tab", self.centralwidget)
+        self.new_tab_check_box.setObjectName("new_tab_check_box")
+        self.form_layout.setWidget(4, QtWidgets.QFormLayout.ItemRole.FieldRole, self.new_tab_check_box)
         
         self.button_layout = QHBoxLayout()
         self.button_layout.addStretch()
@@ -271,35 +269,24 @@ class MainWindow(QMainWindow):
         self.table_view_1 = QtWidgets.QTableView(self.tab_1)
         self.table_view_1.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         self.table_view_1.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
-        self.table_view_1.setObjectName("tableView_1")
+        self.table_view_1.setObjectName("table_view_1")
         self.tab_1_layout.addWidget(self.table_view_1)  # Add the tableView to the layout
         self.tab_widget.addTab(self.tab_1, "")
-
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_1")
-        self.tab_2_layout = QtWidgets.QVBoxLayout(self.tab_2)  # Create a layout for the tab
-        self.tab_2_layout.setContentsMargins(0, 0, 0, 0)  # Optional: set margins for the layout        
-        self.table_view_2 = QtWidgets.QTableView(self.tab_1)
-        self.table_view_2.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.table_view_2.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)  # Set selection behavior to rows
-        self.table_view_2.setObjectName("tableView_2")
-        self.tab_2_layout.addWidget(self.table_view_2)  # Add the tableView to the layout
-        self.tab_widget.addTab(self.tab_2, "")
-
         self.verticalLayout.addWidget(self.tab_widget, stretch=9)  # Add the tabWidget with stretch factor
     
     def add_new_tab(self):
         new_tab = QtWidgets.QWidget()
-        new_tab.setObjectName(f"tab_{self.tabWidget.count() + 1}")
+        new_tab.setObjectName(f"tab_{self.tab_widget.count() + 1}")
         new_tab_layout = QtWidgets.QVBoxLayout(new_tab)
         new_tab_layout.setContentsMargins(0, 0, 0, 0)
 
         new_table_view = QtWidgets.QTableView(new_tab)
         new_table_view.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        new_table_view.setObjectName(f"tableView_{self.tabWidget.count() + 1}")
+        new_table_view.setObjectName(f"table_view_{self.tab_widget.count() + 1}")
         new_tab_layout.addWidget(new_table_view)
 
-        self.tabWidget.addTab(new_tab, f"Tab {self.tabWidget.count() + 1}")
+        self.tab_widget.addTab(new_tab, f"Query {self.tab_widget.count() + 1}")
+        self.tab_widget.setCurrentWidget(new_tab)
 
     def render_menu_bar(self):
         self.menubar = QtWidgets.QMenuBar(self)
@@ -464,7 +451,7 @@ class MainWindow(QMainWindow):
         # Copy to clipboard
         clipboard = QApplication.clipboard()
         clipboard.setText(clipboard_string)
-        self.render_info_text("Selection copied to clipboard.")
+
           
     def paste_selected(self):
         active_table_view = self.get_active_tableview()
@@ -474,7 +461,7 @@ class MainWindow(QMainWindow):
 
         clipboard = QApplication.clipboard()
         clipboard_text = clipboard.text()
-        print(f"Clipboard text: {clipboard_text}")
+        
 
         if not clipboard_text:
             self.render_info_text("Clipboard is empty.")
@@ -517,7 +504,7 @@ class MainWindow(QMainWindow):
 
         header = active_table_view.horizontalHeader()
         header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
-        self.render_info_text("Clipboard pasted to the current table.")
+
 
     def export(self, scope, format):
         active_table_view = self.get_active_tableview()
@@ -535,7 +522,7 @@ class MainWindow(QMainWindow):
                 self.render_info_text("Please make a valid selection.                        ")
                 return        
        
-
+        e = None
         if format == 'csv':
             # Open a file dialog to choose the save location
             file_path, _ = QFileDialog.getSaveFileName(self, "Save CSV", "", "CSV Files (*.csv);;All Files (*)")
@@ -564,7 +551,7 @@ class MainWindow(QMainWindow):
         
         if e is True:
             QMessageBox.information(self, "Success", "File was exported successfully.")
-        else:
+        elif e is not None:
             self.renderDetailedErrorText(f"{e}")
                       
 
@@ -610,8 +597,8 @@ class MainWindow(QMainWindow):
     def get_active_tableview(self):
         current_index = self.tab_widget.currentIndex()
         current_tab = self.tab_widget.widget(current_index)
-        table_view = current_tab.findChild(QtWidgets.QTableView, f"tableView_{current_index + 1}")
-        return table_view        
+        table_view = current_tab.findChild(QtWidgets.QTableView)
+        return table_view
 
     def set_window_style(self):
         self.setStyleSheet("""
@@ -648,10 +635,12 @@ class MainWindow(QMainWindow):
         self.query_button.setText(_translate("MainWindow", "Execute Query"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_1), _translate("MainWindow", "Query 1"))
         self.tab_widget.setCurrentIndex(0)
-        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_2), _translate("MainWindow", "(empty)"))
 
     def run_query(self, query):
         if query:
+            if self.new_tab_check_box.isChecked():
+                self.add_new_tab()
+
             success, result_or_error, columns = self.main_app.execute_query(query)
             if success:
                 results = result_or_error
@@ -659,7 +648,7 @@ class MainWindow(QMainWindow):
                 self.display_results(results, columns, append)
                 self.text_sql_query.setPlainText("")
             else:
-                self.renderErrorText(f"Failed to execute query: {result_or_error}")
+                self.render_error_text(f"Failed to execute query: {result_or_error}")
         else:
             self.render_info_text("Query cannot be empty.          ")
 
