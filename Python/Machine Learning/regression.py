@@ -26,7 +26,7 @@ forecast_col = 'Adj. Close'
 df.fillna(-99999, inplace=True)
 
 # Defining the forecast period
-forecast_out = int(math.ceil(0.01*len(df)))
+forecast_out = int(math.ceil(0.1*len(df)))
 
 
 
@@ -39,8 +39,9 @@ x = np.array(df.drop(['label'], axis=1))
 
 # Scaling the features
 x = preprocessing.scale(x)
-x = x[:-forecast_out]
 x_lately = x[-forecast_out:]
+x = x[:-forecast_out]
+
 df.dropna(inplace=True)
 
 y = np.array(df['label'])
@@ -48,11 +49,11 @@ y = np.array(df['label'])
 
 x_train, x_test, y_train, y_test = model_selection.train_test_split(x, y, test_size=0.2)
 
-#clf = LinearRegression(n_jobs=10)
-#clf.fit(x_train, y_train)
+clf = LinearRegression(n_jobs=10)
+clf.fit(x_train, y_train)
 # Save the classifier
-#with open('linearregression.pickle','wb') as f:
-#    pickle.dump(clf, f)
+with open('linearregression.pickle','wb') as f:
+    pickle.dump(clf, f)
 
 pickle_in = open('linearregression.pickle', 'rb')
 clf = pickle.load(pickle_in)
