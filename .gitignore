@@ -22,3 +22,4 @@ Python/pySQLExport-graphical/main-window-1.ui
 Public_Code_workplace.code-workspace
 linearregression.pickle
 Python/AI Agent/.env
+/Python/AI Agent/__pycache__
