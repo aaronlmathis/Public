@@ -15,3 +15,5 @@ class Solution:
             return 1 + self.minDepth(root.left)
 
         return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
+    
+    int()

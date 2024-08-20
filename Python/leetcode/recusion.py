@@ -60,4 +60,4 @@ def min_coins1(m, coins):
             memo[i] = min_ignore_none(memo.get(i), memo.get(subproblem) + 1)
     return memo[m]
 
-print(min_coins1(150, [1,4,5]))
+#print(min_coins1(150, [1,4,5]))
