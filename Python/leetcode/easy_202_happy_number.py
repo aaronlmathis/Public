@@ -3,7 +3,6 @@ class Solution(object):
         seen = set()
         while n not in seen:
             seen.add(n)            
-            s = str(n)
             arr = [int(c) for c in str(n)]
             n = sum([v**2 for v in arr])
             if n == 1:
