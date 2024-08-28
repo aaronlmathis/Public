@@ -18,9 +18,6 @@ class Solution:
             else:
                 current = l[i]
                 next = l[i+1]
-
-
-
                 if current < next: # If current value is less than value to the right, subtract it from value on right and add to overall sum
                     total -= current
                 else: # If number to the right is equal, add the two together and add to total
