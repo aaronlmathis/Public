@@ -1,9 +1,6 @@
 class Solution:
     def canJump(self, nums: list[int]) -> bool:
-        m = 0
-        for i in range(1, nums[0]+1):
-            if nums[i] > nums[i+1]:
-                m = nums[i]
+
 
         
 

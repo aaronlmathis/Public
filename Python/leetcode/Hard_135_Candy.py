@@ -24,7 +24,7 @@ The third child gets 1 candy because it satisfies the above two conditions.
 """
 class Solution:
     def candy(self, ratings: List[int]) -> int:
-
+        
 sol = Solution()        
 ratings = [1,0,2]
 print(sol.candy(ratings)) # 5
