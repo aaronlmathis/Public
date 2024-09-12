@@ -7,6 +7,7 @@ Example 1:
 
 Input: n = 3
 Output: 3
+
 Example 2:
 
 Input: n = 11
