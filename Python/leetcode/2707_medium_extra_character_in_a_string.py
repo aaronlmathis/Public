@@ -19,7 +19,7 @@ class Solution:
     def minExtraChar(self, s: str, dictionary: List[str]) -> int:
         dictionary = sorted(dictionary, reverse=True)
         for d in dictionary:
-            print(d)
+            
 
 sol = Solution()
 s = "leetscode"
