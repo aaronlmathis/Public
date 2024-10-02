@@ -22,11 +22,16 @@ Output: [5,3,4,2,8,6,7,1,3]
 from typing import List
 class Solution:
     def arrayRankTransform(self, arr: List[int]) -> List[int]:
-        ranks = {}
-        arr.sort()
-        print(arr)
+        # Create a sorted list of unique elements
+        sorted_unique = sorted(set(arr))
+        
+        # Create a dictionary that maps each element to its rank
+        rank_map = {value: rank + 1 for rank, value in enumerate(sorted_unique)}
+        
+        # Replace each element in the original array with its rank
+        return [rank_map[element] for element in arr]
 
 sol = Solution()
-arr = [40,10,20,30]
+arr = [40,10,20,30, 10]
 #Output: [4,1,2,3]
 print(sol.arrayRankTransform(arr))
