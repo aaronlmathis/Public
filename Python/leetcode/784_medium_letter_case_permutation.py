@@ -10,7 +10,7 @@ Example 2:
 Input: s = "3z4"
 Output: ["3z4","3Z4"]
 """
-from typing import List
+from typing import Lists
 class Solution:
     def letterCasePermutation(self, s: str) -> List[str]:
         output = [""]

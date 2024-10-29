@@ -20,38 +20,23 @@ from collections import Counter
 
 class Solution:
     def minIncrementForUnique(self, nums: List[int]) -> int:
-        def find_next_available_unique(existing_numbers):
-            next_unique = 1
-            while next_unique in existing_numbers:
-                next_unique += 1
-            return next_unique
+        if not nums:
+            return 0
+
         nums.sort()
-        print(nums)
-        count = Counter(nums)
-        existing_numbers = set(nums)
-        next_unique = find_next_available_unique(existing_numbers)
-        replaced = set()
         moves_count = 0
-        i = 0
-        while i < len(nums):
-            if count[nums[i]] > 1:
-                if nums[i] not in replaced:
-                    replaced.add(nums[i])
-                    next_unique = find_next_available_unique(existing_numbers)
-                    moves_count += abs(nums[i] - next_unique)
-                    nums[i] = next_unique
-                    existing_numbers.add(nums[i])
-            i+=1
-        
+        current = nums[0]
 
+        for num in nums[1:]:
+            if num <= current:
+                # If num is not greater than current, we need to increment it
+                moves_count += current + 1 - num
+                current += 1
+            else:
+                # Update current to the latest unique number
+                current = num
 
-
-
-        print(existing_numbers)
-        print(next_unique)
-        print(nums)
         return moves_count
-        
 sol = Solution()
 nums = [2,2,2,1]
 print(sol.minIncrementForUnique(nums))        

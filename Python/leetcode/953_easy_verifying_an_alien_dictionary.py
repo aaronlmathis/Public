@@ -35,14 +35,14 @@ class Solution:
 
             # Compare letters in word1 and word2 for as long as the length of the smaller word.
             for j in range(min(len(word1), len(word2))):
-                print(f"Comparing {word1[j]}:{alien_dict[word1[j]]} and {word2[j]}:{alien_dict[word2[j]]}")
                 # If the place of the character in word 1 is greater than the place of the character in word2, return False
                 if alien_dict[word1[j]] > alien_dict[word2[j]]:
                     return False
+                #If the place of the character word 1 is less than the place of the character of word 2 and the characters are not the same, break
                 if alien_dict[word1[j]] < alien_dict[word2[j]] and word1[j] != word2[j]:
                     break
             else:
-                # Assuming that every character has been the
+                # Assuming we finished checking characters and they were all the same, make sure second word isn't shorter than first.
                 if len(word1) > len(word2):
                     return False
                     

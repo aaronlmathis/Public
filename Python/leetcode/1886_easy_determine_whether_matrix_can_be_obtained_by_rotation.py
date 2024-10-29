@@ -21,8 +21,7 @@ class Solution:
         for _ in range(3): # a Square can be rotated 90 degrees 4 times.
             rotate_90(mat)
             if mat == target:
-                return True
-            
+                return True            
         return False
     
 mat = [[0,0,0],[0,1,0],[1,1,1]]

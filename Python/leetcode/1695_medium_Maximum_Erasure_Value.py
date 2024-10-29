@@ -26,6 +26,9 @@ class Solution:
         current_sum = 0 # Sum of elements from current window
         max_value = 0 # Track the max value
 
+        # Iterate throught he list, opening the window to the right until there are duplicates. 
+        # Then shrink window from left until next item on the right is unique again.
+        
         for right in range(len(nums)):
             #If the number to the right is a duplicate, shrink the window from the left
             while nums[right] in current_window:

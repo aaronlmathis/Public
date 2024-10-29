@@ -21,22 +21,31 @@ Explanation: We cannot do any operations on the string so the length remains the
 """
 class Solution:
     def minLength(self, s: str) -> int:
-        if len(s) <= 1:
-            return len(s)
-
-        stack = []
-        for char in s:
-            # Check the top of the stack with current char
-            if stack and ((stack[-1] == 'A' and char == 'B') or (stack[-1] == 'C' and char == 'D')):
-                stack.pop()  # remove the pair
+        if len(s) == 1:
+            return 1
+        if len(s) == 0:
+            return 0
+        
+        prefix = ''
+        suffix = ''
+        j = 1
+        x = 0
+        while x < len(s):
+            item = s[x:j+1]
+            if item == 'AB' or item == 'CD':
+                prefix = s[0:x]
+                suffix = s[j+1:]
+                s = prefix + suffix
+                print(f"{prefix} - {item} - {suffix}")
+                x = 0
+                j = 1
             else:
-                stack.append(char)  # add char to stack if no match
+                j+=1
+                x+=1
+        
 
-        return len(stack)  # length of remaining characters
+        return 0 if (len(s) == 2) and (s == 'AB' or s == 'CD') else len(s)
 
-# Example usage:
-sol = Solution()
-print(sol.minLength("ABCDCDAB"))  # Example input
 s = "CCDDLLDW"
 sol = Solution()
 print(sol.minLength(s)) #2

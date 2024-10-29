@@ -13,8 +13,6 @@ class TreeNode:
 
 class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
-
-
         def helper(l, r):
             if l > r:
                 return None

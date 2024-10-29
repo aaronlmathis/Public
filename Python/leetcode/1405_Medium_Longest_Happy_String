@@ -41,20 +41,20 @@ class Solution:
             print(max_heap)
 
             count1, letter1 = heapq.heappop(max_heap) # Pop the max item
-            if len(ans) > 1 and ans[-1] == letter1 and ans[-2] == letter1:
-                if not max_heap:
+            if len(ans) > 1 and ans[-1] == letter1 and ans[-2] == letter1: #Check to see if the letter popped is the last two letters in the list (if the list is at least 2 letters)
+                if not max_heap:    # Check if there are other letters and if not, break loop
                     break
-                count2, letter2 = heapq.heappop(max_heap)
-                ans.append(letter2)
-                if count2 + 1 < 0:
+                count2, letter2 = heapq.heappop(max_heap) # Pull next greatest letter from max heap
+                ans.append(letter2) # Add letter to answer
+                if count2 + 1 < 0: #Push letter back into max_heap if it isn't zero.
                     heapq.heappush(max_heap, (count2 + 1, letter2))
-                heapq.heappush(max_heap, (count1, letter1))
+                heapq.heappush(max_heap, (count1, letter1)) #Push original letter back into max_heap to be used again
             else:
-                ans.append(letter1)
-                if count1 + 1 < 0:
+                ans.append(letter1) #add letter to answer
+                if count1 + 1 < 0: #add letter back to max_heap unless it is zero.
                     heapq.heappush(max_heap, (count1 + 1, letter1))
 
-        return ''.join(ans)
+        return ''.join(ans) #return string answer
 
 
 

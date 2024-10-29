@@ -31,12 +31,10 @@ class Solution:
             
             # decision to include nums[i[]
             subset.append(nums[i])
-            print(f"Decision1: {subset}")
             dfs(i + 1)
 
             # decision not to
             subset.pop()
-            print(f"Decision 2: {subset}")
             dfs(i + 1)
 
         dfs(0)

@@ -28,11 +28,12 @@ class Solution:
         #Find the initial satisfied customer list.
         starting_satisfied = sum(customers[i] for i in range(len(customers)) if grumpy[i] == 0)
 
+        #find the additional satisfaction of the first window size of Minutes
         additional_statisfied = 0
         for i in range(minutes):
             if grumpy[i] == 1:
                 additional_statisfied+=customers[i]
-
+        #slide the window one place to the right until end of list.
         max_add_satisfied = additional_statisfied
         for i in range(minutes, len(customers)):
             print(i)

@@ -11,8 +11,8 @@ class Solution:
             for j in range(len(grid[0]) - 2):  # j goes up to len(grid[0]) - 3
                 hourglass = (grid[i][j] + grid[i][j+1] + grid[i][j+2]) + (grid[i+1][j+1]) + (grid[i+2][j] + grid[i+2][j+1] + grid[i+2][j+2])
                 max_sum = max(max_sum, hourglass)
-
         return max_sum
+    
 grid = [
     [6,2,1,3],
     [4,2,1,5],

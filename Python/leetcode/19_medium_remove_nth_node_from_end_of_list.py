@@ -38,12 +38,12 @@ class Solution:
             fast = fast.next
         
         while fast.next:
-            print(current.val)
+
             current = current.next
             fast = fast.next
             
         current.next = current.next.next
-        return current
+        return head
 
 # Example Usage
 values = [1,2,3,4,5]
