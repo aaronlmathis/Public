@@ -38,3 +38,4 @@ Go/src/src.code-workspace
 *.exe
 *.sum
 *.mod
+/Go/src/learn-to-code-go-version-03-main
