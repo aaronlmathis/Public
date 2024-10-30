@@ -23,8 +23,11 @@ from typing import List
 
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-  
+        
+        #Initialize an array to track the subsequence
         sub = [nums[0]]
+
+        # Helper function to to do a binary search and return the position of the smallest sub value that is greater or equal to val
         def binary_search(val):
             left, right = 0, len(sub)-1
             while left <= right:
@@ -36,6 +39,9 @@ class Solution:
             
             return left
         
+        # Iterate through the list, if nums[i] > the last element in sub, append it to sub.
+        # If it is not, do a binary search to find the position of the smallest sub value that is >= nums[i]
+        # Replace sub[pos] with nums[i]
 
         for i in range(1, len(nums)):
             if nums[i] > sub[-1]:
@@ -44,6 +50,8 @@ class Solution:
                 pos = binary_search(nums[i])
                 sub[pos] = nums[i]
 
+        # Return length of sub list.
+        
         return len(sub)
 
 
