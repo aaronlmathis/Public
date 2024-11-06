@@ -58,6 +58,7 @@ class Solution:
                 for digit in str(count):
                     chars[write] = digit
                     write += 1
+        
         return write
 
 
