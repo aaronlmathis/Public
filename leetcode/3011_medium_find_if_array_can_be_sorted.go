@@ -111,11 +111,9 @@ func canSortArray(nums []int) bool {
 		left = right
 		right = left + 1
 	}
-	fmt.Println(segments)
-	fmt.Println(max(segments[0]))
-	fmt.Println(min(segments[1]))
 
 	// Iterate through segments, checking that the max value of the previous section is smaller than than the current segments smallest element
+	// If maxPrev > minCurr, return false
 	for i := 0; i < len(segments)-1; i++ {
 		maxPrev := max(segments[i])
 		minCurr := min(segments[i+1])
@@ -124,6 +122,7 @@ func canSortArray(nums []int) bool {
 			return false
 		}
 	}
+	// Otherwise, return true at end of program
 	return true
 }
 
