@@ -44,7 +44,7 @@ class Solution:
             
             # Increment the frequency of the current prefixXOR in the map
             xorCount[prefixXOR] += 1
-        print(xorCount)
+
         return count
     
 nums = [4,3,1,2,4]
