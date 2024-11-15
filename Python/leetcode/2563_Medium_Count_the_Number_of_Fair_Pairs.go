@@ -34,7 +34,7 @@ func bisectRight(nums []int, target int, start int) int {
 	}) + start
 }
 
-func countFairPairs(nums []int, lower int, upper int) int {
+func countFairPairs(nums []int, lower int, upper int) int64 {
 	sort.Ints(nums) // sort nums in asc
 	count := 0
 	for left := 0; left < len(nums); left++ {

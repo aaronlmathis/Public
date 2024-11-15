@@ -32,6 +32,7 @@ class Solution:
                     l+=1
                 res+=(r-l+1)
             return res
+        
         return helper(goal) - helper(goal - 1)
     
 sol = Solution()
