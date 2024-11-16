@@ -43,7 +43,7 @@ func minimumSubarrayLength(nums []int, k int) int {
 				bitCount[bit] += 1
 			}
 		}
-		for start < end && currOR >= k {
+		for start <= end && currOR >= k {
 			minLength = math.Min(minLength, float64(end-start-1))
 			updatedOR := 0
 			for bit := 0; bit < 32; bit++ {
