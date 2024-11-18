@@ -18,24 +18,29 @@ import heapq
 
 class Solution:
     def nthUglyNumber(self, n: int) -> int:
+        # Initialize DP as list of size n.
         dp = [0] * n
+        # Set dp[0] to 1
         dp[0] = 1
+        # Start three pointers at 0
         i2, i3, i5 = 0, 0, 0
-
+        # Iterate from 1 to n
         for i in range(1, n):
+            # Find the next three numbers
             n2 = dp[i2] * 2
             n3 = dp[i3] * 3
             n5 = dp[i5] * 5
-
+            # Set dp[i] to the smallest of those three numbers
             dp[i] = min(n2, min(n3, n5))
 
+            #Increase the pointer of the number that was the smallest
             if dp[i] == n2:
                 i2+=1
             if dp[i] == n3:
                 i3+=1
             if dp[i] == n5:
                 i5+=1
-        
+        # Return the nth ugly number
         return dp[n-1]
         
 
