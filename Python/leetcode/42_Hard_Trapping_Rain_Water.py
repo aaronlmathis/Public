@@ -13,6 +13,7 @@ Output: 9
 from typing import List
 class Solution:
     def trap(self, height: List[int]) -> int:
+        # Helper function that produces two arrays, maxLeft and maxRight, giving the max left/right value for every number in height
         def findMaximums(nums):
             n = len(nums)
             if n == 0:
@@ -36,12 +37,9 @@ class Solution:
         
         maxLeft, maxRight = findMaximums(height)    # Create two lists with maximum values to the left and right of each value in height.
         result = 0                                  # The answer to to problem
-        leftBoundary, rightBoundary = 0,0           # Declare variables for left and right boundaries.
         n = len(height)                             # Initialize n as length of heights
 
         for i in range(n):                          # Iterate through each height, calculating how much water that position holds.
-            leftBoundary, rightBoundary = i,i       # Declare variables for left and right boundaries.
-            
             # Take the minimum maximum of the heights at the left and right boundaries.
             minMaxBoundary = min(maxLeft[i], maxRight[i])
             
@@ -54,9 +52,6 @@ class Solution:
                 result+=water
         
         return result
-
-
-
 
 sol = Solution()
 height = [4,2,0,3,2,5]
