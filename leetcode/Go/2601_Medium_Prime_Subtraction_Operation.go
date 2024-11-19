@@ -61,7 +61,7 @@ func primeSubOperation(nums []int) bool {
 			}
 		}
 	}
-	fmt.Println(sieve)
+
 	currValue := 1
 	i := 0
 	for i < len(nums) {
