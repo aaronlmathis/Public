@@ -25,10 +25,14 @@ from typing import List
 from collections import defaultdict
 class Solution:
     def maxEqualRowsAfterFlips(self, matrix: List[List[int]]) -> int:
+        # Create default dict to use as hash map
         map = defaultdict(int)
+        # Iterate through rows, if row starts with 0, store binary tuple in map as is
+        # If row starts with 1, use bitwise XOR to flip each bit and store in map
         for row in matrix:
             canonical = tuple(col ^ row[0] for col in row)
             map[canonical] += 1
+        # Return the maximum count found in map
         return max(map.values())
             
 matrix = [[0,0,0],[0,0,1],[1,1,0]]

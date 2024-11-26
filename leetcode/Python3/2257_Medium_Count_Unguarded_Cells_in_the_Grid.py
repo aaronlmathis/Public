@@ -25,17 +25,23 @@ There are a total of 4 unguarded cells, so we return 4.
 from typing import List
 class Solution:
     def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
+        # Populate seen matrix with O's
         seen =[['O' for _ in range(n)] for _ in range(m)]
+        # Initialize count
         count = 0
+        # Add walls to seen matrix, increase count
         for wall in walls:
             seen[wall[0]][wall[1]] = 'WL'
             count+=1
     
-
+        # Add Guards to seen matrix, increase count
         for guard in guards:
             seen[guard[0]][guard[1]] = 'GD'
             count+=1 
 
+        # Iterate through each grid location, checking to see if a guard is present.
+        # If guard is present, iterate north, south, east, and west marking the location XX if not already
+        # and increasing the count -- unless you find another guard or wall
         for y in range(m):
             for x in range(n):
                 if seen[y][x] == 'GD':
@@ -66,7 +72,8 @@ class Solution:
                             seen[down][x] = 'XX'
                             count+=1                        
                         down+=1
-
+        # Return m * n (the total grid location count) minus the count
+        # This will be equal to all the unguarded spots.
         return (m*n) - count
 
 m = 2
