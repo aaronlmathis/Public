@@ -32,8 +32,38 @@ Output: "A"
 class Solution:
     def convert(self, s: str, numRows: int) -> str:
         l = len(s)
-        matrix = [[]] * numRows
-        print(matrix)
+        if numRows == 1 or l == 1:
+            return s
+
+        matrix = [['_'] * (l // 2 +1 ) for _ in range(numRows)]
+
+        y, x = 0, 0
+        down = True
+        for i in range(l):
+           # Place the current character in the matrix
+            matrix[y][x] = s[i]
+
+            # Adjust row (y) based on direction
+            if down:
+                if y < numRows - 1:
+                    y += 1
+                else:
+                    down = False
+                    y -= 1
+                    x += 1  # Move to the next column when switching direction
+            else:
+                if y > 0:
+                    y -= 1
+                    x += 1  # Move to the next column in the upward direction
+                else:
+                    down = True
+                    y += 1
+        answer = ''
+        for row in matrix:
+            for cell in row:
+                if cell != '_':
+                    answer += cell         
+        return answer
 
 sol = Solution()
 s = "PAYPALISHIRING"
