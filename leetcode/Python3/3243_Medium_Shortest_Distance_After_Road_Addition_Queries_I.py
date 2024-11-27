@@ -26,7 +26,7 @@ class Solution:
 
         # Initialize the depth array, where depth[i] represents the shortest distance from node 0 to node i
         depth = [i for i in range(n)]
-        print(depth)
+
         def bfs(node):
             """
             Breadth-First Search to update depths starting from the given node.
