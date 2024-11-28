@@ -24,8 +24,7 @@ class Solution:
             if char in magazine:
                 magazine = magazine.replace(char, '0', 1)
             else:
-                return False
-        
+                return False        
         return True
 
 
