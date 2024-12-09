@@ -40,7 +40,7 @@ func lengthOfLongestSubstring(s string) int {
 
 	// Iterate through s, byte by byte
 	for end := 0; end < n; end++ {
-		// for as long as the next character is not unique, shrink window and remove from seen
+		// if character already exists in seen, set start to the byte after where it was seen before
 		if lastIndex, exists := seen[s[end]]; exists && lastIndex >= start {
 			start = lastIndex + 1
 		}
