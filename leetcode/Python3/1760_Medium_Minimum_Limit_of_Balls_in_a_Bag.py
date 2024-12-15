@@ -31,56 +31,43 @@ from typing import List
 from math import ceil
 class Solution:
     def minimumSize(self, nums: List[int], maxOperations: int) -> int:
-        """
-        def maxminbound(min_ans, max_ans):
-            ''' binary search - bounding '''
-            beg, end = min_ans, max_ans
-
-            def check(x):
-                ''' binary search - maximizing/minimizing '''
-                ops = 0
-                for num in nums:
-                    ops += (num - 1) // x
-                if ops <= maxOperations: # CHANGE maximize/minimize condition
-                    return True
-                else:
-                    return False
-
-            ans = min_ans
-            while beg <= end:
-                mid = beg + (end - beg) // 2
-                if check(mid):
-                    ans = mid
-                    # increase beg to maximize
-                    # decrease end to minimize
-                    end = mid - 1
-                else:
-                    # do the opposite of above
-                    beg = mid + 1
-            return ans
-
-        return maxminbound(1, max(nums)) # CHANGE min/max possible answer
+        """ 
+        def minMax(low:int, high:int) -> int:
+            - Returns the minimum max balls in each bag given a range of possible ball amounts, from 1 to the maximum number in nums
         """
         def minMax(low: int, high: int) -> int:
+            """
             def canSplit(newMax: int) -> bool:
+                - returns True or False whether you can split the bags of balls into having a maximum ball count of newMax in each bag in maxOperations or less.
+            """
+            def canSplit(newMax: int) -> bool:
+                # Number of operations starts at 0
                 operations = 0
+                # Iterate through each bag of balls to calculate how many operations it would take to split the bag into newMax balls each
                 for num in nums:
+                    # This is the formula to determine how many operations it would take. (number of balls in bag - 1) integer divided by proposed max in each bag. For example, if a bag has 8 balls and you wanted to split it into bags of 2 balls each, (8-1) // 2 = 3. It would require 3 operations.
                     operations += (num - 1) // newMax
+                # If operations is <= maxOperations, return True because you canSplit this bag.
                 if operations <= maxOperations:
                         return True
                 else:
                     return False
-                    
+            # Start answer at low (1)      
             ans = low
+            # do a binary search where low = 1 and high = max(nums). Keep going as long as low does not pass high.
             while low <= high:
+                # Find the middle between low and high and check if canSplit
                 mid = (low+high) // 2
                 if canSplit(mid):
+                    # You can split, so set ans to mid, and change high to mid - 1 to see if any lower numbers work
                     ans = mid
                     high = mid - 1
                 else:
+                    # You cant, so increase low to mid+1 to see if any higher numbers work
                     low = mid+1
+            # Once loop is done, you should have the minimum number of balls per bag. Return it.
             return ans
-        
+        # Return minMax function
         return minMax(1, max(nums))
 
 sol = Solution()

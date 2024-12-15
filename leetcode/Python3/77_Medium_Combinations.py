@@ -16,7 +16,9 @@ Explanation: There is 1 choose 1 = 1 total combination.
 from typing import List
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
+        answer = []
 
+        def backtrack()
 n = 4
 k = 2        
 sol = Solution()
