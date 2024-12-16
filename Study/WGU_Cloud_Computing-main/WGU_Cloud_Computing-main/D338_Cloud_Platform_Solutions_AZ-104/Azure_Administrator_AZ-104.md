@@ -1,0 +1,1370 @@
+# D338 Cloud Platform Solutions Azure Administrator AZ-104
+
+## Tips
+
+- **Azure for Students Starter**: access to free tier items only. cannot access non-free services.
+- **Azure for Students**: $100 credit + free tier services. access to non-free services.
+  - [Student portal pricing](https://www.microsoftazuresponsorships.com/Balance) // must be signed in.
+- **Complete_D338_Notes_UPDATE.docx**: put critical info in **red**. I also separated each line with blue and black lettering to make it **easier to read** and added links to outside resources that helped me.
+- **First Impressions**: the OA is focused on network infrastructure terminology and function. The AZ-104 certification test leans more toward building infrastructure with CLI & powershell,. While both are essential, it makes learning an already difficult test, more difficult.
+- **Tutorials, Advice**
+  - <https://www.reddit.com/r/WGU/comments/18i1uv8/wgu_d338_its_super_easy/>
+  - <https://www.reddit.com/r/AzureCertification/comments/1colul0/passed_az104_my_experience_with_this_exam/>
+  - <https://www.linkedin.com/pulse/passing-az-104-exam-everything-you-need-know-neeraj-kumar/>
+  - <https://www.reddit.com/r/AzureCertification/comments/1crlfs5/passed_az104/>
+    - Storage, Entra, and networking areas had tricky questions.
+  - <https://www.reddit.com/r/AzureCertification/comments/1ctkwt0/passed_az_104/>
+  - Search for each topic on Microsoft documentation and Microsoft learn to help study each area of the AZ-104 exam. Use search like this ms **docs + "Study topic"**.
+  - <https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/>
+  - <https://www.reddit.com/r/AZURE/comments/164oe1q/passed_az104_yesterday_the_open_book_feature_is/>
+  - <https://portal.tutorialsdojo.com/courses/az-104-microsoft-azure-administrator-practice-exams/>
+  - <https://www.reddit.com/r/AzureCertification/comments/1dnd53n/passed_az104_by_the_skin_of_my_teeth/>
+  - <https://www.reddit.com/r/AzureCertification/comments/1dn8l1s/az104_microsoft_learn/>
+  - <https://www.reddit.com/r/AzureCertification/comments/1dp79km/az104_passed/>
+- **Videos**
+  - <https://www.youtube.com/playlist?list=PLlVtbbG169nGlGPWs9xaLKT1KfwqREHbs>
+  - <https://wgu.udemy.com/course/az-104-microsoft-azure-administrator-lab-exam-prep/>
+  - <https://www.linkedin.com/learning/paths/prepare-for-the-microsoft-azure-administrator-az-104-certification-exam>
+- **Flashcards**
+  - <https://quizlet.com/791527803/az-104-flash-cards/?funnelUUID=f595251a-598c-4eff-8213-e64cb8286eb8>
+  - <https://www.brainscape.com/subjects/az-104>
+- **Notes**
+  - <https://github.com/mischavandenburg/az-104-azure-administrator> // includes Anki cards.
+  - <https://github.com/oliverbebber/AZ-104-Study-Notes/tree/main>
+  - <https://gist.github.com/robsteriam/5cab2b6d4f759c12cb5a85d7d807050d>
+- **Book**
+  - <https://lrps.wgu.edu/provision/277282392> // must be signed in.
+- **Course Chatter**
+  - Make sure to know the difference between RBAC and Azure AD roles, and how they are used.
+  - Know all the different "types" of things like AD license types, Load Balancer types, storage account types, etc... and what can/cannot be done with them.
+  - Know about how policies and roles work together.
+  - Know about the different types of backup, and how it's used. Know about containers and networking, and the different ways monitoring is done and used.
+  - **Joshua S**
+    - AZ-104. Prep for the actual certification and gauges knowledge on how-to and CLI commands, Powershell scripting etc.
+    - The OA however will not, so spending time in a lab going through the how-to's and pouring over script and .csv examples in the book won't get me past the WGU exam but will come handy for the Microsoft Certification. Without a doubt, the Pluralsight videos and practice exams did very little to prepare for the OA.
+    - have come to the conclusion that the OA is taken straight from the book and video links nor the AZ-104 practice exams in Pluralsight.
+    - flashcards for memorization will help with Ports, Subscription levels, and specific concepts like Cloud vs On-Prem.
+- **Exam Advice**
+  - https://www.reddit.com/r/AzureCertification/comments/1dqlx0d/az104_exam_holly_mother_of_god_what_a_roller/
+    - I got two or tree questions on ARM templates, four or five questions with PowerShell command's, tree or four questions about user roles, a had a good bunch of questions about storage and app's.
+- **Microsoft**
+  - 700 of 1000 to pass.
+  - Hands-on experience is crucial in preparing for the AZ-104 exam.
+  - [practice questions](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104/practice/assessment?assessment-type=practice&assessmentId=21&source=docs)
+  - [Azure All Services](https://azure.microsoft.com/en-us/products/)
+  - [AZ-104 Training](https://learn.microsoft.com/en-us/training/courses/az-104t00#course-syllabus)
+  - [AZ-104 Overview](https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/?practice-assessment-type=certification)
+  - [AZ-104 Study Guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104)
+  - [AZ-104 Labs](https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/)
+  - [AZ-104 Exam Prep Videos](https://learn.microsoft.com/en-us/shows/exam-readiness-zone/preparing-for-az-104-manage-azure-identities-and-governance-1-of-5)
+- **Exam Purpose**:
+  - <https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104#skills-measured-as-of-october-26-2023>
+  - **Weights**
+    - Manage Azure identities and governance (15-20%)
+    - Implement and manage storage (15-20%)
+    - Deploy and manage Azure compute resources (20-25%)
+    - Configure and manage virtual networking (25-30%)
+    - Monitor and back up Azure resources (10-15%)
+    - 120-140 minutes. 40-60 questions. passing is 700 out of 1000 points (70%). $165.
+
+## Azure Cloud Shell
+
+- **Cloud Shell**
+  - browser based(access anywhere) cli for bash, powershell.
+  - cloud storage provides
+  - upload scripts and store on cloud for access anywhere.
+  - **Rules**
+    - session last **20 minutes**. Not for long running scripts, session will **end without warning**.
+    - no 'sudo' or admin permission changes.
+    - no non-supported tool installs.
+    - no multiple region storage.
+    - no multiple sessions.
+
+## Azure Blueprints and ARM(Azure Resource Manager)
+
+- **Blueprints**
+  - combine ARM templates, role assignments, policy assignments, and Azure artifacts into a single reusable definition.
+  - Define and enforce a standard set of resources, configurations, and policies.
+  - Enable repeatable deployments of complex environments.
+  - Simplify governance and compliance management.
+  - best when you need to deploy and manage complex environments with multiple resources and strict governance requirements.
+- **Azure Resource Manager (ARM)**
+  - declarative. deploy, manage, monitor, security, auditing, tagging, authentication (vm, database, third-party...) as a group.
+  - best when deploying individual resources or small groups of resources in a consistent and repeatable way.
+  - **Benefits**
+    - reusable templates allow easy deployment.
+    - handle resources as a group instead of individually.
+    - tag resources.
+  - ![resource management](img/resource_management.PNG)
+  - **declarative syntax**
+    - declarative programming. **what you want, not how to do it**.
+    - Syntax that lets you state "Here is what I intend to create" without having to write the sequence of programming commands to create it. The Resource Manager template is an example of declarative syntax. In the file, you define the properties for the infrastructure to deploy to Azure.
+  - **Bicep**
+    - compiles to JSON. allows declarative infrastructure provisioning same as ARM, just human friendly readable.
+  - **Deployment**
+    - **subscription level deployments**: you must provide a location for the deployment. The **location of the deployment is separate from the location of the resources you deploy**. The deployment location specifies where to store deployment data.
+    - **Management group and tenant deployments**: also require a location.
+    - **resource group deployments**: the location of the resource group is used to store the **deployment data**, not the actual resource location.
+  - **Mode**
+    - **Complete**: **deletes** resources that **exist in the resource group but aren't specified in the template**.
+    - **Increment**: leaves **unchanged** resources that **exist in the resource group but aren't specified in the template**.
+
+```powershell
+# PowerShell
+# Deploy ARM template
+New-AzDeployment -Location eastus -TemplateFile "fileName.json" -Mode Complete
+```
+
+## Management Group, Resource Group, and Resource
+
+- **Management Group**
+  - organize manage and enforce organization compliance with management group policy.
+  - **Root Management Group**: once tenant is created, a root management group is created.
+    - all management groups are under this entity.
+- **Resource Group**
+  - container that holds related resources(logical collection).
+  - you can **delete** a resource group with the **Azure Portal, Azure PowerShell, the Azure CLI**, or the **REST API**.
+  - **Rules**
+    - **each resource can only exist in one resource group**.
+    - resource groups **cannot** be **nested**.
+    - resource group **cannot** be **renamed**.
+    - can have many different type(services) and **regions**.
+    - you can move resources to other resource groups. when **moving resources** from one group to another, you **can't add, update, or delete resources** in the resource groups until the move completes(the underlying **service** will continue to function).
+      - the resource group you move resource into must have enough resource quota. e.g. move VM and vCPU quota is at max limit.
+    - all resources share the same lifecycle. e.g. you deploy, update, delete them together.
+    - a resource **can interact** with resources in other resource groups.
+    - **RBAC(role based access control)** can be **assigned** to resource groups.
+    - because a resource group contains metadata about resources, for **compliance reasons(government, sovereign states)**, you must provide a **location** of resource group during creation.
+  - ![az scope](img/az-scopes-billing.png)
+
+```powershell
+# remove resource group.
+Remove-AzResourceGroup -Name "YourResourceGroupName"
+```
+
+- **Resource**
+  - a resource in Azure is a **single service instance**(VM, VNet, Storage, any Azure Service...).
+  - can only **belong** to **one resource group**.
+  - does **not** have to belong to a resource group(can belong to tenant, management group, subscription...).
+- **Resource Limits**
+  - track usage against limits and plan for future needs.
+  - limits shown are for you **subscription**.
+  - all resources have 'maximum' limits threshold that you can't increase.
+  - ![resource limits](img/resource_limits.PNG)
+- **Resource Group and Resource Locks**
+  - prevent accidental deletion of resources, even if you have delete permissions.
+  - only the **Owner** and **User Access Administrator** roles can create or delete management locks.
+  - child resources inherit **Locks**.
+  - **Read-Only Lock**: prevent change.
+  - **Delete Lock**: prevent deletion.
+  - This prevents 'control plane' deletion. you can still use the 'data plane'(modify, delete data inside resource).
+- **Resource Tagging**
+  - tags(**done at the resource level**) allow sorting, searching, managing and analysis.
+  - tags do **not** have inheritance(**children to do not inherit from a tagged resource group**).
+  - user must have **_write_** access(**Contributor** role or higher).
+  - name:value
+  - max 50 labels per resource/resource group.
+- **template**
+  - JSON(javascript object notation) file that defines one or more resources, to **deploy to a resource group**.
+- **Resource Provider**
+  - service that supplies resources you can deploy and manage through the 'Resource Manager'.
+  - e.g. Microsoft.Compute, Microsoft.Storage, Microsoft.KeyVault, Microsoft.Web...
+  - resource type is in the format: `{resource-provider}/{resource-type}`. For example, the key vault type is `Microsoft.KeyVault/vaults`.
+
+## Azure Management Groups and Policies
+
+- **Management Groups**
+  - used to manage access, policies, and compliance across multiple Azure subscriptions. They help in organizing subscriptions into a hierarchy for governance. You **do not deploy individual resources in a management group**.
+  - level of scope and control(manage access, policy and compliance) across **subscriptions**.
+  - use management groups to target policies and spending budgets across **subscriptions**.
+  - all subscriptions within management group inherit policy. e.g. specific region to create VMs.
+  - enforce compliance rules with management groups.
+  - ![management group](img/management_group.PNG)
+  - ![az scope](img/az-scopes-billing.png)
+- **Policy and Policy Definition**
+  - **Policy**
+    - express how the environment is governed for all users at a specified scope regardless of any RBAC assignments. can **require** or **log** compliance.
+    - **scope**: root management group -> management groups -> subscription -> resource group -> resource.
+    - Policy is **default allow**, and you must **explicit deny**.
+    - create, assign, and manage policies to control or audit your resources.
+    - audit and enforce rules and ensure compliance with corporate standards and service level agreements.
+    - **enforcement and compliance, scaling, and remediation**.
+  - **Policy Definition**
+    - **JSON format**. Express condition to evaluate and actions to perform when condition is met.
+    - enforce different rules and effects over your resources, so those resources stay compliant with your IT governance standards.
+    - e.g. cannot deploy VM if it has an exposed public IP address.
+  - individual resources, resource groups, subscriptions can be exempted from policy.
+- **Initiative Definition**
+  - A **group of related policies** joined logically to accomplish a common goal is called an **Azure initiative**.
+  - help you track one or more policy definition compliance state.
+  - scope can be limited to certain groups.
+  - e.g. similar to lego blocks, logically combine multiple policies and apply them as one.
+- **Policy Compliance**
+  - see what percentage of your infrastructure is compliant with policy.
+  - determine the compliance state of your resources and evaluate whether they're compliant.
+
+## Azure Subscriptions and Cost Management
+
+- **Subscriptions**
+  - manage cost for organizations. help you organize access to Azure cloud service resources, and help you control how resource usage is reported, billed, and paid.
+  - Azure Subscription is a logical unit of Azure services that's linked to an Azure account(Microsoft Entra **tenant**).
+  - **Classic Subscription Roles**: Account Administrator, Service Administrator, or Co-Administrator. It is recommended to use Azure **RBAC** roles for more granular control.
+    - there can be only **one** account or service administrator per subscription.
+  - **Rules**
+    - all Azure cloud services will belong to a subscription. billing is done per subscription.
+    - Azure account can have multiple subscriptions.
+    - a subscription can be linked to multiple Azure accounts.
+  - ![subscription](img/subscription.PNG)
+  - ![az scope](img/az-scopes-billing.png)
+- **Subscription Types**
+  - **Free Trial**: 30 day free.
+  - **Pay-As-You-Go**: charges you monthly for the services you used in that billing period.
+  - **Enterprise Agreement**: buy cloud services and software licenses under one agreement.
+  - **Student**: monetary credit that can be used within the first 12 months.
+- **Subscription Cost Management**
+  - **Resource Quotas**: limits on the amount of resources available. e.g. number of cores available for virtual machines is limited to 20 per region.
+- **Cost Management**
+  - you pay only for what you use. Shows the usage-based costs consumed by Azure services and third-party Marketplace offerings.
+  - Predictive analytics are available.
+  - Azure management groups, budgets, and recommendations to show how your expenses are organized and how to reduce cost.
+  - Cost data can be exported.
+- **Cost Budgets, Recommendations, Analysis**
+  - **Budget**: set limits to prevent overspending. must have **_reader_** access to view.
+  - **Recommendations**: learn how to optimize and improve efficiency of idle or underutilized resources.
+  - **Analysis**: explore where the money is going and spending trends.
+  - **export**: data can be set to automatically export csv daily.
+- **Cost Savings**
+  - **Reservations**: pay ahead. 1-3 years. VM, Database,
+  - **Azure Hybrid**: use your **_Software Assurance_** on-prem licenses(Windows Server, SQL Server...).
+  - **Azure Credits**: Visual Studio Subscribers get monthly credits for development.
+  - **Azure Regions**: compare region pricing.
+  - **Budgets**: manage cost, prevent overspending.
+  - **Pricing Calculator**: estimate usage: Compute, networking, storage, web, database.
+
+## Entra ID: User Identity and Group Accounts
+
+- **Entra ID vs Active Directory**
+  - **Entra ID**
+    - purpose: cloud-based identity and access management service(PaaS) that provides **authentication**(prove who you are) that speaks cloud(SAML, WS-Federation, OpenID Connect for authentication, and uses OAuth for authorization over HTTPS).
+    - Allows employees can use to access external resources. e.g. Microsoft 365, Azure Portal...
+    - focused on providing **identity management** services to **web-based apps**, unlike **AD DS**, which is more focused on **on-premises apps**.
+    - Entra ID users have access to a set of features that **aren’t natively available in AD DS**, such as support for **multi-factor authentication, identity protection, and self-service password reset**.
+      - primarily an **identity solution** for internet based(**https**) communications.
+      - multi-tenant directory service.
+      - provides **directory services**: stores and handles the authentication and authorization of the **users, devices, and applications**.
+      - Entra is **managed** by **REST API** over https.
+      - Entra ID includes **federation services**(sign-in once, authenticate to multiple services).
+  - **Entra Schema**
+    - no definition of 'computer' class(AD has 'computer' class definition). Uses 'device' class instead.
+      - lack of support of 'computer' domain, you can't manage GPOs, instead Entra provides **directory services**: stores and handles the authentication and authorization of the **users, devices, and applications**.
+    - **no OU(AD organizational unit)** class. Policy scope and delegation organization is done by '**group membership**'.
+  - **Active Directory Domain Services** (AD DS or traditionally called just "Active Directory").
+    - directory service that provides the methods for storing directory data, such as **user accounts and passwords**, and makes this data available to network users, administrators, and other devices and services. It runs as a service on **Windows Server**, referred to as a **domain controller**.
+    - true X.500 based structure. Uses a DNS for locating resources on network.
+    - AD authentication(kerberos -for identity) and authorization(LDAP -query and manage AD).
+    - OUs(organizational units) and GPOs(group policy objects) for management.
+    - AD has hierarchal structure, Entra does not.
+    - AD DS can be deployed on a Windows Server VM, but does not use Microsoft Entra ID.
+- **Entra ID Licenses P2 over P1**
+  - P2 has:
+    - Entra ID protection: enhanced security/monitoring user accounts.
+    - Entra Privileged Identity Management: additional security levels for admins(permanent and temporary).
+- **Entra Connect**
+  - If you don't have on-prem AD, Entra Connect works by providing you **support to your on-prem infrastructure** through a **site-to-site VPN**.
+  - freely migrate applications that use LDAP, NTLM, or the Kerberos protocols from your on-premises infrastructure to the cloud.
+- **Entra Connect: Cloud Sync**
+  - **source of truth** is **Entra ID in cloud**. agents run on-prem.
+- **Entra Connect: Sync**
+  - **source of truth** is **on-prem AD**. cloud mirrors on-prem.
+  - provides authentication when you have on-prem AD and apps on cloud VMs.
+  - **money savings**
+    - site-to-site VPN. on-prem -> cloud. = expensive.
+    - replica AD on VM in the cloud. = expensive.
+- **Entra tenant**
+  - [microsoft definition](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#tenants)
+  - [tenant](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-create-new-tenant)
+  - A tenant represents an organization. It's a **dedicated instance** of Microsoft Entra ID that an organization or app developer receives at the beginning of a relationship with Microsoft(yourname.onmicrosoft.com).
+  - e.g. your piece in the cloud with your name like **yourname.onmicrosoft.com** that you lease from microsoft.
+    - An organization can have multiple Microsoft Entra tenants. This allows separation.
+    - An organization can have multiple Azure subscriptions(each subscription must be associated with only one, Microsoft Entra tenant).
+    - A subscription can have multiple licenses.
+    - Licenses can be assigned to individual user accounts.
+    - RBAC(grant permissions to resources in the Azure subscription) and User accounts are stored in your Microsoft Entra tenant(yourname.onmicrosoft.com).
+  - ![az scope](img/az-scopes-billing.png)
+  - **Entra Domain Names**: microsoft gives you a sub-domain: `yourName.onmicrosoft.com`
+    - add your own **vanity domain**. e.g. `example.com`
+- **Entra User/Guest Accounts**
+  - **user account**
+    - anyone who wants to access an Azure resource, must have an Azure user account.
+  - **Entra ID User Accounts**
+    - **Cloud**: **cloud identity** accounts.
+      - Cloud identities have profile information such as job title and office location.
+    - **Hybrid**: when user has on-prem AD account (**_directory-synchronized identity_**) synchronized w/ Entra ID via Entra Connect.
+    - **Guest**: external user. outside of Azure. e.g. external identity(vendor, contractor, google, another Entra ID tenant...) who needs access to your Azure resources.
+  - **Entra User**
+    - when a user is added, they are granted default permissions.
+      - Varies by: type of user(admin, member, guest), role assignment, ownership of individual objects.
+  - **who can create/delete users**
+    - only global admins can create/delete users. If user has license, they can be deleted and license becomes unassigned.
+    - **Entra ID cloud identity user accounts can be added through**:
+      - Azure portal, Microsoft 365 Admin Center, Microsoft Intune admin console, and the Azure CLI.
+  - **Guest**
+    - The proper way to create guest users is to send them invitations. This allows them to accept the invitation and set up their own authentication credentials.
+
+```powershell
+# Powershell
+# create user -member of organization
+New-MgUser
+# create guest -guest of organization -See Entra B2B.
+New-MgInvitation
+# CSV file for guest creation -Microsoft Graph API for bulk invitation.
+```
+
+- **Entra Groups**
+  - roles are inherited to all members of group. same access and permissions to resources, such as potentially restricted apps and services.
+  - **Nesting Groups**: **groups assigned licenses cannot be deleted**.
+    - **security group**: can add an existing **security group**.
+    - **synced on-prem AD**: cannot be nested.
+    - **Microsoft 365**: cannot be nested.
+  - **Groups Administrator** or **User Administrator** role to **edit group membership**.
+  - **Direct assignment**: you manually give them role assignment.
+  - **Group assignment**: you assign group role.
+  - **Rule-based assignment(Dynamic Assignment)**: rules based on user or device.
+  - **Security/Microsoft 365 group accounts**
+    - Entra Groups allow you to manage multiple users. the two types of group accounts:
+      - **Security groups**: manage users and computer/app access through security policy.
+        - set permissions for all group members at same time.
+        - managed only by **Microsoft Entra Administrator**.
+      - **Microsoft 365 groups**: group access to apps. e.g. mailbox, calendar, files, sharepoint...
+        - allow access to normal users and guest accounts.
+- **Entra SSPW (self service password reset)**
+  - user can reset their password.
+  - user is considered '**registered**' when they setup the required amount of password resets.
+  - a strong two-method authentication policy is always applied to accounts with an administrator role.
+    - security-question method is not available for administrator roles.
+  - **Best Practices**
+    - Enable two or more of the authentication reset request methods.
+    - Use the mobile app notification or code as the primary method, but also enable the email or office phone methods to support users without mobile devices.
+    - The mobile phone method isn't a recommended method, because it's possible to send fraudulent SMS messages.
+    - The security-question option is the least recommended method, because the answers to the security questions might be known to other people. Only use the security-question method in combination with at least one other method.
+- **Entra Roles**
+  - applies policy to identities(users, groups, domains).
+  - **Entra Administrator Role**
+    - **Global Administrator**: all permissions.
+    - **Administrator**
+      - create/delete/assign users.
+    - you can restore deleted users within 30 days of deletion.
+  - **Entra Member Role**
+    - manage their profile. considered internal to organization.
+    - by default can invite guest.
+  - **Entra Guest Role**
+    - invite someone to collaborate with organization, most restricted permissions.
+- **administrative units**
+  - organizing and managing user or device roles. create AU, add users, devices..., assign roles.
+  - **restricts administrative scope**. admins can have greater privileges than others depending on the scope of their responsibilities.
+  - ![administrative units](img/administrative_units.PNG)
+- **Entra B2B**
+  - external team collaboration. add external collaborators as **guest users**.
+  - By default, **users**(members) and **administrators** in Microsoft Entra ID can **invite guest users**.
+  - connect multiple **internal tenants** for collaboration.
+    - e.g. tenant A needs access to resource in tenant B.
+  - **Why B2B**
+    - instead of having to manage each external collaborator, you can set roles and they have to manage themselves.
+    - you don't take the responsibility of managing, authenticating the credentials and identities of external users.
+    - **federation**: Entra B2B is easier than using on-prem AD FS(federation service). To use AD FS you have to add an internet facing proxy for them to log into.
+      - Good for keeping all auth local, but if your network goes down, no one can connect.
+    - ![federation](img/federation.PNG)
+- **Entra Devices**
+  - **registered**: when device(phone, computer...) is registered, it becomes a **known entity** allowing Entra tenant ability to manage device. e.g. validate that phone has not been 'jail-broken'.
+  - **join**: cooperate device, have complete control. show up as **objects** in Entra tenant.
+
+## Azure Entra RBAC (Role Based Access Control)
+
+- **RBAC**
+  - Azure RBAC and Microsoft Entra roles are different.
+    - **RBAC**: applies policy to infrastructure(VM, DataBase, Storage...).
+    - **Entra Role**: applies policy to identities(users, groups, domains).
+  - manage who can access their resources, and what actions are allowed.
+  - **default deny, explicit allow**.
+  - control access to data and resources by specifying roles and access privileges for employees and business partners.
+  - create role definitions and role assignments.
+  - **scope**: root management group -> management group -> subscription -> resource group -> resource.
+  - permissions are inherited.
+- **Entra and RBAC solve what Identity and Access concern of the Cloud**
+  - when employees leave, lose access to resources in cloud.
+  - being able to centrally control network communication, while allowing employee autonomy(create/manage VMs).
+  - Entra and RBAC work together to address these concerns.
+- **Classic Subscription Administrator Role vs RBAC Role vs Entra Role**
+  - **Classic Subscription Administrator**: before RBAC, Azure first role policy.
+    - **Account Administrator**, **Service Administrator**, and **Co-Administrator**. Access was controlled by assigning admin roles to subscriptions.
+  - **Azure RBAC**: added fine grain control and custom roles on resources(VM, DB, Storage...).
+  - **Entra Administrator Role**: adds ability to manage users, groups, domains in Microsoft Entra resources(apps). Scope is defined at **_tenant_** level.
+    - controls access at a higher level than RBAC.
+  - ![rbac entra roles](img/rbac_entra_roles.PNG)
+  - ![az scope](img/az-scopes-billing.png)
+- **Role Assignment**
+  - **assignment** attaches **role definition** to a **security principal** at a particular **scope**.
+  - purpose of a role assignment is to control access.
+  - Role Assignment parts:
+    - **Security Principal**: **who**. something/someone(VM service, user) requesting access to resource.
+    - **Role Definition**: **what**. JSON list of **effective permissions**(built in: owner, contributor, reader, user access administrator).
+    - **Scope**: **where**. how many resources security principal is granted access(management group -> subscription -> resource group -> resource). **Permissions in sub-levels are inherited**.
+    - ![RBAC scope](img/rbac_scope.PNG)
+    - ![Role definition](img/role_definition2.PNG)
+- **Security Principal**
+  - object that represents something(**Requestor**) requesting access to resource.
+  - Requestors can be internal or external users, groups of users, applications and services(**_service principal_**), resources, and so on.
+- **Role Definition**
+  - JSON list of allowed permissions. least privilege.
+  - **Custom Roles**
+    - creating a custom role definition and then assigning it using a role assignment.
+    - collection of permissions that you add from a preset list(same list built-in roles use).
+  - **Built-In Roles**
+    - cannot be modified or
+    - **owner** built-in role has the **highest level of access privilege** in Azure.
+    - **user access administrator**: manage(create/delete) user access to resource. can assign themselves or others owner.
+    - **contributor**: manage(create/modify/delete) resource. Cannot grant/remove access to others.
+    - **reader**: view resource. cannot create/modify/delete or grant/remove access.
+  - The system **subtracts NotActions** permissions from **Actions** permissions to determine the **_effective permissions_** for a role.
+  - **JSON**
+    - **Actions**: permissions identify what actions are allowed.
+    - **NotActions**: permissions specify what actions **aren't** allowed.
+    - **DataActions**: permissions indicate how data can be changed or used.
+    - **AssignableScopes**: permissions list the scopes where a role definition can be assigned
+    - ![role definition](img/role_definition.PNG)
+    - ![role definition2](img/role_definition2.PNG)
+    - ![az scope](img/az-scopes-billing.png)
+- **scope**
+  - how many resources(assignable scope) security principal is granted access.
+  - **_AssignableScopes_**: permissions for a role can be management groups, subscriptions, resource groups, or resources.
+
+## Azure Region and Storage Redundancy
+
+- **Describe Azure Geography, regions, region pairs, and sovereign regions, availability zones, availability sets, fault domains, update domains**
+  - **Geography**: groups of regions in each continent.
+    - Americas, Europe, Asia Pacific, Middle East and Africa.
+  - **Regions**: one or more datacenters connected w/ low-latency communications. For redundancy.
+    - preserve data residency(keep data inside the region) for compliance and resiliency depending on customer needs.
+  - **Region Pairs**: two regions in same geography **300+ miles apart** linked for disaster recovery.
+  - **Sovereign Regions**: separation for compliance or legal purpose. physical and logical isolation.
+    - e.g. (US government and US government contractors).
+  - **Availability Zones**
+    - group of datacenters within a region networked w/ low-latency network, each with redundant power, network, cooling.
+    - redundancy with **datacenter failure**.
+  - **Azure Datacenters**
+    - physical buildings w/ servers. redundant network, power, cooling.
+  - **Availability Set**
+    - within same datacenter, group of identical VMs spread across **fault domains**(share: compute racks, storage units, network switches, power) and **update domains**(reboot same time).
+    - protection from **hardware failure** within datacenter.
+    - VMs in **different fault domains** that perform identical functionalities.
+    - VMs should have the same software installed.
+  - **Fault Domain**
+    - VMs that share the same hardware, network, and power in a datacenter. single point of failure.
+    - across fault domains are **group of servers** that have separate hardware, network, power.
+  - **Update Domain**
+    - VMs that will receive Azure hardware updates(and will be rebooted) at same time.
+  - ![high availability](img/04-azure-global-infra.jpg)
+  - ![availability set](img/AvailabilitySet.webp)
+  - ![availability zones](img/Azure-Availability-zone-infographic.png)
+- **Storage Redundancy**
+  - **LRS**: local redundant storage. **synchronous**. creates **three** copies of data in **availability set**(within **same datacenter** across fault and update domains). protection from **hardware failure**. **cheapest option**.
+  - **ZRS**: zone redundant storage. **synchronous**. creates **three** copies data across **availability zones**(linked datacenters) within a region. protection from **datacenter failure**.
+  - **GRS**: geo-redundant storage. **primary LRS**, secondary region **asynchronous** LRS hundreds of miles away. **protection from disaster**.
+  - **RA-GRS**: Read-access geo-redundant storage. because secondary storage data cannot be read until primary fails, this method allows you to **read from secondary, with primary still working**. **synchronous LRS** in primary region and **synchronous LRS** in secondary region.
+  - **GZRS**: geo-zone-redundant storage. **primary ZRS**, secondary **asynchronously** LRS. protection against regional disasters.
+  - **RA-GZRS**: Read-access geo-zone-redundant storage. because secondary storage data cannot be read until primary fails, this method allows you to **read from secondary, with primary still working**. **synchronous ZRS** in primary region and **synchronous ZRS** in secondary region.
+  - [Microsoft Learn: Storage Options](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
+  - ![storage reliability](img/storage_reliability.PNG)
+  - ![high availability](img/04-azure-global-infra.jpg)
+  - ![availability zones](img/Azure-Availability-zone-infographic.png)
+
+## VMs
+
+- **VMs**
+  - IaaS. instant compute. scalable.
+  - compute is per hour charge(per minute).
+  - **Setup**
+    - choose network(topology must be designed first) and create name(windows 15 char, linux 64 char) for VM.
+    - select compute cpu size, ram and size hdd/ssd. // **data disk can be added after creation**.
+    - select OS.
+    - region // changes pricing.
+    - availability set // **cannot be changed after creation**.
+  - ![vm compute](img/vm_compute.PNG)
+  - ![vm setup](img/vm_setup.PNG)
+- **VM NIC**
+  - every VM has one or more vNIC(virtual network interface card).
+  - JSON: "VMNicName": "MyVnic"
+  - **Multiple NICs**: first is primary. all others are secondary. default outbound traffic will be on primary.
+  - **Options**: subnet and public IP address, network security group, ports, accelerated networking.
+  - **Accelerated Networking**: single root I/O virtualization (SR-IOV). bypass virtual switch. Greater I/O.
+  - **Connecting**
+    - **Windows**: RDP(TCP port 3389) full access. Public IP w/ `mstsc.exe` software.
+    - **Linux**: ssh. private key or password.
+    - connect to Azure VMs using a public IP address or a Private IP address with RDP, SSH, or even PowerShell. A VPN must be setup to connect using a private IP like a site-to-site, point-to-site, or ExpressRoute.
+  - **Source Network Address Translation (SNAT)**: map the outbound traffic from the private IP address to the public(internet facing) IP address.
+- **VM Storage -Azure Disk**
+  - managed by Azure. You choose disk size.
+  - you can import your custom image into **Azure Disk**.
+  - storage is scalable. amount of disk you can attach is **determined by VM size**.
+  - compute and storage are charged separately.
+  - **unmanaged data disk**: manual scale to disk needs.
+  - **managed data disk**: Azure scales disk to VM needs.
+  - all VMs have **two disk**: **OS disk**(pre-installed operating system), **temporary disk** and **optional data disk**.
+    - **Data Disk**: Azure managed VHD attached to VM for storage of application data(database...).
+    - **Server Side Encryption (SSE)**: enabled by default for all managed disks, snapshots, and images.
+    - **temporary disk**: **not managed**, **not persistent** and **not encrypted** unless host is encrypted.
+  - **VHD**: disk mapped to VM. page blobs.
+    - **Storage Blob**: select disk image.
+    - **None**: new empty VHD is created.
+    - **Permanent Storage**: **data disk**. can be SSD or HDD. page blobs.
+    - **Premium Storage**: Premium SSD. optimized for I/O-intensive workloads(80,000 IOPS, mission critical). throughput 2,000 MB/s.
+  - **Backup**
+    - **Snapshot**: read-only full copy of **single** disk.
+    - **Custom Image**: copy of all disk(OS, data disk, temporary) attached to VM.
+- **VM Bastion**
+  - PaaS. secure access to RDP(windows)/SSH(linux) over HTTPS/SSL. VM doesn't need public IP.
+- **VM Maintenance Planning**
+  - unplanned hardware failure: predicted failure of physical machine.
+  - unexpected downtime: physical machine fails.
+  - planned maintenance: hardware update/upgrade.
+- **VM Scaling and Scale Sets (VMSS)**
+  - **Vertical Scaling**: **scale up/down**. add more resources(compute, ram, HDD...).
+  - **Horizontal Scaling**: **scale out(increase)/in**. add more VMs.
+  - **VM Scale Sets (VMSS)**: manage set of **_identical VMs_**. True autoscaling.
+    - automatically increases/decrease VM instances based on demand.
+    - support **Azure Load Balancer**(layer-4) and **Azure Application Gateway**(layer-7).
+    - **Zone Redundant Scale Set (ZRSS)**: deployed across availability zones.
+    - **Updating Scale Sets**:
+      - **Automatic**: random order updates.
+      - **Rolling**: batch updates.
+      - **Manual**: you update.
+- **VM ARM Templates**
+  - **schema**: JSON.
+    - **parameters**: values passed at runtime. pass value from parent to child ARM template.
+    - **variables**: avoid repeating code.
+    - **functions**: avoid repeating code.
+      - **You cannot access variables or any other user-defined functions within your function.**
+    - **resources**: resource group items. **_dependsOn_** determines which resources must be deployed first before a specific resource.
+    - **outputs**: message returned after resource deployed.
+  - **Infrastructure as Code (IaC)**: supports two different deployment modes: complete and incremental.
+    - **Incremental**: leaves existing resources not in ARM template unchanged.
+    - **Complete**: mirror ARM templates(delete anything not in templates).
+      - **Complete Mode can only be enabled with REST API or Shell tools with the "--mode: complete" set**.
+- **VM Script Extensions**
+  - Azure VM built-in extension for configuration management after deploy or when provisioning.
+  - script must be accessible from URI(Azure Storage Account).
+- **VM Size**
+  - General-Purpose: balanced cpu-to-memory ratio.
+  - Compute Optimized: intensive workloads.
+  - Memory Optimized: high memory-to-cpu ratio.
+  - Storage Optimized: high disk throughput (I/O) for databases.
+
+## Azure Containers and Kubernetes Service
+
+- **Containers**
+  - package application and dependencies into an image. uses host OS and kernel. isolated containers(like docker) instances.
+  - containers are **stateless**. if fail, state is lost. to maintain state:
+    - **persistent storage**: **Azure Disk**, or **Azure files**(SMB) for multiple nodes to share.
+  - **weak security** boundary, but **high fault tolerance**(new node will be created if one fails.)
+  - **flexibility and speed**: **OS is shared(only run needed services)** and use less resources. sharing, testing, deployment easier.
+- **Azure Container Instance (ACI)**
+  - **serverless** way to package, deploy and manage cloud apps. ACI provide a simple way to create container instances without having to create and manage a VM.
+  - **billed only for containers in use per second**(cheaper than VM which is billed per hour).
+  - **Restart Policy**
+    - **Always**: long running task. e.g. web-servers.
+    - **Never**: one of task. e.g. background jobs.
+    - **OnFailure**: container encounter error try restarting.
+  - ![container instance](img/container-instance.PNG)
+- **Container Group**
+  - collection of containers that get scheduled on the same host machine. The containers in a container group **share** a **lifecycle, resources, local network, and storage volumes**.
+  - same as 'pod' in Kubernetes(multiple containers per pod).
+  - deploy through ARM(Azure Resource Manager) or YAML files.
+- **Azure Container Apps**
+  - serverless platform that **simplifies deployment**. abstracts away complexities of Kubernetes and infrastructure management.
+  - Container Apps provides resources: server configuration, container orchestration, and deployment details, so you don't have to.
+- **Azure Container Registry (ACR)**
+  - Azure managed, private registry(similar to docker hub) for storing and managing container images.
+  - securely store, version, share images.
+- **Azure Kubernetes Service (AKS)**: Azure PaaS service. container orchestration.
+  - cluster: all nodes managed by AKS.
+  - node: VM(computer) in cluster.
+  - control plane: node that orchestrates pods.
+  - pod: one or more containers working together. single IP address.
+    - pod count is controlled by the **HorizontalPodAutoscaler**.
+  - **Ingress controller**: distribute traffic to pods(**workers**) listening for HTTP request.
+  - **Storage**:
+    - if created together, lifecycle of storage(Disk or Files) is tied to pod lifecycle. **deleting pod deletes storage**.
+      - Azure Disk: single pod can access data.
+      - Azure Files: to **access data across multiple pods**. enables SMB access as well.
+    - persistent volumes: exist within cluster, but outside of pod. not tied to pod lifecycle.
+    - **Autoscaler**: **autoscale nodes and pods**.
+      - Horizontal Pod Autoscaler: add pods.
+      - Cluster Autoscaler: add nodes.
+    - **Kubenet**: manage AKS cluster from cmd line. kubenet created cluster, pods cannot be accessed from private network.
+    - **Container Networking Interface (CNI)**: advanced cmd line management of AKS cluster. pods can be accessed from private network.
+
+## Azure Storage
+
+- **Azure Storage Account**
+  - <https://tutorialsdojo.com/azure-storage-overview/>
+  - high availability, scalability. Handle high traffic w/ data durability. Quick restore of outage.
+  - **scope**: region.
+  - All storage is encrypted at rest with SSE(storage service encryption).
+  - container that allows you to manage as a group all Azure storage services(**queue, blob, file share, table, Azure Data Lake Storage**) together. similar to a resource group for storage.
+  - policy applied to container, all storage services within container inherit the policy.
+  - Database(SQL, Cosmos...) cannot be inside storage account.
+  - LRS(local redundant storage) is the minimum replication(3 copies in same datacenter(across fault domains). hardware failure protection).
+  - **Creating New Storage Account**:
+    - **Name**: globally unique. letter and number only.
+    - **Performance**: Standard | Premium(better I/O, SSD, database). // [a-z0-9]{3,24} cannot be changed later.
+    - **Account Kind**: General-Purpose V2 | (classic V1), BlockBlobStorage, FileStorage, and BlobStorage.
+      - General-Purpose V2: Basic storage account type for blobs, files, queues, and tables.
+      - BlockBlobStorage: high-performance block blob and append blob storage. no files, queues, tables.
+      - FileStorage: SMB file shares(Windows, Linux, macOS).
+      - BlobStorage: (legacy) not recommended.
+    - **Replication Option**: LRS, ZRS, GRS...
+    - **Access Tier**: Hot, Cool, Cold, Archive // **only V2**.
+  - ![storage kind tier](img/storage_kind_tier.PNG)
+  - ![storage account](img/storage_account.PNG)
+- **Azure storage services: blob, disk, file, table, queue**
+  - **blob (Binary Large OBject)**: **unstructured**, _nonrelational_ data. Any type of binary data, typically large files(archives), video, images...
+  - **disk**: **block-level** storage for persistent VM data. stored as **page-blobs** in blob storage.
+  - **file**: mimics a SMB or NFS **file server**. file sharing access and management. by default, data is **encrypted** at rest and in transit.
+  - **table**: **structured NoSQL** _nonrelational_ data. e.g. key:value like mongodb.
+  - **queue**: **messages** accessible from anywhere through HTTPS calls.
+- **Blob Storage**
+  - good for serving images(to browser), **streaming** video, distributed access, archive/recovery, disk(page blob).
+  - **all blob storage must be in a container**.
+  - **Blob Types**
+    - blob any data type any size. All three types can share a container.
+    - type cannot be changed after creation. Must re-upload to change type.
+    - **block blob**: default. block data storage. e.g. video, large text files, images, binary...
+    - **page blob**: 8TB max size. optimized read/write operations. e.g. VM disk.
+    - **append blob**: optimized for append data. e.g. logging.
+  - ![blob storage](img/blob_storage.PNG)
+  - ![blob vs file share](img/file_share_vs_blob.PNG)
+- **Blob Soft Delete**
+  - V2 storage: default 14 days, max retention: **365 days**.
+- **Blob Storage Lifecycle Management**
+  - set rules to automatically move blob object into a cheaper tier(cool, cold, archive) when not accessed in a certain time period.
+  - Each tier represents a trade-off of performance, availability, and cost.
+  - change blob access tiers **without having to move data** between accounts. All requests to change tier will take place immediately between Hot and Cool tiers.
+  - **Cost**:
+    - manage costs by organizing data based on **how frequently it will be accessed** and **how long it will be retained**.
+    - data **storage cost decrease** and **access cost increases** as tier gets **cooler**.
+    - data cost to transfer(replicate to another region, move out of Azure, per-gigabyte charge).
+    - Hot, Cool, Cold transfer happens **immediately**. **Archive takes time**.
+    - **Hot**: immediate access. highest storage cost, lowest access cost. frequently accessed.
+    - **Cool**: immediate access. infrequently accessed. retained at least 30 days. early deletion penalty.
+    - **Cold**: immediate access. infrequently accessed. retained at least 90 days. early deletion penalty.
+    - **Archive**: **Data in the Archive storage tier is stored offline and must be rehydrated to the Cool or Hot tier before it can be accessed.** This process can take up to 15 hours. infrequent access. retained at least 180 days. early deletion penalty.
+    - Hot -> cool: incurs a **write** charge for all data.
+    - Cool -> Hot: incurs **read** charge for all data.
+  - ![blob storage lifecycle](img/blob_storage_lifecycle.PNG)
+- **Blob Object Replication**
+  - blobs copied asynchronously.
+  - complete blob object is copied(metadata, version history, blob contents).
+  - blob versioning must be enabled on both source and destination, to perform replication.
+  - snapshots **are not** replicated.
+  - replication can only be between Hot, Cool, or Cold.
+  - ![blob storage replication](img/blob_storage_replication.PNG)
+- **Storage Endpoint URL**
+  - each object in storage is prefixed with `YOURNAME.SERVICE.core.windows.net/myStorageName/myblob`
+  - names must be **globally** unique.
+  - you can map a custom endpoint: `blob.example.com`. This is done by CNAME(points to Azure) from DNS provider.
+  - ![storage endpoint](img/storage_endpoint.PNG)
+- **File Share**
+  - Microsoft managed files in the cloud that are accessible via industry standard protocols(**SMB(tcp port 445), NFS**) through a **REST API**.
+  - classic: to access **Azure File Share** through **SAS** URI, you must use the **REST API**.
+  - stores data as **true directory objects**, so can be **mounted like SMB(tcp port 445) or NFS**.
+  - multiple (VMs, on-prem computers(windows, macOS, linux), roles, services...) can access(mount) an Azure file share simultaneously, from anywhere in the world(REST interface).
+  - embraces **lift and shift**(take the workload as-is and run it on cloud-native resources).
+  - good for: configuration files, logs, metrics, crash dumps...
+  - **Premium vs Standard**:
+    - **standard**: HDD. format: SMB, REST
+    - **premium**: SSD. format: SMB, NFS, REST.
+  - ![blob vs file share](img/file_share_vs_blob.PNG)
+- **File Sync and Cloud Tiering**
+  - **cache Azure File Shares and synchronize between on-prem Windows Server and cloud VM**.
+  - any number of caches in any location.
+  - **Multi-Site Access**: write on-prem (linux, windows server protocols: SMB, NFS, FTPS) and cloud.
+  - file sync backs up on-prem files with Azure File Share.
+  - **Cloud Tiering**
+    - only allow frequently accessed files to be cached locally(free up local cache).
+    - when file is **tiered**, file is replaced with pointer(URL to Azure File Share) instead of it being cached locally.
+    - tiered file is marked with an `O` and **greyed out** to show file is stored only in Azure.
+- **File Share Snapshots**
+  - **point-in-time read only copy of file share**.
+  - only data that has changed(from last snapshot) is recorded. Only most recent share is needed to restore the share.
+  - single files can be restored from snapshot.
+  - all snapshots must be deleted before share can be deleted.
+  - snapshot can act like a versioning system, previous files can be recovered.
+- **File Share Soft Delete**
+  - recover deleted files and file shares. Once marked for deletion, you can set retention period: **1-365 days**.
+  - soft delete **does not work on NFS shares**.
+  - Advantages: ransomware protection, comply with data retention policy, restore to known good state, recovery from accidental data loss.
+- **Azure Storage Explorer**
+  - access multiple accounts and subscriptions, and manage all your Storage content on **windows, macOS, linux**.
+  - requires both management (Azure Resource Manager) and Active Directory permissions to allow full access to your resources.
+  - ![Azure storage explorer](img/storage_explorer.PNG)
+
+## Storage Security
+
+- **Storage Security**
+  - all storage accounts are created with two access keys(two keys allows rotation without interruption).
+  - **disk encryption**: Azure Disk Encryption. all data written encrypted by default(Azure storage encryption, 256 bit AES). decrypted automatically. transparent to users. cannot be disabled.
+  - **data in transit**: Azure Client-Side Encryption, HTTPS, SMB 3.0.
+  - **Public Access**: when **_AllowBlobPublicAccess_** is set to true and container public access is set.
+  - **Shared Access Signature (SAS)**: URI with read or read/write permissions that expire.
+  - **shared key**: key produces encrypted signature. passed in Authorization header.
+  - **authentication**: Entra ID(user identity) and RBAC(resource permissions). prove your identity
+  - **authorization**: RBAC. assign roles for Data Plane access(storage data).
+  - **Entra ID**: enables access to authorized person.
+- **Storage Account Access Keys**
+  - each storage account has two keys(switch primary key without down time.).
+  - **access keys** allow full access(CRUD) to all services within storage account.
+  - store in **Azure key vault** for safety.
+  - **Connection String**
+    - classic way to manage(full access) storage data. connection string **contains sensitive information**, such as account keys(Shared Key authorization(Storage Access key)).
+    - Use Microsoft Entra ID or SAS URI with Security Policy instead.
+    - **connection string is retrievable by opening the storage account blade in the Azure Portal and clicking Access Keys.**
+- **Stored Access Policy**
+  - to revoke SAS, you have to delete the secret key or resource, this creates a need to decouple permissions from the token itself. **Stored Access Policy** addresses this need.
+  - **Stored Access Policy**: creates start/end times, access permissions **independently from SAS token**. the SAS token gets generated with a **reference to this policy** instead of embedding access parameters explicitly in URI.
+    - can be applied to a container and every service in container.
+    - Set rules: start time, expiry time, permissions.
+    - reference policy when you create SAS.
+    - revoke SAS token by deleting/renaming or modifying expiry time of policy.
+- **Blob Storage Access Levels**
+  - extra access controls only for blob storage.
+  - blob storage is organized by containers and blobs. These can have **ACL**s(access control levels).
+  - a storage account can include an **unlimited number of containers**, and a container can store an **unlimited number of blobs**.
+  - access level can be changed through the Azure portal, Shell, or by using Azure Storage Explorer.
+  - **Private**: default. private URI. only storage account owner can access blob or container.
+  - **Blob**: public URI. Blob data within this container can be read via anonymous request, but container data isn't available.
+  - **Container**: public URI. Container and all blob data can be read via anonymous request.
+- **Managed Disk**
+  - page blob is abstracted to Azure managed disk.
+- **Private Link**
+  - data shared between services along microsoft backbone instead public internet.
+  - ![private link](img/private_link.PNG)
+- **Shared Access Signature**
+  - uniform resource identifier(URI): grant access to a **specific resource**, for a **specified period of time**, and with a **specified set of permissions** to Azure Storage resources(containers, blobs, queues, tables...).
+    - e.g. `https://myaccount.blob.core.windows.net/?restype=service&comp=properties&sv=2015-04-05&ss=bf&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=F%6GRVAZ5Cdj2Pw4tgU7IlSTkWgn7bUkkAg8P6HESXwmf%4B`
+  - purpose: give client who normally does not have access, a URI for a specified time period, to prevent account keys exposure.
+  - granular control(read, write, delete...) of resource permissions(blobs, files, queues, tables). restrict IP address, protocol used(https or http).
+  - **account-level**: one or more storage services.
+  - **service-level**: only one storage service.
+  - you can only **remove access** by deleting storage key, or resource/rename. Use **Stored Access Policy** to decouple permission with key.
+- **Azure Key Vault**
+  - **Service-Managed Keys**: Microsoft HSM(hardware security module)s safeguard keys.
+  - **Customer Managed Keys**: create your own key. greater control(create, audit, rotate, delete...). stored in Microsoft HSM. **Bring Your Own Key (BYOK)**.
+  - **Service-Managed Keys in Customer-Controlled Hardware**: your keys, your HSM, outside Microsoft control. **Host Your Own Key (HYOK)**.
+- **Storage Firewall**
+  - restrict access to specific **networks or IP addresses**, ensuring that only internal devices within those networks can access the storage account.
+- **Storage Security Best Practices**
+  - set permissions to minimum and time to minimum.
+  - use HTTPS and **User Delegation** to create SAS, because key does not have to be embedded in the URL.
+  - **data**: encrypted at rest and in transit.
+  - **WAF firewall**: Web Application Firewall. Layer 7 aware. Route and filter traffic(SQL injection, XSS...). block IP address. **Application Gateway** or **Front Door**.
+  - **private link**: wrap data resource in VPN and share data between services along Azure backbone instead of public internet. shields DB from outside world.
+  - **restrict access to VM's**: disable RDP(remote desktop protocol) and SSH. Keep VM on private network, connect through **Azure Bastion**.
+  - **Secret Keys**: Azure Key Vault. To connect services to Azure Key Vault, use **Managed Service Identities**.
+  - **Production**: use separate subscription for production environment. Development policies and Production policies can be controlled.
+  - **Resources**: RBAC to allow users permissions on resources.
+  - **Azure Security Center**: Azure service that informs you of your security state and what can be improved.
+
+## Azure Backup
+
+- **Azure Backup**
+  - enterprise-class backup solution to protect all your workloads and manage them from a central place.
+  - complete data recovery, high security storage(encrypted at rest), protection against ransomware or malicious admins(soft delete, min 14 days).
+  - **create scheduled backups**: data, machine state, and workloads, running on on-premises machines and VM instances to the Azure cloud.
+  - VM(linux or windows) backup using agent(extension) software. stores in vault.
+  - ![vm backup](img/vm_backup.PNG)
+  - **Zone or Region**: customer choice. LRS(across fault domain), GRS(across geographies), ZRS(across datacenters, datacenter failure).
+  - single vault or multiple vaults to organize and manage your backup.
+  - **Backup Types**
+    - **Planned**: known in advance.
+    - **Unplanned**: backup with custom retention.
+    - **On-Demand**: not scheduled.
+  - **Data Plane -Access Tiers**: Azure Backup managed storage.
+    - **Snapshot tier**: fastest to restore. stored with **customer data, and in vault**. You do not have to wait for data to be copied from vault.
+    - **Standard tier**: stored in Microsoft managed vault. isolated copy.
+    - **Archive tier**: **Long-Term Retention (LTR)**. rarely accessed.
+  - **Data Plane -Availability and Security**: cross zone or region backups.
+  - **Management Plane -Recovery Vault**: interface to interact with backup service.
+- **Backup center**
+  - manage all backup vaults(spanning multiple workload types, vaults, subscriptions, regions, and Azure Lighthouse tenants).
+- **Backup Policies**
+  - instructions that tell Azure how to protect your data.
+  - when(daily, weekly, monthly...), how many(retention period), where(LRS, ZRS, GRS), security(soft delete, encryption).
+  - **view policy**: the Azure portal, open the Recovery Services Vault blade, and then click backup policies.
+  - **default policy**: backup once a day and retain 30 days.
+    - VM Backup policy, SQL, Files, Blobs, Database for PostgreSQL.
+- **Backup Reports**
+  - insights(data visualization) into the health and performance of your backup environment.
+  - view of your backups **across vaults, subscriptions, and regions**.
+  - uses **Log Analytics Workspace**.
+- **Backup Tiers**
+  - **hot**: online tier(immediate access), frequent access.
+  - **cool**: online tier(immediate access), infrequent access. 30 day storage.
+  - **cold**: online tier(immediate access), rarely accessed. 90 day storage.
+  - **archive**: **offline** tier(low priority, high latency, several hours to access), rarely accessed. 180 day storage.
+  - cooler tiers have **lower** storage, but **higher** access cost.
+  - ![storage access tiers](img/storage_access_tier.PNG)
+- **Backup Vault**
+  - newer than Azure Recovery Service Vault optimized for large-scale backups.
+  - supports newer Azure services like Azure **Blobs** and **Database for PostgreSQL**.
+  - to restore encrypted disk, must provide access to encryption key.
+  - ![backup comparison](img/backup_comparison.PNG)
+- **Identify options for moving files, including AzCopy, Azure Storage Explorer, and Azure File Sync**
+  - **AzCopy**: cmd line utility.
+    - **fault tolerant, large-scale bulk transfer of data**.
+    - **asynchronously** copy **blobs** or **files**.
+    - allows **incremental backup**.
+    - permissions: Azure login, service principal, SAS token, access key, managed identity...
+  - **Azure Storage Explorer**: GUI to manage all/multiple storage(blob, file, queue, tables, database, data lake) accounts.
+  - **Azure File Sync**: centralize files. **Automated bi-directional sync** from **Cloud with on-prem**. Installs on Windows Server.
+- **Describe migration options, including Azure Migrate and Azure Data Box**
+  - **Azure Migrate**: hub of services and tools designed to help with data migration.
+  - **Azure Data Box**: send terabytes of data into and out of Azure in a quick, inexpensive, and reliable fashion. Shipped 'data box'. Basically it's a SSDs(max 40TB) with your data on it, that is shipped to you.
+  - **Azure Import/Export**:
+    - same as Azure Data Box, but you supply the hard drives, Microsoft copies your data and ships to you.
+    - first step to use tool, download **WAImportExport(only 64 bit Windows)** program to prepare disk and copy data onto.
+      - Two versions of WAImportExport: **V1 for blob storage, V2 for File Shares**.
+    - **Export Jobs**: Can only export **blobs**. ship Azure up to 10 empty drives.
+- **Microsoft Azure Recovery Services (MARS) Agent**
+  - agent running on windows server or client.
+  - backup on-prem **files, folders, and machine state** to Azure cloud.
+- **Recovery Services vault**
+  - cross region secure container for replicated data(VM disk, images, SQL, Files).
+  - cannot be deleted until all soft-deleted items are removed.
+  - ![backup comparison](img/backup_comparison.PNG)
+- **Redundancy Options**
+  - save your backup copies in local(datacenter), or zone(multiple datacenters), or region(datacenters miles apart).
+- **Site Recovery**
+  - backup **complete on-prem footprint**(business continuity by replicating workloads) to another region. **ensure business continuity**(natural disaster recovery, power outages, migration...).
+  - replicates **data from your primary site**(Azure VM and on-prem computers replicated) to the secondary location, ensuring that your **data is up-to-date and ready for recovery**.
+  - **failover**(if primary offline, failover to secondary) and **failback**(if primary online, failback to primary).
+  - ![site recovery](img/site-recovery.PNG)
+- **Soft Delete**
+  - default 14 day retention after deletion.
+  - no backup jobs can be running.
+  - **UnDelete**
+    - restore deleted backup. unDelete cannot run until all dependencies are restored.
+- **VM and On-Prem Computer Backup**
+  - **Microsoft Azure Recovery Service (MARS)**: file, folders, VM state, **windows on-prem** backup.
+    - Microsoft Azure Backup Server (MABS), Azure managed disks snapshots, and Azure Site Recovery.
+  - **VMs (Windows and Linux)**: Azure Backup installs agent(extension) on VM. Backs up entire VM.
+  - **Azure Managed Disk Snapshot**
+    - VM single disk backup. read-only full copy of single disk. can be used to create template. billed for data backed up, not disk size.
+    - stored as **page blobs**(Azure Disk) in vault.
+    - default retention is **two days** before moving snapshot to Recovery Service Vault.
+    - **recovery point** is available only after both phases(snapshot and transfer to vault) have completed. you can still restore your VM from snapshot before transfer phase.
+    - ![vm backup](img/vm_backup.PNG)
+  - **Azure Managed Disk Image**
+    - single image from **all** VM data disk including the OS disk. can be used to create template.
+    - stores in vault.
+    - ![vm backup](img/vm_backup.PNG)
+- **VM SQL Database**
+  - when running VM with SQL database, Azure backup does a **Stream Backup**.
+  - **VM SQL Backup Types**
+    - **Full**: full recovery of all data.
+    - **Differential**: full backup, then only data that has changed.
+    - **Transaction Log**: SQL transactions log backup.
+- **When to Backup**
+  - Azure Backup **doesn’t** support **cross-region backup** for most workloads.
+  - **Types**
+    - **Workload recovery**: VM, Disk, SQL, SAP, HANA, Blobs...
+    - **Compliance**: customer defined retention.
+    - **Operational recovery**: key items to ensure against data loss.
+  - **Steps**
+    - create Recovery Service vault. created within your **subscription**.
+      - choose replication: GRS(default) or LRS.
+    - define your backup policy options. when and how long to retain.
+    - back up your VM. on-prem backup must have agent must be installed on VM.
+
+## App Services
+
+- **App Service Plans**
+  - PaaS. HTTP-based service for hosting, develop and deploying web, mobile, and API apps.
+  - has third party **identity providers**(Facebook, Google, Microsoft) **integration** for managing **customer authentication**.
+  - defines a set of **compute resources**(how many VMs, compute, disk for each VM) for a web application to run on.
+  - configuration settings include runtime stack(node, python, dotnet...), operating system, region and App Service plan(standard, premium, isolated...).
+  - brings together everything you need to create websites, mobile backends, and web APIs for any platform or device.
+  - **Load Balancer**: optional. round robin deliver HTTP request to **workers**(web servers).
+  - **Scaling**: vertical(more compute) or horizontal(more VMs). Autoscale you provide max and min.
+  - **App Service Plan: Free, Shared or Dedicated Tier**: choose features.
+    - Free: can't scale. charged CPU minutes used.
+    - shared: share resources with others.
+    - dedicated: you have dedicated resources assigned only to you.
+  - **Basic, Standard, Premium, or Isolated Tier**
+    - VMs in your App Service are yours to use as you want.
+  - **Setup**
+    - **Region**: location of datacenter. e.g. 'East US'.
+    - **Number of VM instances**: how many VM instances allocated to plan.
+    - **Size of VM instances**: compute. Small, Medium, Large.
+- **Continuous Integration and Deployment CI/CD**
+  - **automated deployment**: automate the testing and deployment of code changes.
+  - **Azure DevOps**: Azure devops pipeline. code changes -> testing -> deploy.
+- **App Service Environment (ASE)**
+  - **fully isolated and dedicated environment** for securely running App Service apps at high scale.
+  - gated by WAFs. **External/Internal load balanced**.
+  - can create multiple ASEs across regions or single region.
+- **CI/CD Deployment Slots**
+  - with App Service, instead of deploying to production node, you deploy to another node with **it's own hostname**.
+  - manage different app stages(development, testing, staging, and production).
+  - available in the **Standard, Premium, and Isolated** App Service pricing tiers.
+  - similar to **_blue/green_** deployment strategy. Rollback if "**_swap_**" is not as expected.
+  - new deployment slots can be empty or cloned.
+  - ![deployment slot](img/deployment_slot.PNG)
+- **App Service Authentication and Authorization**
+  - Security Module: authenticate users, manage tokens, sessions, and inject identity into request headers.
+  - built-in authentication and authorization support.
+  - configured by using App settings, when enabled, every HTTP request will pass through the security module before it's handled by your App.
+  - automatic logging of authentication and authorization traces.
+  - **Settings**
+    - **Allow Anonymous Request**: defer authorization of unauthenticated traffic to your App.
+    - **Allow only authenticated request**: **_all_** anonymous traffic is sent to login provider page.
+- **Domain Names (DNS) Records**
+  - you are given a sub domain name for main account owner: `yourAppName.azurewebsites.net`.
+  - purchase domain from Azure portal, you don't have to configure anything.
+  - `A` record: map domain name to IP address of web server.
+  - `Cname`: maps domain name to another domain name.
+- **Backup and Restore App**
+  - App snapshots can be created on a schedule or manually backup.
+  - **Standard** or **Premium** tier App Service plan.
+  - full or partial backups.
+- **Application Insights**
+  - continuously monitor the performance and usability of your apps.
+  - analytic tools(failure, response, request, views, load performance) to understand what users are doing with your apps.
+  - Apps hosted on-premises, in a hybrid environment, or in any public cloud.
+  - ![application insights](img/application_insights.PNG)
+- **WebJobs**
+  - run script in the same instance as web app. no additional charge.
+
+## Azure Networks and Network Security Groups
+
+- **Azure Bastion**
+  - connect to VNet **without** needing a **public IP**. **Windows RDP or Linux SSH** through web browser.
+  - log into Azure Portal, and open Bastion.
+  - special subnet named **_AzureBastionSubnet_**. Acts as a '**jump server**', providing single hardened access point into network.
+- **Application Gateway**
+  - direct web traffic to the appropriate web applications and enforce security.
+  - Azure managed, **web traffic(layer 7 -HTTP(S))** load balancer(for web traffic(HTTP(S))) and firewall(optional WAF). directs traffic to backend pools(web servers, databases w/ private IP(VNet)) via **Round-Robin** method.
+  - **Basic**: routing via **URL**(includes hostname and port).
+  - **Multi-site routing**: multiple different web app routing(based on Domain Name) on same Application Gateway.
+  - allows redirects, HTTP header rewrite.
+  - ![application gateway](img/application_gateway.PNG)
+  - ![application gateway](img/application_gateway2.PNG)
+- **Application Security Group**
+  - used to **group virtual machines**(application(function). e.g. web server and database.) and define security rules based on these groups, facilitating network security management.
+  - layer 3 and 4(IP and port).
+- **Azure Front Door**
+  - multiple access points around the world, handles all the HTTPS stuff, then content is provided from your VNet through Microsoft backbone.
+  - can turn on caching, combining CDN features.
+- **Azure Traffic Manager**
+  - global. DNS for routing to closest VNet Gateway.
+- **Border Gateway Protocol (BGP)**
+  - automatically exchange routing information **Azure Gateway(VPN Gateway) and on-prem** for **S2S**(site-to-site) connections otherwise you would have to manually create a UDR(user defined route).
+  - BGP is the internet standard method of exchanging routing information between networks. Mainly handled in the background by your ISP.
+- **DNS**
+  - **hosting service** for DNS domains and acts as the SOA for domain name. manage and host your **registered** domain.
+  - Azure supports **vanity domains**. e.g. `example.com`. Just point to your Azure IP from 'A' record or 'CNAME'.
+  - after creating **Azure DNS zone**, go to your DNS registrar, point DNS server to Azure DNS zone.
+    - **DNS**: Domain Name Server. maps domain name with IP.
+    - **DNS Zone**: collection of DNS records for a given domain name.
+    - **SOA**: start of authority. master record for domain.
+      - `nslookup -type=SOA example.com`
+    - **A**: maps domain to IPv4.
+    - **AAAA** map domain to IPv6.
+    - **CNAME**: Canonical Name. alias pointing to domain.
+    - **MX**: mail exchange. email server IP.
+    - **TXT**: text record. associate text strings with domain. e.g. DKIM, SPF...
+    - **Alias**: **Azure** has its own **special record type** called an **Alias** that work with A, AAAA and CNAME records. Azure Alias record **points** directly to an **Azure resource** instead of to an **IP or hostname** (helps avoid dangling domains)
+  - **private DNS zone**: not visible on internet. only available to your local network. assign name to VNet IP.
+  - **Apex Domain**: highest level domain. sometimes called _zone apex_ or _root apex_. `example.com` // `.com` is Top Level Domain (TLD).
+    - designated by `@`
+- **ExpressRoute**
+  - private connection between on-prem and Azure VNet through dedicated line from connectivity provider. **traffic does not traverse public internet**. higher security.
+  - **Private Peering**: connects VNet Gateway to on-prem through private backbone of Microsoft.
+  - **Global Reach**: connect two on-prem locations, over Microsoft backbone.
+  - **Microsoft Peering**: connect over ExpressRoute on-prem to Azure PaaS services.
+- **Firewall**
+  - managed, stateful, service. high availability and scalability. logging. SNAT and DNAT support.
+- **Forced Tunneling**
+  - routing outbound VNet traffic via VPN to on-prem device(typically firewall for inspection, packet capture...) then on to the public internet.
+- **Gateway Transit**: allows peered networks to share same **Virtual Network Gateway**.
+- **Hub and Spoke**
+  - central public entry point(**Virtual Network Gateway**), then out to subnets(spokes) or other peered VNets.
+  - public traffic flows through **Virtual Network Gateway** to a **NVA**(network virtual appliance e.g. Cisco Firewall(custom rules, packet inspection/cloning...)), then out to the spokes.
+  - you can **service-chain** multiple NVAs to perform packet inspection and routing.
+  - ![P2S](img/peering_hub.png)
+- **Load Balancer (ALB)**
+  - **Azure Load Balancer**: managed layer 4(TCP,UDP), high availability, scalability. **inbound** or **outbound traffic**. **public** or **internal** facing.
+  - **scope**: must be in **same VNet** as backend pools.
+  - **internal** load balancer must be in **same VNet** as VMs and **does not** have a **public IP**.
+  - can use **availability sets**(hardware failure) and **availability zones**(datacenter failure) to ensure that virtual machines are always available.
+  - **Types**:
+    - **Basic**: original, superseded by standard.
+    - **Standard**: up to 1,000 pools. HTTPS health check.
+    - **Gateway**: high performance and high availability.
+  - **To implement a load balancer**:
+    - **Front-end IP configuration**: ip load balancer assigned.
+    - **Back-end pools**: back-end resources listening for request.
+    - **Health probes**: checks backend resources health.
+    - **Load-balancing rules**: how to distribute the requests to the back-end.
+    - **Distribution Mode**: load-balancer traffic distribution rules: `5/3/2 tuple`.
+      - **five-tuple hash**: default. src/dest IP, src/dest port, and protocol(TCP, UDP).
+      - **three-tuple-hash**: src/dest IP, protocol(TCP, UDP).
+      - **two-tuple-hash**: src/dest IP.
+      - ![load balancer type](img/load_balancer_type.PNG)
+    - **Source IP Affinity**: source IP -> destination IP. when using Remote Desktop Gateway(RDP) for windows or media upload, you cannot use five-tuple hash. you must use source IP affinity as your distribution mode.
+      - **Session Persistence**: group same client request or send to any VM listening.
+- **Network Interface Card (NIC)**
+  - vNIC. layer 2. -see VM NIC.
+  - can have network security group applied.
+- **Network Security Group (NSGs)**
+  - manage network traffic rules for Azure resources, typically associated with VNets, subnets and NICs. It controls inbound and outbound traffic based on security rules.
+  - software firewall(layer 3, 4 allow/deny rules) that can be applied to **subnets** and **NIC**.
+  - The last rule is always a **Deny All** rule.
+  - without NSG, **all** traffic is allowed.
+  - **Rules**
+    - **Rule Creation**: priority, name, src/dest ip, port, action.
+    - default: **deny** all **inbound(except loadBalancer or VNet subnets)**. **allow** all **outbound**.
+    - rules can be overridden by **Priority** value.
+      - **priority values**: 100 - 4096. processed from low to high. first rule matches, processing stops. lower numbers are processed first, so have higher priority.
+    - default **intra-subnet** traffic(resources inside same subnet) are **allowed**.
+    - you must define an **allow rule** for both the **subnet and network interface** in the group to ensure traffic can get through.
+    - because a **NIC** or **subnet** can each have a security group, there can be two NSGs in a subnet:
+      - the first NSG to read packet, takes **precedence**.
+      - inbound: the subnet(NSG 1) rules will take precedence.
+      - outbound: the NIC(NSG 2) will take precedence.
+      - ![nsg rules](img/nsg.PNG)
+- **Network Virtual Appliance (NVA)**
+  - software virtual machine with the same functionality.
+  - from providers in **Azure Marketplace**.
+  - e.g. Virtual Network Gateway to **Cisco Firewall** then to VNET.
+- **Peering**
+  - seamless connection of two or more VNets. function as single VNet.
+  - managed as separate resources, but communicate as single resource.
+  - **Traffic** between the VNets are kept on the **Microsoft Azure backbone** network. No public IP, gateways, or encryption is required in the communication between the virtual networks.
+    - **internal network access** is controlled with **NSGs**.
+  - allow remote communication between peering VNets with VPN Gateway.
+  - **Transitivity**: must be explicit. Only VNets that are directly peered can communicate with each other. e.g. A,B,C VNet. Peer A->B and B->C. A->C does not automatically work without explicit peering A->C.
+  - can peer VNets with different Microsoft Tenants, subscriptions...
+  - To peer, administrator must have the **_Network Contributor_** role on the VNet.
+  - **Regional and Global Peering**: peering is possible **between different tenants, subscriptions**...
+    - **Regional**: VNets in same region.
+    - **Global**: VNetS in different regions. Any Azure cloud region, China cloud region, but not Government Region.
+    - ![peering global](img/peering_global.PNG)
+  - **PowerShell and CLI Peering**
+    - creating peering from **PowerShell** or **CLI**, you must create peering from **A->B and B->A**.
+    - Azure portal automatically creates both.
+- **Point-to-Site (P2S)**
+  - VPN tunnel from individual computer.
+  - client **authenticates**, the connects with **OpenVPN** or Secure Socket Tunneling Protocol(software on PC) to '**Azure VPN Gateway**' on the Azure side.
+  - [Azure P2S VPN](https://learn.microsoft.com/en-us/azure/vpn-gateway/point-to-site-about)
+  - ![P2S](img/p2s.png)
+- **Private Link**
+  - **all internal traffic** between your VNet and the service **travels** the **Microsoft backbone network**. eliminates data exposure to the public internet.
+  - ![private link](img/private_link.PNG)
+  - ![private link](img/private_link2.PNG)
+- **Routes**
+  - custom routes direct traffic flow within VNet. all routes are stored in the **_route table_**.
+  - **route tables**: each **subnet** will have it's **own route table**.
+  - **Service Tags**: can be used as a route address in a user-defined route(UDR).
+    - e.g. create NSG, blocking in/out traffic. add service tag on destination. add security rule allowing traffic out to tag name. traffic can only reach tagged resource.
+  - **Specificity**: most direct match wins. e.g. 10.0.0.6 with route 10.0.0.0/16 and 10.0.0.0/24. the 10.0.0.0/24 is more specific and will be chosen.
+    - **Order of specificity**: user-defined, BGP route, system route.
+  - **System Routes**:
+    - Azure uses **_system routes_** to direct traffic between VMs, on-prem and internet. system routes enable communication between any VM and any other VM in VNet.
+    - uses **_route table_**(rules of how to get to destination) to store system routes.
+    - You **can't create or delete system routes**, but you can **override** the system routes by adding custom routes to control traffic flow to the **next hop**.
+    - Every **subnet** has the following **default system routes**:
+      - **Virtual Network**: address prefix. // e.g. `192.168.0.0/24` the range of IP inside VNet.
+      - **Internet**: default route to internet.
+      - **None**: drops traffic.
+      - ![subnet default route](img/subnet_default_route.PNG)
+- **Service Chaining**
+  - **direct traffic** through a series of **network services**(NVAs) by manually setting up **UDR**(user defined route).
+  - VNets must be peered.
+- **Service Endpoints and Policies**
+  - <https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-overview>
+  - service endpoints allow **subnet** or **resource** to talk to your **Azure (Storage, Database, Vault, App, Event Hub...) Service** over the private Microsoft backbone.
+  - **service endpoint**: allow **all** instances in a **subnet**(your VNet) to communicate to Azure **Storage** over the Microsoft backbone. no public internet access.
+  - **private endpoint**: **single** instances in a **subnet**(your VNet) to communicate to Azure **Storage** over the Microsoft backbone. no public internet access.
+  - ![service endpoint](img/service_endpoint.PNG)
+- **Site-to-site VPNs (S2S)**
+  - use IPSEC to provide a secure connection between your **on-prem VPN Device**(handles IPSec encryption/decryption) and **Azure VPN Gateway**(service provided by Microsoft).
+  - [S2S setup](https://learn.microsoft.com/en-us/azure/vpn-gateway/tutorial-site-to-site-portal)
+  - [on-prem vpn device](https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-devices)
+  - ![s2s](img/s2s.png)
+- **Subnets and Screened Subnets (DMZ) and IP Addresses**
+  - network can be segmented into subnets to help improve security, increase performance, and make it easier to manage.
+  - default **all subnets** in VNet **can communicate** with each other.
+  - subnet **name** must be **unique** in VNet.
+  - subnet must be specified by using **CIDR** notation.
+    - each subnet, the **first four addresses** and the **last address** are **reserved**.
+    - smallest supported subnet: **/29** subnet mask(8 IP addresses), largest supported subnet: **/2** subnet mask(1,073,741,824 IP addresses).
+  - segmenting(subnetting) networks allows custom firewall rules for each subnet.
+  - **maximum one security group per subnet**.
+  - **Screened Subnet (DMZ)**
+    - security group applied to a subnet acts as buffer between resource and internet.
+    - restrict traffic flow.
+  - **Azure IP Addresses Schema**
+    - **private IP**: internal communication only. on-prem communication, use VPN Gateway or ExpressRoute.
+    - **public IP**: communicate with resources over the public internet. when assigned to vNIC, creates a public facing endpoint.
+      - **basic**: (static/dynamic) assigned. inbound traffic. default open to inbound traffic. no availability zone support. no IP prefix support.
+      - **standard**: static only. default closed to inbound traffic(NSG default rules). supports availability zones. supports IP prefix. e.g. `192.168.1.0/24` '/24' is prefix.
+    - **static IP**: does not change. **public or private**. best for DNS records, TLS certs, Firewall rules based on IP range.
+    - **dynamic IP**: changes as needed. typically change when VM/service is stopped and restarted.
+    - **Schema**
+      - IP Address range with on-prem can't overlap cloud. e.g. on-prem: 192.168.0.0/16(65,536) and cloud 192.168.10.0/24(256). // on-prem includes the 192.168.10.0 network.
+    - **Public IP Prefix**: Azure **region specific** range of **contiguous** static IP addresses. **prefix size** is the number of IP addresses.
+    - **Private IP Addresses**: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16
+      - `.1, .2, .3 and last`, IP addresses aren't visible or configurable. Reserved for Load Balancers, Application Gateway, VM NICs.
+      - .0 = network address // identifies start of subnet.
+      - .1 = Azure Gateway // load balancer...
+      - .2 & .3 = DNS
+      - .255 = Broadcast // reserved as last address of subnet.
+  - **Route Table**
+    - can have many subnets, each subnet can have only one route table.
+- **User-defined routes (UDR)**
+  - **manually define route and next hop**. e.g. route traffic to VPN Gateway.
+  - ip forwarding must be enabled for VMs.
+- **Virtual Network Gateway**
+  - establish secure connection(S2S(site-to-site), P2S(point-to-site), ExpressRoute) between Azure VNet and other networks(on-prem).
+  - **Gateway Subnet**: special subnet reserved only for Virtual Network Gateway.
+    - Virtual Network Gateway is deployed as **two VMs** in an **active-active** configuration. This is the **high availability**. With active-active **both gateways have a public IP address** with both listening on VPN endpoint.
+    - **Name**: must be named **_GatewaySubnet_**.
+    - **Size**: min `/29` recommended: `/27`.
+  - When **creating the Virtual Network Gateway**, specify what it will be used for: **ExpressRoute or VPN**.
+  - **ExpressRoute Gateway**: direct connection to **all** Microsoft services. no public internet.
+  - **VPN Gateway**: Azure service for encrypted communication between on-prem VPN(IPSec: S2S, P2S) and Azure VNet.
+    - VPN Gateway must be in **dedicated subnet**.
+    - VNet can only have **one** VPN Gateway.
+  - ![vpn gateway](img/vpn_gateway.PNG)
+- **VNet**
+  - VPN network. provide logical isolation and protection. IP range once chosen, cannot be changed.
+  - If **no security group** is applied, then **all** traffic is **allowed** by Azure.
+  - Azure blocks SMTP (Email port 25) outbound.
+  - link virtual networks with an on-premises IT infrastructure to create hybrid or cross-premises solution.
+  - **Possible Azure Private IP Ranges**
+    - 10.0.0.0–10.255.255.255 (10.0.0.0/8)
+    - 172.16.0.0–172.31.255.255 (172.16.0.0/12)
+    - 192.168.0.0– 192.168.255.255 (192.168.0.0/16)
+  - **Connecting VNets**
+    - VNets must have non-overlapping IP address space.
+    - VNets are non-**transitive**. A peered to B and B peered to C does not connect A to C.
+    - VNet peering. inside region or across regions.
+    - VNet-to-VNet VPN over public internet.
+
+## Azure Monitor
+
+- **Azure Monitor**
+  - **collects, analyzes**, and **responds** to **telemetry data** from both **on-prem**() and **cloud** environments.
+  - charts to visualize metrics. view health and availability.
+  - gather monitoring and diagnostic information about the health of your services. You can use this information to visualize and analyze the causes of problems that might occur in your app.
+  - query and analyze logs.
+  - alerts and actions: critical conditions notify you.
+  - **Extend functionality**: adding **Azure Monitor Agent** to compute resources. Collects data on VM internal operations.
+  - **Enable Diagnostics**: Azure SQL database will send full information to Azure Monitor when you **enable diagnostic logging**.
+  - Azure Monitor has two main monitoring features: **Azure Monitor Metrics** and **Azure Monitor Logs**.
+  - **Data Stores**
+    - hold metrics and logs. **Azure Monitor Metrics** and **Azure Monitor Logs** are the two base types of data used by the service.
+  - ![azure monitor](img/azure_monitor.PNG)
+- **Activity Log**
+  - who, what, when, where. subscription level events. any write operation (PUT, POST, DELETE) performed on resources in your subscription.
+  - kept for **90 days**.
+  - What operations happened on resources in my subscription?
+  - Who initiated the operations?
+  - When did the operations occur?
+  - What's the current status of the operations?
+  - What are the values of other properties that can help with my analysis of the resources and operations?
+- **Alerts**
+  - you configure alerts on key resources and who will get them.
+  - data can be a **_metric_** or **_log_** or **both**.
+  - **Metric**: numeric threshold is reached. ideally suited to monitoring for threshold breaches or spotting trends.
+  - **Activity Logs**: when resource changes state(when specific changes occur on a resource within your Azure subscription).
+  - **Logs**: based on what is written to log file.
+    - they are stateless(alert even when already alerted on same rule if event happens again).
+    - monitoring of historical data.
+    - e.g. web server returns 404 or 500.
+  - **Composition of an Alert**
+    - **Resource**: the resource being monitored.
+    - **Condition**: numeric(metric) or log file.
+    - **Actions**: how and who gets alerted.
+      - **severity**: 0(critical), 1(error), 2(warning), 3(informational), 4(verbose).
+  - **dimensions**: can monitor multiple target instances at a time. use `*` as wildcard.
+    - **scale**: when new resources are created, they would be included as well.
+  - **Metric Alert Settings**
+    - static or dynamic:
+      - **static**: static is fixed value to measure against. e.g. 85% cpu usage.
+      - **dynamic**: dynamic no fixed value. need three values:
+        - **metric**: number you want to test.
+        - **look-back period**: how many periods need evaluating.
+        - **number of violations**: how many times there can be violation before alert.
+    - how often to run. e.g. every two minutes.
+    - data to be assessed. e.g. last 10 minutes.
+  - **Log Alert Settings**
+    - **Query**: query that runs every time alert rule fires.
+    - **Time Period**: time range for query.
+    - **Frequency**: how often should rule should run.
+    - **Threshold**: when alert should notify someone.
+    - **Aggregate function**: count the average.
+    - **Group Field**: group results and alert only if pattern found.
+  - **Alert Events**
+    - **Specific Operation**: alert event contacts someone or creates an IT Service Management(ITSM) support ticket.
+    - **Alert State**: when alert rule is triggered, an alert state is generated and set to **fired** and when condition clears, alert state is set to **resolved**.
+    - **Service Health Event**: notice of incidents or maintenance. You no longer need to select a resource, because alert is for whole region. you opt in to what alerts you want to receive.
+  - **Action Groups**: what and how alert is sent. can be reused.
+  - ![alerts](img/alerts.PNG)
+- **Analyze (Log Analytics Workspace)**
+  - **analytics** from your logs.
+  - create and test queries. Use the query results to directly analyze the data, save your queries, visualize the data, and create alert rules.
+  - uses a version of the **Data Explorer** query language. The language is suitable for simple log queries, but also includes advanced functionality like **aggregations**, **joins**, and **smart analytics**.
+  - **Log Analytics Workspace**
+    - captured logs and data is stored in a **Log Analytics workspace**. the workspace becomes the basic management environment for Azure Monitor Logs.
+    - each workspace has a unique workspace ID and resource ID.
+    - workspace **name** must be **unique** within your **resource group**.
+  - **Kusto Query Language (KQL)**: query log files.
+    - output can be saved and viewed in the Azure Portal or exported to Power BI, Excel, Log Analytics.
+    - schedule jobs to run automatically.
+    - set thresholds for alerts.
+    - Kusto is case-sensitive.
+    - `StormEvent | count` # returns number. each operator is separated with pipe command `|`.
+    - ![kusto query language](img/log_analytic_queries.PNG)
+- **Insights**
+  - Application Insights is an **Application Performance Management (APM)** service. It is a sub-service of Azure Monitor. analysis, alerting, and streaming to external systems.
+- **Integrate**
+  - export log query **results**. build workflows to retrieve and copy logs to external location.
+- **Metrics and Logs**
+  - All data collected by Azure Monitor fits into one of two fundamental types, **metrics** and **logs**.
+  - the collected data can be viewed in **Azure Monitor**.
+  - **Metrics**
+    - **numerical values** stored in a **time-series database** that describe some aspect of a system at a particular point in time. can capture metrics in **near-real time**.
+    - have fixed set of **attributes**: time, type, resource, value, and dimension(optional).
+    - Azure Monitor displays collected metrics on the **Overview** page.
+    - **Metrics Explorer**: sub-service of Azure Monitor. plot charts, visualize correlating trends, and investigate spikes and dips in metrics values.
+    - default **retention** is **93 days**.
+  - **Logs**
+    - contain **time-stamped data** about resources, organized into **records** with different sets of **properties** for each type.
+    - **three places to send logs**:
+      - Azure Storage: cheap, but no query.
+      - Event Hub: notify some other SIEM(Security information and event management) to fetch logs.
+      - Log Analytics Workspace: Kusto Query Language(KQL) analytics.
+    - data collection agents collect log data and **store as tables** in a **Log Analytic Workspace** and queried using the **Log Analytics tool: Kusto Query Language**(KQL).
+    - default **retention** is **30 days**. free tier 7 days.
+    - **can store both metric(numeric) and event log data**.
+    - begins collecting data as soon as you create your Azure subscription and add resources.
+    - create or modify resources, stored in Azure Monitor activity logs.
+    - **Azure Monitor Agent**: allows you to collect internal logs from **Windows/Linux** VMs.
+      - **Guest OS**: collect operating system logs from VM running Azure Monitor Agent.
+    - **Data Collector API**: collect logs from any **REST API**.
+    - **Azure Monitor Analyze**: query language for logs.
+  - ![azure monitor](img/azure_monitor.PNG)
+- **Network Watcher**
+  - monitor, diagnose, and manage resources in an **VNet and on-prem**(Azure Monitor Agent installed).
+  - **scope**: one instance per **region**.
+  - gather data about connectivity, packet loss, latency, and available network paths
+  - reports that someone cannot access resources, network watcher helps you quickly identify(pin point root cause) the cause.
+  - must have **Log Analytics Workspace** setup.
+  - classic: **Any subscription containing a virtual network resource will automatically have Network Watcher enabled. Network Watcher can also be deployed in Azure Portal or the CLI**.
+  - **IP flow verification**: check connectivity to internet.
+    - sends different packets to check connectivity. reports on NSG rule that **accepted** or **dropped** packet.
+    - failed test and no issue reported by IP flow, firewall could be issue.
+  - **Next Hop Analysis**: helps verify network configuration. find broken routes.
+    - is traffic delivered to intended destination?
+    - returns next hop: type, ip, route table. Possible next hop types:
+      - Internet
+      - VirtualAppliance
+      - VirtualNetworkGateway
+      - VirtualNetwork
+      - VirtualNetworkPeering
+      - VirtualNetworkServiceEndpoint
+      - None (Used for user-defined routes)
+  - **Network Topology**: visual diagram of resource routes.
+    - must be Owner, Contributor, or Network Contributor to use Network Watcher.
+    - remote monitoring, alert notification, NSG flow and log analysis.
+  - **Packet Capture**: VM must have NSG rules allowing access to Azure Storage. capture packets on network for review.
+  - **Network Troubleshooting**
+    - Connection Monitor: **ongoing** monitoring of network.
+    - Connection Troubleshoot: **point-in-time** monitoring of network.
+- **Performance Monitor**
+  - packet loss and latency between endpoints(VNet and on-prem).
+  - VM running **Log Analytics Agent** is required on both ends.
+- **RunBooks**
+  - Runbooks are **PowerShell or Python scripts** that **automate tasks** and processes **within Azure or on-premises** environments.
+  - called from Alert webhooks. execute complex automation workflows in response to specific alerts.
+- **Service Connectivity Monitor**
+  - monitors packet loss and network performance with remote location(database, web server...)
+- **Tiers**
+  - Tiers of monitoring data collect by Azure Monitor:
+  - **Application**: performance and functionality of application code.
+  - **Guest OS**: collects OS logs. VM, on-prem or another cloud.
+  - **Azure Resource**: resource consumption by VMs, Services.
+  - **Azure Subscription**: operation and management of Azure subscription. health of Azure itself.
+  - **Azure Tenant**: tenant level services data. e.g. Entra ID
+- **Visualize**
+  - viewing and interpreting metrics and logs.
+- **VM Monitoring**
+  - to proactively prevent and quickly respond to any access, security, and performance issues, you need to monitor your VMs' traffic, health, performance, and events.
+  - default basic metrics are collected from each VM and shown on the VMs **Overview** page.
+  - **Metrics** can measure VM performance, resource utilization, error counts, user responses, or any other aspect of the system that you can quantify numerically.
+    - default kept for 93 days.
+  - **Logs** are records of system events that contain a timestamp and different types of structured or free-form data.
+  - **Extend functionality**: adding **Azure Monitor Agent** to compute resources. Collects data on VM internal operations. on-prem or cloud VMs.
+    - stores log data in a **Log Analytics workspace** for querying and analysis.
+  - **Host Monitoring**
+    - VM host represents compute, storage, and network.
+  - **VM Alerts**: Recommended alert rules are a predefined set of alert rules based on commonly monitored host metrics.
+  - **Boot Diagnostics**: linux/windows. show boot console log output. stores data in a managed storage account.
+  - **Azure Monitor Agent**: program that collects **OS workloads**, guest OS... After install, you set up a **Data Collection Rule** (DCR).
+    - **DCR**: defines what to collect and where to send data.
+  - **VM Insights**: feature that installs **Azure Monitor Agent** and provides prebuilt **DCR** to help you get started monitoring **metrics**(usage and performance) on one or more VMs.
+  - **VM Event Logs**: create custom DCR. specify data you want to collect and where to send. If sent to **Log Analytics workspace**, data can be analyzed with the **Kusto Query Language**(KQL).
+  - **Data Collection Endpoint**: required with **Insights**. where to send data.
+  - ![vm monitoring](img/VM_monitoring.PNG)
+- **Webhooks**
+  - purpose: send alert to external system or application.
+  - user-defined HTTP callbacks send **POST** request to **webhook URL**.
+
+## Azure Powershell and CLI
+
+- **CLI**
+  - <https://learn.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest>
+
+```sh
+# Show list of all available images
+az vm image list --output table
+az vm image list --sku Wordpress --output table --all # wordpress images
+az vm image list --publisher Microsoft --output table --all # microsoft images
+# available datacenter locations
+az vm image list --location eastus --output table
+# VM sizes
+az vm list-sizes --location eastus --output table
+# Resize VM
+az vm list-vm-resize-options --resource-group "[sandbox resource group name]" --name SampleVM --output table
+az vm resize --resource-group "[sandbox resource group name]" --name SampleVM --size Standard_D2s_v3
+# Query
+az vm show --resource-group "group name" --name SampleVM --query "networkProfile.networkInterfaces[].id"
+# VMs
+# Create
+az vm create --resource-group "[sandbox resource group name]" --location westus --name SampleVM --image Ubuntu2204 --admin-username azureuser --generate-ssh-keys --verbose
+# When creating multiple VMs, Adding '--no-wait' will cause 'azure VM create' to return immediately without waiting for VM creation.
+# View all VMs -return all virtual machines defined in this subscription.
+az vm list --output table
+# Show VM specs
+az vm show --resource-group "[sandbox resource group name]" --name SampleVM
+# VM IP address
+az vm list-ip-addresses -n SampleVM -o table
+
+# Network
+az vm open-port --port 80 --resource-group "[sandbox resource group name]" --name SampleVM # open port 80
+# VNet
+az network VNet create --resource-group "[sandbox resource group name]" --name CoreServicesVNet --address-prefixes 10.20.0.0/16 --location westus
+# Subnet
+az network VNet subnet create --resource-group "[sandbox resource group name]" --VNet-name CoreServicesVNet --name GatewaySubnet --address-prefixes 10.20.0.0/27
+```
