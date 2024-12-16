@@ -42,16 +42,12 @@ class Solution:
             lvl, curr = queue.popleft()
             level_vals[lvl].append(curr.val)
 
-            print(f"Level: {lvl}\nVal: {curr.val}")
-
             if curr.left:
-                print(f"Left: {curr.left.val}")
                 queue.append((lvl+1, curr.left))
 
             if curr.right:
-                print(f"Right: {curr.right.val}")
                 queue.append((lvl+1, curr.right))
-            print()
+
         answer = []
         for lvl, nodes in level_vals.items():
             answer.append(nodes[-1])

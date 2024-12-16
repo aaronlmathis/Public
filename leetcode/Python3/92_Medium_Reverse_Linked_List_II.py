@@ -30,7 +30,6 @@ class Solution:
             new_node_list.append(node_list[i])
         new_node_list+=node_list[right+1:]
 
-        print(new_node_list)
 
         for i in range(len(new_node_list) - 1):
             new_node_list[i].next = new_node_list[i+1]
