@@ -30,15 +30,21 @@ from typing import List
 import heapq
 class Solution:
     def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:
+        # Create a min heap full of tuples that have (value, index) for each item in nums.
+        # This will let you pull the smallest value out every time without searching the list over and over.
         min_heap = [(value, index) for index, value in enumerate(nums)]
         heapq.heapify(min_heap)
 
+        # Iterate k times for k operations
         for _ in range(k):
+            # Pop out the smallest value in the heap along with it's index in nums
             value, index = heapq.heappop(min_heap)
+            # Set nums[index] to value * multiplier
             nums[index] = value * multiplier
+            # Reinsert the new value into the heap
             heapq.heappush(min_heap, (nums[index], index))
 
-
+        # Return nums
         return nums
     
 sol = Solution()

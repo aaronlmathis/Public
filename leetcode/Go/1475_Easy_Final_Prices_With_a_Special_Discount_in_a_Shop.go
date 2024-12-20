@@ -33,11 +33,13 @@ func finalPrices(prices []int) []int {
 	ans := append([]int{}, prices...) // Create a copy of prices
 
 	for i, price := range prices {
+		// While the stack is not empty and the current price is less than or equal to the price at the top of the stack
 		for len(stack) > 0 && prices[stack[len(stack)-1]] >= price {
 			top := stack[len(stack)-1]   // Get the index at the top of the stack
 			stack = stack[:len(stack)-1] // Pop the index from the stack
 			ans[top] -= price            // Apply the discount
 		}
+		// Push the current index onto the stack
 		stack = append(stack, i)
 	}
 
