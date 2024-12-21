@@ -44,11 +44,10 @@ class Solution:
             else:
                 ans.append(False)
         
-        print(ans)
+        return ans
                 
 
-        
-        return True
+
      
 nums = [4,3,1,6]
 queries = [[0,2],[2,3]]

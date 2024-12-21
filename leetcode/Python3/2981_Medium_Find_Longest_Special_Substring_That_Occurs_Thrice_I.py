@@ -37,9 +37,10 @@ class Solution:
             return -1
         longest = -1
         low, high = 1, n
-        counts = defaultdict(int)
+
         while low <= high:
             found = False
+            counts = defaultdict(int)
             print(f"{low} - {high}")
             k = (low + high) // 2
             print(f"K: {k}")

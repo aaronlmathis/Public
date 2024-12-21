@@ -1,0 +1,705 @@
+# D337 Internet of Things and Infrastructure
+
+## Tips
+
+- <https://www.reddit.com/r/WGU/comments/104eeyh/d337_internet_of_things_iot_and_infrastructure/>
+  - I only read through "The Internet of Things : From Data to Insight" and read Chapters 1, 2, 3 and maybe some of 4. The other textbook is a lot of stats and seems like a waste of time.
+  - <https://quizlet.com/759979605/d337-internet-of-things-iot-and-infrastructure-flash-cards/?x=1jqt>
+  - [The Internet of Things: From Data to Insight](https://ebookcentral.proquest.com/lib/westerngovernors-ebooks/reader.action?docID=6109011&ppg=23)
+- <https://www.reddit.com/r/WGUIT/comments/zfm6r6/internet_of_things_iot_and_infrastructure_d337/>
+  - I'd say **study the PA extensively** as the OA is very similar with some questions verbatim.
+  - Just study the **bolded terms** in the book and the **acronyms**, the other half of the exam is literally common sense.
+  - **LowPowerWAN "LPWAN"** there were like 3-6 questions on that alone, make sure you know your **regs** and what they do like **NIST, ICT**, etc.
+  - The **most important part of the book was the last 4 chapters**, the ones that talked about IoT in transportation, healthcare, agriculture (specifically the difference between sensors, actuators, etc), and the ethical concerns and standards behind IoT. Those 4 chapters make up at least 50% of the exam.
+  - few questions about **botnets** and the **Mirai Malware**.
+  - The only thing they really want you to know is that the **malware specifically attacks devices with default credentials**.
+  - They hit **Blockchain** pretty hard in the OA too so I'd study up on how a blockchain operates, but if you've taken the Intro to Crypto course before this you will have no problem in that section.
+  - <https://quizlet.com/885143305/d337-internet-of-things-and-infrastructure-flash-cards/>
+- <https://www.reddit.com/r/WGUIT/comments/1blh3rd/internet_of_things_iot_and_infrastructure_d337/>
+- <https://www.reddit.com/r/WGU/comments/18oz6kz/d337_internet_of_things_iot_and_infrastructure/>
+  - <https://quizlet.com/759979605/d337-internet-of-things-iot-and-infrastructure-flash-cards/?x=1jqt>
+- [The Internet of Things: What Everyone Needs to Know](https://ebookcentral.proquest.com/lib/westerngovernors-ebooks/reader.action?docID=6176638&ppg=32)
+- <https://skillsforall.com/course/introduction-iot?courseLang=en-US>
+- My Notes:
+  - My anki deck can be found [here](https://ankiweb.net/shared/by-author/938689157)
+  - **Take the pre-exam first!** I created this with the help of Gemini, to help explain the meaning of IoT terminology.
+  - About 25% of questions on the final exam are closely related to these questions.
+  - Some of the final exam questions are poorly written, but keep it simple and choose the answer that makes the most sense.
+
+## 01_IoT
+
+- **First Wave**
+  - Hardware related breakthrough that aimed to connect everyday objects to networks.
+- **Second Wave**
+  - Development of new sensors and materials as well as communication technologies and protocols
+- **Third Wave**
+  - Data management processing and analytics as well as security, privacy, and trust
+- **IoT Ecosystem**
+  - a set of stakeholders that participate in the deployment of IoT technology and the relationship between them.
+
+## 02_Stakeholders In IoT Ecosystems
+
+- **Information Providers**
+  - Owners of sensor deployments that may share information and data for the general good.
+- **Platform Providers**
+  - Provide storage and computing infrastructure as well as analytics services which could include artificial intelligence.
+- **Application Developers**
+  - Produce applications that process the available data within a specific context to produce actionable insight for end users.
+- **End Users**
+  - Use the information and applications that are made available
+- **Information broker**
+  - on-board storage module that allows storage of recently received data from sensors or from the cloud or other modules.
+- **Information provider**
+  - collects data from its own sensor deployments and wants to make this available to others under appropriate terms and conditions.
+- **Information consumer**
+  - wants to join the data revolution and build a new application that draws on multiple disparate sources of data, wants to identify relevant data, obtain permission to use it, and integrate it into their own development.t
+- **Actuator**
+  - a device that converts an electrical signal into a corresponding physical quantity such as movement, force, or sound.
+- **Edge processing**
+  - a process of data aggregation, manipulation, bandwidth reduction, and other logic directly on an IoT sensor or device
+- **Access network**
+  - part of network which is concerned with moving data to and from a sensor or edge.
+- **Customer edge device**
+  - receive data from and send commands to IoT devices & provide limited local storage, processing, and networking functions device to a backhaul network.
+- **Mobile edge computer**
+  - MEC, servers that reduce transmission cost and provide fast interactive response in the computation of off-loading resources, focused on data aggregation, data compression, and data transformation.
+- **Centralized IoT platform**
+  - powerful central storage and processing capability for IoT use cases delivering important capabilities such as data interoperability and uniform data access, management functions.
+- **C-PEC**
+  - Customer Premises Edge Compute, computing devices installed on the customer’s premises adjacent to their sensors, LAN, or IoT devices.
+- **CSP-PEC**
+  - Communications Service Provider Premises Edge Compute
+
+## 03_IoT Connectivity
+
+- **Zigbee**
+  - can mesh, suitable for short and mid-range.
+- **LPWAN**
+  - (Low Power Wireless Area Network), lower than 1 GHz, 868 MHz in EU called ISM (Industrial, Scientific, and Medicine) band, USA 915 MHz, several techs hat use this band are Sigfox, LoRaWAN, and Weightless
+- **UNB**
+  - Ultra-narrow Band systems transmit the signal in a small amount of spectrum, usually less than 1 kHz, and are particularly suitable for small amounts of data.
+- **Spread spectrum**
+  - the technique in which the signal is transmitted on a bandwidth that is much bigger than the original frequency to decrease interference and increase security.
+- **LoRaWAN**
+  - based on LoRa protocol from Semtech, uses spread spectrum.
+- **Sigfox**
+  - named for company that owns it, used in narrowband.
+- **Weightless**
+  - consists of three protocols, works on 2.4
+- **Extended coverage**
+  - IoT-optimized GSM network, deployed with software upgrade.
+- **Narrow band Internet of Things (NB-IoT or LTE-M2)**
+  - designed to lower power consumption, increase system capacity, spectrum efficiency, and range.
+- **LTE-M**
+  - LTE chips built for IoT, higher throughput and lower battery life than NB-IoT
+- **eMBB**
+  - 5G: Enhanced Mobile Broadband with higher data rates
+- **URLLC**
+  - 5G: ultra-reliable low-latency communication for critical use cases where quality of service and low latency is needed.
+- **mMTC**
+  - 5G: Massive Machine Type Communications to support huge number of devices in future.
+
+## 04_Runtime Environments, Programming & Features
+
+- **IoT Runtime Environment**
+  - IRE, provides additional functionality beyond the container management level that enables remote management of information flows between multiple IoT applications and external endpoints, allows specific applications to be chained together, enabling data to be transforms, contextualized, and communicated to other systems.
+- **Device management**
+  - encompassing the areas of initial device configuration and on-going management.
+- **Secure Runtime Environment**
+  - component represents a comprehensive collection of tools that reduce the attack space through measures such as identity access management (IAM), secure boot, device attestation, TPMs, and trusted execution environments (TEEs)
+- **NodeJS**
+  - Javascript for servers
+- **Node-RED**
+  - built on NodeJS, flow-based development tool meant for IoT.
+- **Protocol adapter**
+  - protocol specific module enabling the transformation of incoming sensor data or outgoing actuator commands to a common format.
+- **Rules Engine**
+  - a module to route the incoming data from other modules based on predefined rules.
+- **Use case specific**
+  - module that is produced by a developer to perform a specialist function.
+- **Management and Security**
+  - module that allows registration of the IoT device to the system and manages modules and configuration, handles security features.
+- **HyperCat**
+  - a specification for representing and exposing IoT platform catalogues over Web technologies, uses JSON and URI
+- **DCAT**
+  - Data Catalog Vocabulary, a W3C recommendation aimed at facilitating interoperability between data catalogues, specifics a resource description framework (RDF)
+
+## 05_Three main aspects of interoperability: discovery, access control, and usage
+
+- **Discovery**
+  - Where information is distributed across many aggregators (IoT platforms), it is necessary to first identify which aggregators contain information of interest and afterwards find specific data sets.
+- **Access control**
+  - In the more open environment of the IoT, a provider of information generally does not know all potential consumers of its data. Facilities that allow information providers to retain control over access should therefore be provided by an IoT platform.
+- **Data access**
+  - The primary aim of the data access platform is to reduce the technical barriers faced by both providers and consumers of information in which they have a shared interest. This particularly applies to where they have different starting points and thus do not have an existing shared context.
+
+## 06_Four main classes of information in BT Datahub
+
+- **Sensor data**
+  - values (generally numeric), each with a time and an optional location, which is required for a mobile sensor. For a fixed sensor, location can be regarded as a contextual property of the sensor.
+- **Journeys**
+  - represented as geospatial features (e.g., point, line, or polygon) with arbitrary associated properties described in metadata.
+- **Geographical features**
+  - represented as geospatial features (e.g., point, line, or polygon) with arbitrary associated properties described in metadata.
+- **Situations**
+  - includes an aggregation of sensor-based data and other data, as well as interpretation. It is relevant to a time and some specified locations.
+
+## 07_Data
+
+- **Sensor data**
+  - measurement or query of data, is the initial value required for metadata to be gathered.
+- **Metadata**
+  - set of data that describes and presents information about other data. Metadata is a child set of data provided within an initial query of parent data.
+- **Dataset**
+  - is a key-value pair of data that is relational to the initial query of data from a sensor.
+- **Batch processing**
+  - a process that accumulates new data into disjunctive groups and processes them later, which is defined by criteria such as batch size or age.
+- **Stream processing**
+  - a process that handles each new piece of data at the time the data is being created, either individually or inside of a rolling window.
+- **Two main types of stream data processing systems**
+  - first type based on existing relational database principles, second type more suitable for streaming data as they do not enforce a relational view and enable the creation of custom operators that consume and transform data streams and generate new data streams.
+- **Flink**
+  - is a second-generation stream processing system that utilizes automated scaling.
+- **Lambda architecture**
+  - supports both stream and batch functionalities, provides both accurate and up to date, near-real-time results.
+- **Kappa architecture**
+  - the batch layer is not present, and all data are processed exclusively as streams.
+- **Stream analytics**
+  - is important for sensing what is happening in the radio frequency electromagnetic spectrum, with relatively low-cost sensors.
+- **Spectrum Streamer**
+  - is a streaming architecture and an open-source library used to ingest time, frequency, and energy values of data in real time.
+- **Real-time notifications**
+  - are detected transmissions that can be used to update spectrum occupancy databases or directly notify other devices that a transmission is happening in a certain channel.
+- **Statistical reporting**
+  - references a report delivered by computational statistics of the detected events, primarily targeting human users for report generation.
+- **Custom applications**
+  - can be developed to subscribe to the output of the spectrum streamer for report generation.
+- **Archetype Query Language (AQL)**
+  - a declarative query language developed specifically for expressing queries used for searching and retrieving the data found in archetype-based repositories.
+- **Electronic health record (HER)**
+  - the electronic, systematized collection of patient and population health information stored in a digital format that can be shared across different healthcare settings.
+- **Laboratory information system (LIS)**
+  - a software-based solution with features that support a modern laboratory’s operations.
+- **NoSQL**
+  - provides a mechanism for storage and retrieval of data that is modeled in means other than the tabular relations.
+
+## 08_Five main operations performed on streaming data: compression, dimensionality reduction, summarization, learning, and visualization
+
+- **Compression**
+  - set of operations that can be done on the data to reduce the occupied space for storing and/or the required bandwidth for transmitting.
+- **Dimensionality reduction**
+  - set of techniques that reduce the number of random variables (or dimensions) under consideration.
+- **Summarization**
+  - process of transforming the data in order to provide to the human and machine data consumers a representation that best describes the time series under consideration.
+- **Learning and mining**
+  - learning refers to methods that automate model building from recorded data, mining involves using models to extract insights and understand large datasets that are otherwise impossible to analyze.
+- **Visualization**
+  - methods that transform the data into a visual representation targeted at a human consumer.
+
+## 09_Organizations
+
+- **Standards development organizations (SDOs)**
+  - organizations that work to formulate health and safety standards.
+- **Industrial Internet Consortium (IIC)**
+  - a nonprofit organization created for the promotion of open standards and interoperability for technologies used in industrial and machine-to-machine (M2M) environments, founded by ATT, Cisco, General Electric, Intel, and IBM in 2014 to bring together organizations and technologies to promote best practice for IoT systems.
+- **Alliance for Internet of Things Innovation**
+  - initiated by the European Commission in 2015. The objective of the association was to enhance innovation and economic development in the Internet of Things in Europe.
+- **PETRAS Internet of Things Research Hub**
+  - is a consortium of nine leading UK universities that work together to explore critical issues in privacy, ethics, trust, reliability, acceptability, and security of the IoT. The SGP team is part of PETRAS.
+- **Internet of Things Security Foundation (IoTSF)**
+  - a collaborative, nonprofit, international responses to the complex challenges posed by cybersecurity in the expansive hyper-connected IoT world.
+- **BGP**
+  - IoTSF Best Practice Guidelines
+- **National Cybersecurity Center of Excellence (NCCoE)**
+  - a U. S. government organization that builds and publicly shares solutions to cybersecurity problems faced by U. S. businesses.
+- **OECD**
+  - Organization for Economic Cooperation and Development, an intergovernmental economic organization with 38 member countries, founded in 1961 to stimulate economic progress and world trade.
+- **NICE**
+  - National Initiative for Cybersecurity Education, a partnership between government, academia, and the private sector focused on supporting the United States’ ability to address current and future cybersecurity education and workforce challenges through standards and best practices.
+- **Return on investment (RoI)**
+  - a performance measure used to evaluate the efficiency or profitability of an investment or to compare the efficiency of several different investments.
+- **Security operations center (SOC)**
+  - a centralized function within an organization employing people, processes, and technology to continuously monitor and improve an organization’s security posture while preventing, detecting, analyzing, and responding to cybersecurity incidents.
+
+## 10_Acts / Processes Used by Organizations
+
+- **Cybersecurity Act**
+  - is central to the EU’s approach to IoT security. It gives the European Union Agency for Network and Information Security (ENISA) a permanent mandate, a strengthened role, and greater operational resources. It also aims to create a single certification scheme for connected devices, thereby strengthening consumer trust and working toward a single EU digital marketplace.
+- **ISO27005**
+  - the international standard document of a widely agreed general framework for security risk management.
+- **Industrial Internet Reference Architecture (IIRA)**
+  - standards-based architectural template and methodology that enables Industrial Internet of Things
+- **BSI Kitemark**
+  - recognizable symbols and often binary indicators that can be combined with color coding and/or letters, numbers, etc., to indicate levels of trust, compliance, security, etc.
+- **California Consumer Privacy Act (CCPA)**
+  - a state statue intended to enhance privacy rights and consumer protection for residents of California in the United States
+- **Vulnerabilities Equities Process (VEP)**
+  - a process used by the U.S. federal government to determine on a case-by-case basis how it should treat zero-day computer security and vulnerabilities.
+
+## 11_Blockchain
+
+- **Distributed Ledger Technology (DLT)**
+  - a decentralized database managed by multiple participants across multiple nodes.
+- **Permissionless DLTs**
+  - any actor can become a node.
+- **Federated DLT**
+  - permissioned DLT shared across more than one organization.
+- **Features of blockchains**
+  - Decentralization, Immutability, auditability, fault tolerance and resilience
+- **Benefits of blockchain**
+  - trust, resilience, adaptability, fault tolerance, security, complete decentralization
+- **VNF**
+  - virtual network function
+- **vMCM**
+  - virtual machine cloud machine function. Offers digital twin services of the on-field physical assets (physical twin counterpart) such that the latter may be monitored and governed in a device-agnostic manner (i.e., through the digital twin rather than the physical one). Also acts as a local network cache for reported measurements.
+- **vBCP**
+  - virtual blockchain processing function. Gateway to blockchain infrastructures, allowing interaction of vBCP service-compliant devices with the blockchain, without necessitating any mining operation on their behalf. Uses vAAA as a means of blockchain-based identity validation.
+- **vAAA**
+  - VNF delivering AAA, features two distinct service modes, namely blockchain-based and OAUTH2.0 service.
+- **vMME**
+  - virtual mobility management entity responsible for registering devices to the network and advertising their presence on it.
+- **vSON**
+  - virtual self-organizing networks enabling multihop and multiprotocol connectivity of IoT devices without direct access to 5g networking.
+- **vTSD**
+  - virtual terminal service discovery responsible for effectively handling IoT devices services discovery.
+
+## 12_Energy Sector
+
+- **Advanced metering infrastructure (AMI)**
+  - an integrated system of smart meters, communications networks, and data management systems that enable two-way communication between utilities and customers.
+- **SM**
+  - smart meter. IoT device that reports power consumption. Electricity usage.
+- **IED**
+  - intelligent energy device. Electrical Grid monitoring and information gathering.
+- **PMU**
+  - phasor measurement unit. Advanced AC sine wave monitoring. Voltage quality.
+- **SCADA**
+  - Industrial monitoring and control center.
+
+## 13_Internet of Things PreExam 60 Questions and Explanations
+
+- Which building block is used to move collected IoT data to the central IoT platform? % A. Edge compute % B. Application % C. Gateway % D. Smart device
+  - **Correct Answer**
+    - **Gateway**: A gateway acts as an intermediary device, collecting data from sensors and transmitting it to a central platform.
+  - **Incorrect Answer**
+    - **Edge compute**: While edge computing can process data from sensors, it doesn't necessarily forward it onward like a gateway does.
+    - **Application**: Applications use the data collected by sensors, but they aren't involved in moving the data itself
+    - **Smart device**: A traditional device enhanced with internet connectivity and computing capabilities, making it part of the IoT.
+- What is the function of soil moisture sensors in a smart agriculture ecosystem? % A. Capturing soil moisture metrics % B. Processing soil moisture metrics % C. Activating sprinklers based on low-soil-moisture metrics % D. Transmitting soil moisture metrics to a central network
+  - **Correct Answer**
+    - **Capturing soil moisture metrics**: Soil moisture sensors are specifically designed to measure the water content in the soil.
+  - **Incorrect Answer**
+    - **Processing soil moisture metrics**: This is a secondary action that might be done after capturing the moisture metrics.
+    - **Activating sprinklers based on low-soil-moisture metrics**: This relies on the processed data, not the capturing itself.
+    - **Transmitting soil moisture metrics to a central network**: While this might happen after capturing, it's not the primary function of the sensor.
+- What moves data from IoT sensor devices to a central network? % A. Gateway % B. Actuator % C. Application server % D. Proxy server
+  - **Correct Answer**
+    - **Gateway**: Similar to question 1, a gateway is responsible for moving data from sensor devices to a central network.
+  - **Incorrect Answer**
+    - **Actuator**: Actuators perform actions based on instructions, not data movement.
+    - **Application server**: Applications analyze data, not move it.
+    - **Proxy server**: Proxy servers manage network traffic, but they aren't directly involved in data movement between sensors and the network.
+- Which computation method processes data captured at the sensor device before sending it to a backhaul network? % A. Data analytics % B. Data access % C. Cloud computing % D. Edge computing
+  - **Correct Answer**
+    - **Edge computing**: Edge computing processes data at the sensor level or nearby devices before sending it to a central location.
+  - **Incorrect Answer**
+    - **Data analytics**: Data analytics typically happens after the initial processing that edge computing performs.
+    - **Data access**: Data access refers to how users can retrieve data, not the initial processing.
+    - **Cloud computing**: Cloud computing refers to the location where data is stored and processed, not the initial processing at the sensor level.
+- Which building block of the IoT architecture is responsible for collecting raw data generated by the monitored entity? % A. Actuator % B. Gateway % C. Processor % D. Sensor
+  - **Correct Answer**
+    - **Sensor**: Sensors are the primary devices responsible for collecting raw data from the environment.
+  - **Incorrect Answer**
+    - **Actuator**: Actuators perform actions based on data, not collect it.
+    - **Gateway**: Gateways move data, not collect it.
+    - **Processor**: Processors can be part of a sensor device, but they aren't the primary function of capturing raw data.
+- What is the function of the customer edge device in the four-node edge computing model? % A. Provides limited local storage and processing capabilities % B. Performs data aggregation and reduces transmission costs % C. Performs measurements and provides telemetry % D. Provides powerful storage and processing capabilities
+  - **Correct Answer**
+    - **Provides limited local storage and processing capabilities**: Customer edge devices (C-PEC) typically have limited resources for local processing and storage.
+  - **Incorrect Answer**
+    - **Performs data aggregation and reduces transmission costs**: While customer edge devices might perform some basic data pre-processing, data aggregation and transmission cost reduction are often handled by higher-level nodes with more processing power and potentially network management capabilities.
+    - **Performs measurements and provides telemetry**: This is partially true. Customer edge devices often collect measurements and telemetry data from sensors or other devices they are connected to. However, their role extends beyond just data acquisition; they can also perform some local processing and storage before potentially transmitting the data onwards.
+    - **Provides powerful storage and processing capabilities**: As mentioned earlier, customer edge devices are resource-constrained. Powerful storage and processing capabilities are typically found in higher-level nodes within the four-node edge computing model, which can handle more complex tasks and data analysis.
+- Which two processor architectures are used by Customer Premises Edge Compute (C-PEC) devices? % % Choose 2 answers. % A. x86 % B. MIPS % C. ARM % D. Itanium
+  - **Correct Answer**
+    - **x86**: x86 and ARM are common processor architectures used in C-PEC devices due to their balance of power consumption and processing capabilities.
+    - **ARM**: x86 and ARM are common processor architectures used in C-PEC devices due to their balance of power consumption and processing capabilities.
+  - **Incorrect Answer**
+    - **MIPS**: Less common architecture in C-PEC devices compared to x86 and ARM.
+    - **Itanium**: Typically used in high-performance servers, not C-PEC devices.
+- Which module in the edge computing framework is used to store IoT data received from sensors or from the cloud? % A. Protocol adapter % B. Information broker % C. Rules engine % D. Case specific
+  - **Correct Answer**
+    - **Information broker**: An information broker stores and manages data received from various sources, including sensors.
+  - **Incorrect Answer**
+    - **Protocol adapter**: Manages communication protocols, not data storage and management.
+    - **Rules engine**: Automates actions based on predefined rules, not data storage.
+    - **Case specific**: epends on the specific use case, not a general function for data storage and management.
+- Which feature characterizes a wireless local area network (WLAN) in an IoT architecture? % A. Limit of battery life of one year % B. Limit of data rate of 1 KB % C. Support for FireWire protocol % D. Support for line-of-sight communication
+  - **Correct Answer**
+    - **Support for line-of-sight communication**: While other features may be relevant to WLANs, line-of-sight communication is a key characteristic for optimal signal transmission in WLANs. Signal strength can be weakened by obstacles between the transmitting and receiving devices.
+  - **Incorrect Answer**
+    - **Limit of battery life of one year**: Battery life of devices connected to a WLAN can vary depending on the device type, usage patterns, and power management features. While some devices might achieve a year of battery life, it's not a defining characteristic of WLANs themselves.
+    - **Limit of data rate of 1 KB**: Data rates (speed of data transfer) of WLANs can vary depending on the specific WLAN standard used (like 802.11n or 802.11ac) and network conditions. While there might be limitations, 1 KB/s is a very low data rate for most WLAN applications.
+    - **Support for FireWire protocol**: FireWire is a wired connection protocol typically used for high-speed data transfer between devices. WLANs use radio waves for wireless communication and don't rely on FireWire protocol.
+- What is the result of switching from the industrial, scientific, and medical (ISM) frequency above 1 GHz to the ISM frequency below 1 GHz? % A. Lower cost % B. Longer range % C. Higher data rate % D. Shorter battery life
+  - **Correct Answer**
+    - **Longer range**: Lower frequencies generally offer a longer range for signal transmission compared to higher frequencies.
+  - **Incorrect Answer**
+    - **Lower cost**: Lower cost is more likely associated with higher frequencies due to simpler hardware requirements.
+    - **Higher data rate**: Higher data rates are typically achievable with higher frequencies.
+    - **Shorter battery life**: The impact on battery life is not a direct consequence of the frequency itself. It depends more on the specific radio hardware and how efficiently it transmits and receives signals. Both higher and lower frequencies can be optimized for low power consumption depending on the design.
+- What is a short-range network technology that supports meshing? % A. Zigbee % B. Bluetooth % C. Sigfox % D. Weightless
+  - **Correct Answer**
+    - **Zigbee**: Zigbee is a low-power wireless networking technology specifically designed for mesh networks, where devices can relay data for each other.
+  - **Incorrect Answer**
+    - **Bluetooth**: Bluetooth is not specifically designed for mesh networking, although some implementations might achieve limited mesh functionality.
+    - **Sigfox**: While Sigfox and Weightless are other low-power options, Zigbee is more widely used for mesh networking applications.
+    - **Weightless**: While Sigfox and Weightless are other low-power options, Zigbee is more widely used for mesh networking applications.
+- Which two components provide the connectivity for an IoT architecture? % Choose 2 answers. % A. Access network % B. Gateway % C. Sensor % D. Edge device
+  - **Correct Answer**
+    - **Access network**: An access network provides connectivity to a broader network, such as the internet, for sensor devices.
+    - **Gateway**: A gateway acts as an intermediary device, collecting data from sensors and transmitting it to a broader network through an access network.
+  - **Incorrect Answer**
+    - **Sensor**: Sensors themselves don't provide connectivity, they collect data.
+    - **Edge device**: While edge devices can process data, they can also connect through access networks.
+- A university is testing a smart energy solution and requires a system to monitor the following parameters of power used by its buildings: % voltage % phase % apparent power % power factor % frequency % Which device should be used to perform these readings? % A. Intelligent energy device (IED) % B. Smart meter (SM) % C. Power measurement and control (PMC) % D. Phasor measurement unit (PMU)
+  - **Correct Answer**
+    - **Power measurement and control (PMC)**: PMC stands for Power Measurement and Control, and these devices are designed to measure and potentially control power usage in a smart grid.
+  - **Incorrect Answer**
+    - **Intelligent energy device (IED)**: IEDs are used for broader intelligent grid management tasks beyond just power measurement and control.
+    - **Smart meter (SM)**: Smart meters are primarily used for residential or commercial billing purposes. They can measure power consumption but typically focus on total energy usage and might not provide detailed information on all the parameters mentioned in the question (like phase or power factor).
+    - **Phasor measurement unit (PMU)**: PMUs provide high-fidelity measurements for power systems, used for specific analysis but not general power measurement and control.
+- A university is deploying a smart energy solution to its student dormitories and needs to collect power usage data for billing purposes. % Which device should this university use? % A. Power measurement and control (PMC) % B. Smart meter (SM) % C. Intelligent energy device (IED) % D. Phasor measurement unit (PMU)
+  - **Correct Answer**
+    - **Smart meter (SM)**: Smart meters are specifically designed for billing purposes by intelligently measuring and recording power usage data.
+  - **Incorrect Answer**
+    - **Power measurement and control (PMC)**: PMCs may have broader functionalities than just billing, such as controlling power consumption.
+    - **Intelligent energy device (IED)**: IEDs are used for grid management, not individual meter reading like smart meters.
+    - **Phasor measurement unit (PMU)**: Phasor Measurement Units (PMUs) are specialized devices that provide high-fidelity (very precise) measurements of voltage and current phasors (phasors represent the magnitude and phase angle of a sinusoidal waveform). PMUs are valuable for specific grid analysis tasks but might be overkill for the university's needs, where a more general-purpose power measurement and control device like a PMC would be sufficient.
+- A city plans for an Intelligent Transport System (ITS) that monitors public transport locations, as well as accidents and congestions, to control traffic lights effectively. % % Which two items should be used to gather information for the system? % % Choose 2 answers. % A. GPS devices % B. Smart CCTV cameras % C. Smart meters % D. Intraocular devices
+  - **Correct Answer**
+    - **GPS devices**: GPS devices track location data, which can be used to understand traffic flow patterns.
+    - **Smart CCTV cameras**: Smart CCTV cameras can provide visual data on traffic flow and identify accidents.
+  - **Incorrect Answer**
+    - **Smart meters**: Smart meters focus on power usage data, not traffic information.
+    - **Intraocular devices**: Intraocular devices are implanted medical devices for vision correction.
+- An electric utility company needs to increase the speed of the collection and improve the accuracy of the information it manually collects from its meters. The meters are located in the back of residential dwellings. % % Which solution meets both requirements? % A. Move meters to the front of every building % B. Have another person verify the data from the meters % C. Install a sensor on meters that can transmit data to a receiver % D. Change the analog meters to a digital display
+  - **Correct Answer**
+    - **Install a sensor on meters that can transmit data to a receiver**: Installing sensors with data transmission capabilities eliminates the need for manual data collection, improving efficiency, speed, and reducing the risk of errors associated with manual processes.
+  - **Incorrect Answer**
+    - **Move meters to the front of every building**: While this might improve accessibility for meter readers in some cases, it wouldn't necessarily increase speed or accuracy. Additionally, relocating meters might be impractical and costly.
+    - **Have another person verify the data from the meters**: While having another person verify data can help catch errors, it wouldn't necessarily improve speed. Additionally, it would still be a manual process prone to human error.
+    - **Change the analog meters to a digital display**: Changing to a digital display might make it easier to read the meter value during manual collection, but it wouldn't address the need for speed or eliminate the need for manual data entry, which is prone to errors.
+- Which IoT device is used in a smart building to determine when rooms are in use? % A. Humidity device % B. Thermo device % C. Smart speaker % D. Smart light
+  - **Correct Answer**
+    - **Smart light**: Smart lights are often equipped with occupancy sensors. These sensors can detect motion or changes in light levels within a room. When no motion or significant change in light is detected for a certain period, the sensor can infer that the room is unoccupied. This information can be used by the smart building system to automate various actions, such as turning off lights to conserve energy.
+  - **Incorrect Answer**
+    - **Humidity device**: While humidity levels can be influenced by occupancy to some extent, they are not a reliable sole indicator. Humidity can fluctuate due to various factors like ventilation or recent activities in the room, making it less suitable for determining real-time occupancy.
+    - **Thermo device**: Similar to humidity, temperature can be impacted by occupancy but might not always be a reliable indicator. External factors like weather or HVAC settings can also affect temperature, making it less suitable for solely determining room usage.
+    - **Smart speaker**: Smart speakers primarily interact with users through voice commands. While some might have limited motion detection capabilities, they are not typically used as dedicated occupancy sensors in a smart building environment.
+- Which IoT device can improve emergency responses by monitoring a user's activities at home? % A. Camera % B. Companion robot % C. Air tag % D. Compressor
+  - **Correct Answer**
+    - **Companion robot**: Companion robots designed for elderly care or assisted living situations can be equipped with various sensors and monitoring capabilities. These might include motion detectors, fall detection sensors, or even voice recognition. By monitoring a user's activities at home, such as movement patterns or changes in routine, the robot could potentially detect emergencies and trigger an alert system or contact emergency services.
+  - **Incorrect Answer**
+    - **Camera**: While cameras can be used for surveillance, they might not be ideal for monitoring activities in a privacy-sensitive home environment. Additionally, cameras might not always be able to detect falls or other emergencies requiring immediate assistance.
+    - **Air tag**: Air tags are primarily used for tracking the location of objects, not monitoring activities within a home. They wouldn't provide the necessary data to detect emergencies.
+    - **Compressor**: A compressor is a mechanical device used for compressing gases. It has no role in monitoring user activities or emergency response.
+- Which type of IoT detection sensor built into electric bulbs minimizes energy usage? % A. Humidity % B. Light % C. Vibration % D. Motion
+  - **Correct Answer**
+    - **Motion**: Motion detection sensors built into electric bulbs can significantly minimize energy usage. These sensors detect movement within a room and automatically turn on the light when someone enters. Conversely, when no motion is detected for a predetermined period, the sensor can turn the light off. This targeted approach to lighting based on occupancy helps conserve energy compared to bulbs that remain lit continuously.
+  - **Incorrect Answer**
+    - **Humidity**: Humidity levels typically don't directly correlate with the need for light. Humidity sensors might be used in other smart home applications but wouldn't be the most suitable choice for minimizing energy usage with light bulbs.
+    - **Light**: Light sensors might be used for automatic dimming based on ambient light levels, but they wouldn't necessarily turn off lights completely when a room is unoccupied.
+    - **Vibration**: Vibration sensors are not commonly used in light bulbs. They might be used for specific applications in other contexts but wouldn't be suitable for detecting occupancy and controlling lighting.
+- A company plans to adopt IoT into its business operations and then go public. The company is concerned about the financial and reputational impact of increasing the volume of personally identifiable information (PII) that might inadvertently be exposed, which would affect the value of its stock. % Which two considerations should be addressed as part of the adoption strategy? % Choose 2 answers. % A. Governance % B. Privacy % C. Security % D. Standardization
+  - **Correct Answer**
+    - **Privacy**: As the company is collecting more PII, it's vital to have a robust privacy framework in place. This framework should address how PII is collected, stored, used, and disposed of. It should also ensure compliance with relevant data privacy regulations.
+    - **Security**: Since increased PII collection introduces a bigger target for cyberattacks, strong security measures are essential. This includes securing devices, networks, and data storage systems. Implementing robust access controls, encryption, and vulnerability management practices are all crucial elements of a strong security posture.
+  - **Incorrect Answer**
+    - **Governance**: While governance is important overall, it's a broader concept encompassing various aspects of managing the company. In this case, focusing specifically on data privacy and security governance is more critical.
+    - **Standardization**: While standardization can be helpful for device interoperability within an IoT ecosystem, it's not the primary concern here. The company needs to prioritize protecting PII data.
+- Which task does an information consumer perform within an IoT ecosystem? % A. Collects data from their sensors and shares it based on terms and conditions % B. Builds applications that use data from various sources after obtaining consent % C. Identifies risks by communicating with the data owner for risk management % D. Maintains backups of the data collected from the sensors for disaster recovery
+  - **Correct Answer**
+    - **Builds applications that use data from various sources after obtaining consent**: Information consumers in an IoT ecosystem are the entities that utilize data collected from various sources (sensors, devices, etc.). They typically don't directly collect the data themselves. However, they play a crucial role by building applications or services that leverage this data after obtaining proper consent from the data owner. This could involve anonymized data or data aggregated from multiple sources.
+  - **Incorrect Answer**
+    - **Collects data from their sensors and shares it based on terms and conditions**: While some information consumers might have their own sensors, the core function is using data collected by others, not necessarily collecting it themselves.
+    - **Identifies risks by communicating with the data owner for risk management**: Risk identification and management might be a collaborative effort involving various stakeholders, but it's not the primary function of an information consumer. Their focus is on utilizing the data for specific purposes.
+    - **Maintains backups of the data collected from the sensors for disaster recovery**: Maintaining data backups is typically the responsibility of the data owner or the platform that stores the data. Information consumers might rely on the data being accessible but wouldn't usually handle backups themselves.
+- How does the processing of IoT data in the cloud change when transitioning from the Lambda architecture to Kappa architecture? % A. The batch layer is removed. % B. The streaming layer is removed. % C. The batch layer replaces the serving layer. % D. The streaming layer replaces the serving layer.
+  - **Correct Answer**
+    - **The batch layer is removed.**: Kappa architecture is an extension of Lambda architecture designed for real-time data processing. It removes the batch layer, allowing for continuous processing of data streams.
+  - **Incorrect Answer**
+    - **The streaming layer is removed.**: Kappa architecture heavily relies on the streaming layer for processing all data. Removing this layer wouldn't make sense in this context.
+    - **The batch layer replaces the serving layer.**: The serving layer in both architectures focuses on preparing processed data for access and visualization. It wouldn't be replaced by the batch layer, which serves a different purpose.
+    - **The streaming layer replaces the serving layer.**: Similar to the previous explanation, the serving layer has a distinct function from the streaming layer. While the streaming layer processes data, the serving layer focuses on presenting the processed data for user access or further analysis.
+- Which component in the Lambda architecture acts as the streaming layer in a streaming processing system? % A. Real-time engine % B. Batch engine % C. Serving back-end % D. Data storage
+  - **Correct Answer**
+    - **Real-time engine**: The real-time engine in Lambda architecture is responsible for processing real-time data streams.
+  - **Incorrect Answer**
+    - **Batch engine**: This processes batched data, not real-time streams.
+    - **Serving back-end**: This serves processed data to applications, not for real-time processing.
+    - **Data storage**: This stores data, not for processing.
+- Which two technology areas affect the networking requirements within the customer IoT landscape? % % Choose 2 answers. % A. Smart roads % B. Smart home % C. Sonography % D. Wearables
+  - **Correct Answer**
+    - **Smart home**: Smart home devices require specific network protocols and bandwidth to communicate effectively.
+    - **Wearables**: Wearables often transmit data wirelessly, impacting network design and resource allocation.
+  - **Incorrect Answer**
+    - **Smart roads**: While smart roads may use IoT devices, they are not a primary technology impacting customer IoT landscapes.
+    - **Sonography**: Sonography is a medical imaging technique, not relevant to customer IoT landscapes.
+- Which vulnerability do IoT botnets target on IoT devices by applying data found on the internet? % A. Unencrypted communications % B. Default credentials % C. Cleartext passwords % D. Exposed sensors
+  - **Correct Answer**
+    - **Default credentials**: IoT botnets often exploit pre-programmed usernames and passwords (default credentials) to infect devices.
+  - **Incorrect Answer**
+    - **Unencrypted communications**: While unencrypted communication can be a vulnerability, it's not the primary target for default credential attacks.
+    - **Cleartext passwords**: Similar to unencrypted communications, this is not the main vulnerability exploited.
+    - **Exposed sensors**: Exposed sensors might be a vulnerability, but it's not the specific target of default credential attacks.
+- Which two stakeholder groups contribute to addressing the challenges of IoT security? % % Choose 2 answers. % A. Governments % B. Universities % C. Standards development bodies % D. Law enforcement organizations
+  - **Correct Answer**
+    - **Governments**: Governments play a role in setting regulations and standards for IoT security.
+    - **Standards development bodies**: Standards development bodies create guidelines and best practices for secure IoT development.
+  - **Incorrect Answer**
+    - **Universities**: While universities contribute to research on IoT security, they are not a primary stakeholder group.
+    - **Law enforcement organizations**: Law enforcement plays a role in investigating and prosecuting cybercrime, but they are not a primary stakeholder group in developing security solutions.
+- Which two issues can result from global deployment of insecurely configured IoT devices? % % Choose 2 answers. % A. Devices are compromised to provide fake data % B. Device hardware is attacked until destroyed % C. Devices are compromised to form botnets % D. Device software is built into a sandbox environment
+  - **Correct Answer**
+    - **Devices are compromised to provide fake data**: Insecure devices can be manipulated to provide false information.
+    - **Devices are compromised to form botnets**: Insecure devices can be easily exploited by attackers to become part of a botnet, a network of compromised devices controlled by a malicious actor. These botnets can be used to launch large-scale cyberattacks, such as Distributed Denial-of-Service (DDoS) attacks, disrupting online services or critical infrastructure.
+  - **Incorrect Answer**
+    - **Device hardware is attacked until destroyed**: While physical damage is a possibility in some extreme cases, attackers are more likely to exploit vulnerabilities for ongoing malicious activities rather than focus solely on destroying the hardware.
+    - **Device software is built into a sandbox environment**: A sandbox environment is a security measure to isolate software, not a result of insecure deployment.
+- Which type of malware creates a network of remotely controlled IoT devices unknown to the owners? % A. Macro % B. Cross-site scripting % C. Embedded software exploitation % D. Botnet
+  - **Correct Answer**
+    - **Botnet**: A botnet is a network of compromised devices controlled by a remote attacker.
+  - **Incorrect Answer**
+    - **Macro**: Macros are a type of program embedded in documents, not specific to IoT devices.
+    - **Cross-site scripting**: This is a web application vulnerability, not related to controlling devices.
+    - **Embedded software exploitation**: This is a general term for exploiting vulnerabilities in embedded systems, not specific to creating botnets.
+- What enables IoT devices to be infected by the Mirai malware? % A. Default passwords % B. Plaintext communication % C. Stolen certificates % D. Cloud storage
+  - **Correct Answer**
+    - **Default passwords**: Mirai exploited default credentials to infect a large number of IoT devices.
+  - **Incorrect Answer**
+    - **Plaintext communication**: While unencrypted communication can be a vulnerability, it's not the specific method used by Mirai.
+    - **Stolen certificates**: Stolen certificates are more likely used for man-in-the-middle attacks, not for infecting devices.
+    - **Cloud storage**: Cloud storage itself is not a vulnerability exploited by Mirai.
+- A company develops a small tracker to be used in parcels to track progress via Global Positioning System (GPS). Testing reveals that the tracker has a Joint Test Action Group (JTAG) port on the circuit board that can be used to overwrite the firmware on the tracker and provide false location data. % Which two Internet of Things Security Foundation (IoTSF) Best Practice Guidelines (BPGs) should this company follow in its design process to ensure security from these forms of attack? % Choose 2 answers. % A. Device secure boot % B. Credential management % C. Physical security % D. Application security
+  - **Correct Answer**
+    - **Device secure boot**: Device secure boot ensures the device only boots with authorized firmware, preventing unauthorized modifications.
+    - **Physical security**: Physical security measures like tamper-evident seals can deter attackers from accessing the JTAG port.
+  - **Incorrect Answer**
+    - **Credential management**: Credential management is important, but not specifically relevant to JTAG port attacks.
+    - **Application security**: Application security focuses on software vulnerabilities, not physical security of the device.
+- A company develops an IoT-based security system. The system uses proximity sensors that communicate with a central gateway using a 433 MHZ radio signal. Testing reveals that the traffic can be sniffed with a software-defined radio, and an attacker could spoof the proximity sensor by copying the authentication details from the radio traffic. % Which Internet of Things Security Foundation (IoTSF) Best Practice Guideline (BPG) should this company follow in its design process to ensure the security of the radio data? % A. Device secure boot % B. Physical security % C. Network connections % D. Application security
+  - **Correct Answer**
+    - **Network connections**: The network connections BPG recommends using encryption and authentication mechanisms to secure communication between devices.
+  - **Incorrect Answer**
+    - **Device secure boot**: Device secure boot ensures the device only boots with authorized firmware, preventing unauthorized modifications. This is not relevant to securing communication between devices.
+    - **Physical security**: While physical security is important, it alone may not prevent radio sniffing.
+    - **Application security**: Application security focuses on software vulnerabilities, not communication security.
+- A company hosts a database in a public cloud. Multiple IoT devices are compromised and used to generate a high volume of requests targeting the database to affect its availability. % Which type of attack is this? % A. Cross-site scripting % B. Distributed denial of service (DDoS) % C. Spear phishing % D. Structured Query Language (SQL) injection
+  - **Correct Answer**
+    - **Distributed denial of service (DDoS)**: A DDoS attack overwhelms a system with traffic, making it unavailable to legitimate users.
+  - **Incorrect Answer**
+    - **Cross-site scripting**: This is a web application vulnerability, not related to overwhelming a system with traffic.
+    - **Spear phishing**: This is a targeted email attack, not relevant to attacking a database.
+    - **Structured Query Language (SQL) injection**: This is a database attack technique, but it doesn't involve overwhelming the system with traffic.
+- A company developed an IoT smart photo frame that allows users to upload photos to their device using a web browser. Testing revealed that users can upload files onto the root filesystem. % Which Internet of Things Security Foundation (IoTSF) Best Practice Guideline (BPG) should this company follow in its design process to ensure filesystem permissions are set correctly? % A. Device secure boot % B. Physical security % C. Secure operating system % D. Application security
+  - **Correct Answer**
+    - **Secure operating system**: While other BPGs are important for IoT device security, securing the operating system is the most relevant guideline in this context. A secure operating system includes mechanisms for setting and enforcing filesystem permissions. By following this BPG, the company can ensure that uploaded files are placed in appropriate directories with restricted access, preventing users from uploading files to the root filesystem, which could compromise the entire system.
+  - **Incorrect Answer**
+    - **Device secure boot**: Device secure boot is a security measure that verifies the integrity of the operating system before it boots. While important, it doesn't directly address filesystem permissions.
+    - **Physical security**: Physical security focuses on protecting devices from physical tampering. While some physical security measures might limit unauthorized access to the filesystem entirely, it's not the most suitable BPG for the scenario where the issue lies with software configuration.
+    - **Application security**: Application security is crucial for IoT devices, but in this case, the problem stems from the core operating system's handling of filesystem permissions, not a specific application vulnerability.
+- A company uses IoT devices to capture data in the field and transmit it for central processing. The company plans to follow the Internet of Things Security Foundation's (IoTSF) Best Practice Guidelines (BPGs) to ensure that personal data is protected. % Which IoTSF guideline should this company use? % A. Device secure boot % B. Physical security % C. Securing software updates % D. Application security
+  - **Correct Answer**
+    - **Application security**: The Application Security BPG from IoTSF is the most suitable guideline for this scenario. It focuses on securing the software applications running on the IoT devices. This includes measures to protect against vulnerabilities that could allow unauthorized access to personal data collected by the devices. By following this BPG, the company can implement practices like secure coding, input validation, and data encryption to safeguard personal information throughout its lifecycle within the application.
+  - **Incorrect Answer**
+    - **Device secure boot**: While device secure boot is an important security measure, it primarily verifies the integrity of the operating system before it boots. It doesn't directly address application-level security for protecting personal data.
+    - **Physical security**: Physical security focuses on protecting devices from physical tampering. While it can indirectly contribute to data protection, it's not the most specific BPG for this situation where the concern lies with software vulnerabilities within the application.
+    - **Securing software updates**: Securing software updates is a crucial BPG for maintaining overall security, but in this specific case, the primary concern is securing the application itself to protect personal data it handles. However, secure software updates can indirectly contribute to application security by patching vulnerabilities that could be exploited for unauthorized access.
+- A company is developing a smart speaker. The company wants to review industry standards on device boot and operating system security to improve security in its devices. % Which two resources should this company evaluate? % Choose 2 answers. % A. Code of Practice % B. Best Practice Guidelines % C. Human-in-the-loop % D. Internet of Bodies
+  - **Correct Answer**
+    - **Code of Practice**: CoPs are established guidelines or sets of rules created by industry associations or government bodies. They outline best practices for achieving a specific goal, such as secure device boot and operating system security for smart speakers. Following a relevant CoP can provide a strong foundation for the company's security practices.
+    - **Best Practice Guidelines**: Similar to CoPs, BPGs offer recommendations and best practices. However, they might be created by individual companies or organizations and might not carry the same weight as a formally established CoP. Nevertheless, BPGs from reputable organizations in the smart speaker industry can provide valuable insights and specific technical recommendations for secure boot and operating system hardening.
+  - **Incorrect Answer**
+    - **Human-in-the-loop**: This refers to systems where a human is involved in decision-making processes alongside automation. While human oversight can be important for security, it's not a resource for reviewing industry standards on device boot and operating system security.
+    - **Internet of Bodies**: IoB refers to the interconnection of wearable devices with the internet. While smart speakers might be connected devices, they are not typically considered wearables, and IoB wouldn't be the most focused resource for smart speaker security specifically.
+- Malware has infected several IoT devices in a company. These devices were using default configurations. % What should the company do to prevent the malware from being installed? % A. Alter the port the devices use to communicate % B. Scan for unusual packets being sent to the devices % C. Change the devices' usernames and passwords % D. Install a firewall limiting communication to the devices
+  - **Correct Answer**
+    - **Change the devices' usernames and passwords**: Default usernames and passwords are well-known to attackers and make devices easy targets. By changing these credentials to strong, unique passwords for each device, the company significantly increases the difficulty for malware to gain unauthorized access and install itself.
+  - **Incorrect Answer**
+    - **Alter the port the devices use to communicate**: While changing communication ports can add a layer of obscurity, it's not a foolproof method. Malware can often scan for devices on different ports. Additionally, some devices might require specific ports to function correctly.
+    - **Scan for unusual packets being sent to the devices**: Network traffic monitoring is a valuable security practice, but it's more suited for ongoing threat detection. While it might help identify suspicious activity after the malware infection, it wouldn't necessarily prevent the initial installation that already occurred due to default configurations.
+    - **Install a firewall limiting communication to the devices**: Firewalls can be a useful security measure, but they typically focus on controlling incoming and outgoing traffic based on pre-defined rules. While they might help prevent some malware from communicating after installation, they wouldn't necessarily stop the initial infection that exploited default configurations.
+- What does blockchain implement to ensure reliable data are returned when there are multiple sensors measuring the same data? % A. Mega-merger method % B. Agreed consensus mechanism % C. Shared storage quorum % D. Byzantine Paxos algorithm
+  - **Correct Answer**
+    - **Agreed consensus mechanism**: Blockchain technology utilizes a consensus mechanism to ensure all participating nodes in the network agree on the validity of a transaction (adding a new data block). This consensus mechanism ensures that even if some sensors might report slightly different readings due to factors like calibration or environment, only one version of the data is accepted and added to the blockchain. Common consensus mechanisms include Proof of Work (PoW) and Proof of Stake (PoS). These mechanisms incentivize nodes to verify and agree on the data, promoting data integrity and preventing manipulation.
+  - **Incorrect Answer**
+    - **Mega-merger method**: There's no standard method called **mega-merger** in blockchain technology. It's likely not a relevant term in this context.
+    - **Shared storage quorum**: While blockchains involve distributed storage across nodes, **shared storage quorum** isn't a widely used concept. Consensus mechanisms play a more prominent role in ensuring reliable data.
+    - **Byzantine Paxos algorithm**: Byzantine Paxos is a complex consensus algorithm used in some distributed systems, but it's not the most common approach in public blockchains. Agreed consensus mechanisms like PoW or PoS are more widely implemented.
+- Which blockchain feature in an IoT application ensures that a transaction is tamperproof once it is validated? % A. Decentralization % B. Immutability % C. Auditability % D. Resilience
+  - **Correct Answer**
+    - **Immutability**: Immutability is a core feature of blockchain technology. Once a transaction is validated and added to a block, the block becomes part of a tamperproof chain. Any attempt to alter the data within a block would require modifying all subsequent blocks, which becomes increasingly difficult as the chain grows longer. This immutability safeguards the integrity and authenticity of transactions within the IoT application.
+  - **Incorrect Answer**
+    - **Decentralization**: Decentralization distributes data storage and ledger maintenance across a network of nodes. While it contributes to security, it's not the specific feature that guarantees immutability of individual transactions.
+    - **Auditability**: Blockchain transactions are auditable, meaning anyone can view the history of transactions. However, auditability itself doesn't prevent tampering.
+    - **Resilience**: Blockchain networks are resilient to failures or attacks due to their decentralized nature. While resilience is a valuable feature, it doesn't directly address immutability of individual transactions.
+- What is the purpose of the consensus mechanism enabled through blockchain when collecting the same signals from multiple IoT sensors? % A. Ensuring that data from each sensor is treated equally % B. Providing a single version of the truth across all sensor data % C. Identifying a single sensor with the most accurate data % D. Verifying data from sensors by a central authority
+  - **Correct Answer**
+    - **Providing a single version of the truth across all sensor data**: In an IoT application where multiple sensors collect the same data, there might be slight variations in readings due to factors like sensor calibration or environmental conditions. The consensus mechanism within the blockchain ensures that all participating nodes in the network agree on a single version of the data to be added to the blockchain. This agreement helps establish a verifiable and tamperproof record of the sensor data, eliminating discrepancies and providing a single source of truth.
+  - **Incorrect Answer**
+    - **Ensuring that data from each sensor is treated equally**: While the consensus mechanism promotes fairness within the network, its primary purpose isn't to give equal weight to every sensor's data point (which might have slight variations). It focuses on agreeing on a single, verifiable data record.
+    - **Identifying a single sensor with the most accurate data**: The consensus mechanism doesn't determine which sensor is **most accurate.** It validates the data and reaches an agreement on a single version to be recorded. Data analysis techniques might be used later to assess sensor accuracy based on specific criteria.
+    - **Verifying data from sensors by a central authority**: Blockchain is inherently decentralized, meaning there's no central authority verifying data. The consensus mechanism involves distributed verification among multiple nodes within the network.
+- What are two categories of ethical concern when collecting data through IoT? % Choose 2 answers. % A. Accessing and using data % B. Building applications to store data % C. Control and property rights of data % D. Diagnostics of data quality
+  - **Correct Answer**
+    - **Accessing and using data**: This category encompasses ethical considerations around how data is accessed from IoT devices. It includes concerns about user consent, authorized access controls, and the purpose for which the data is being used. There are ethical concerns if data is collected without user knowledge or used for purposes beyond what users consented to.
+    - **Control and property rights of data**: This category focuses on who owns and controls the data collected from IoT devices. There are questions about transparency regarding data ownership, how long data is stored, and whether users have the right to access or delete their data.
+  - **Incorrect Answer**
+    - **Building applications to store data**: While the way data is stored can have security implications, it's not a primary ethical concern in this context. The focus here is on user consent, data usage, and ownership.
+    - **Diagnostics of data quality**: Data quality is important, but it's not a core ethical concern. It relates more to the accuracy and reliability of the data itself, not the ethical implications of collecting it.
+- A company is developing a garage door sensor that stores data defining when the owner is home or away and when the garage door is open or closed. The company needs to ensure the data is stored in a secure manner. % What should this company be concerned about regarding the storage of user information? % A. Mishandling stored user information will lead to privacy issues. % B. Securing stored user information will affect the garage door sensor's functionality. % C. Connecting the garage door sensor to private networks will affect stored data. % D. Caching garage door sensor data at the edge will lead to governance issues.
+  - **Correct Answer**
+    - **Mishandling stored user information will lead to privacy issues.**: This answer correctly identifies the primary concern. The sensor collects data that can be used to infer a user's home/away status and garage door activity. If this data is not stored securely, it could be accessed by unauthorized individuals, leading to privacy breaches and potential misuse of the information.
+  - **Incorrect Answer**
+    - **Securing stored user information will affect the garage door sensor's functionality.**: While security measures might add some overhead, they shouldn't significantly impact core functionality. The sensor can still collect and transmit data securely.
+    - **Connecting the garage door sensor to private networks will affect stored data.**: The type of network connection (private or public) might influence security considerations, but it's not the most critical factor here. Even on private networks, the data needs to be stored securely on the company's servers.
+    - **Caching garage door sensor data at the edge will lead to governance issues.**: Caching data at the edge (local devices) can be a technical consideration, but it doesn't directly address the core concern of secure storage. Governance issues are broader and might involve data ownership or usage policies, but not necessarily the technical aspects of where the data is temporarily cached.
+- Which ethical issue do customers encounter when using social media platforms from their wearable IoT devices to update people about activities? % A. Utilizing freedom of expression at the expense of their privacy % B. Determining who can purchase their demographic information % C. Ensuring personally identifiable information being stored is secure % D. Making sure information is not saved locally in plain text
+  - **Correct Answer**
+    - **Utilizing freedom of expression at the expense of their privacy**: This answer captures the core ethical dilemma. Wearable IoT devices might collect various data points about a user's activities. While social media allows for freedom of expression, users might unknowingly share details about their location, health, or habits through their updates. This creates a tension between sharing information and potentially giving up aspects of privacy, especially if they aren't fully aware of the data collected by their wearables.
+  - **Incorrect Answer**
+    - **Determining who can purchase their demographic information**: While data privacy is a concern, this answer focuses on a specific aspect of data control, not the core ethical issue in this context.
+    - **Ensuring personally identifiable information being stored is secure**: Data security is important, but it's not the main ethical concern here. The issue lies in the potential privacy trade-off when users freely share information through social media, even if the platform itself stores data securely.
+    - **Making sure information is not saved locally in plain text**: This answer refers to a technical security concern, but it doesn't directly address the ethical tension between freedom of expression and privacy in the context of social media and wearables.
+- A company requires customers to provide personally identifiable information (PII) when registering an IoT device. The company sells the information. A business school has argued that only people should be able to sell their information and not the IoT company. % % Which principle does this argument support? % A. Integrity must remain a high priority. % B. Confidentiality of all data is mandatory. % C. Privacy is a fundamental human right. % D. Availability is essential for data transfer.
+  - **Correct Answer**
+    - **Privacy is a fundamental human right.**: This answer reflects the core principle behind the business school's argument. The right to privacy is increasingly recognized as a fundamental human right, giving individuals control over their personal information. By selling user data without explicit consent, the company arguably violates this right.
+  - **Incorrect Answer**
+    - **Integrity must remain a high priority.**: Data integrity is crucial for ensuring data accuracy and trustworthiness. While important, it doesn't directly address the concept of user control over personal information.
+    - **Confidentiality of all data is mandatory.**: Data confidentiality focuses on keeping information confidential and protected from unauthorized access. While user data should be confidential, the argument goes beyond just confidentiality; it emphasizes the user's right to decide how their information is used or shared.
+    - **Availability is essential for data transfer.**: Data availability ensures data can be accessed and used when needed. It's not relevant to the user's right to control their personal information.
+- A manufacturer of proprietary IoT technology is trying to pressure a company into using its technology. % What is the manufacturer infringing on? % A. Fifth Amendment % B. Deidentification % C. Decisional privacy % D. Safe harbor
+  - **Correct Answer**
+    - **Decisional privacy**: Decisional privacy refers to the right of an individual or organization to make choices without undue influence or pressure. In this case, the manufacturer's pressuring tactics could be seen as an attempt to restrict the company's freedom to choose the most suitable IoT technology for its needs. The company should be allowed to make an informed decision based on various factors, not feel compelled due to pressure from the manufacturer.
+  - **Incorrect Answer**
+    - **Fifth Amendment**: The Fifth Amendment applies to legal proceedings and protects against self-incrimination. It's not relevant to the business scenario of choosing technology.
+    - **Deidentification**: Deidentification refers to removing personally identifiable information (PII) from data. It's not directly connected to the right to make choices without pressure.
+    - **Safe harbor**: Safe harbor provisions are legal agreements that offer protections for companies transferring data across borders. It's not applicable to the situation of a manufacturer pressuring a company's technology choice.
+- Which framework identifies factors influencing investments? % A. National Institute of Standards and Technology (NIST) Privacy Framework % B. National Institute of Standards and Technology (NIST) Cybersecurity Framework % C. Software Alliance Framework for Security Software (SAFSS) % D. Regulators, Facilitators, and Collaborators (RFC) Framework
+  - **Correct Answer** - **Regulators, Facilitators, and Collaborators (RFC) Framework**: Regulators: Government regulations can significantly impact investment decisions in certain sectors.
+    Facilitators: Entities like banks or investment firms can influence investment opportunities through funding or guidance.
+    Collaborators: Partnerships or collaborations between companies can create new investment opportunities.
+  - **Incorrect Answer**
+    - **National Institute of Standards and Technology (NIST) Privacy Framework**: This framework focuses on identifying and managing privacy risks, not specifically investment factors.
+    - **National Institute of Standards and Technology (NIST) Cybersecurity Framework**: Similar to the privacy framework, this one addresses cybersecurity risks and best practices, not investment decisions.
+    - **Software Alliance Framework for Security Software (SAFSS)**: While SAFSS is related to security, it specifically focuses on the software security industry and best practices, not general investment factors.
+- Which body in the U.S. is responsible for leveling penalties against companies whose cybersecurity is below standard? % A. Federal Communications Commission (FCC) % B. Institute of Electrical and Electronics Engineers (IEEE) % C. Federal Trade Commission (FTC) % D. Internet Engineering Task Force (IETF)
+  - **Correct Answer**
+    - **Federal Trade Commission (FTC)**: The FTC enforces a variety of consumer protection laws, including those related to data security. The FTC can investigate companies and impose fines or other penalties if it finds that their cybersecurity practices are unfair or deceptive and cause substantial harm to consumers.
+  - **Incorrect Answer**
+    - **Federal Communications Commission (FCC)**: The FCC regulates communication by radio, television, satellite, wire, and cable. While cybersecurity can be relevant to some FCC regulations, it doesn't have the primary authority for data security enforcement.
+    - **Institute of Electrical and Electronics Engineers (IEEE)**: The IEEE is a professional organization that develops technical standards but doesn't have legal enforcement power.
+    - **Internet Engineering Task Force (IETF)**: The IETF is a standards organization that focuses on the technical aspects of the internet, not enforcement actions.
+- Which agency publishes the Cybersecurity Framework (CSF)? % A. Federal Communications Commission (FCC) % B. Federal Trade Commission (FTC) % C. National Institute of Standards and Technology (NIST) % D. American National Standards Institute (ANSI)
+  - **Correct Answer**
+    - **National Institute of Standards and Technology (NIST)**: NIST is a part of the U.S. Department of Commerce and is responsible for developing the Cybersecurity Framework (CSF). This framework provides voluntary guidance for businesses, organizations, and government agencies on how to improve their cybersecurity posture.
+  - **Incorrect Answer**
+    - **Federal Communications Commission (FCC)**: The FCC, as mentioned previously, regulates communication technologies but doesn't publish the Cybersecurity Framework.
+    - **Federal Trade Commission (FTC)**: The FTC enforces consumer protection laws and can take action against companies with poor cybersecurity practices, but it doesn't publish the CSF.
+    - **American National Standards Institute (ANSI)**: ANSI is a private organization that oversees the development of voluntary consensus standards for products, services, and processes in the United States. While some ANSI standards might be relevant to cybersecurity, they are separate from the NIST Cybersecurity Framework.
+- Which framework prohibits countries from knowingly allowing IoT infrastructure under their control to be used for wrongful acts against other countries? % A. EU Network and Information Security Directive % B. General Data Protection Regulation (GDPR) % C. G7 Declaration on Responsible States Behavior in Cyberspace % D. Fair Information Practice Principles (FIPP)
+  - **Correct Answer**
+    - **G7 Declaration on Responsible States Behavior in Cyberspace**: This declaration is a set of non-binding norms agreed upon by the G7 nations. It outlines expectations for responsible behavior in cyberspace, including a commitment to refrain from using ICT infrastructure for international security purposes. This aligns with the concept of preventing malicious use of IoT infrastructure.
+  - **Incorrect Answer**
+    - **EU Network and Information Security Directive**: This directive focuses on improving cybersecurity measures across sectors in EU member states. While it promotes good security practices, it doesn't have a specific clause prohibiting malicious use of IoT infrastructure against other countries.
+    - **General Data Protection Regulation (GDPR)**: The GDPR is a regulation in EU law on data protection and privacy in the European Union. It doesn't directly address using IoT infrastructure for malicious activities.
+    - **Fair Information Practice Principles (FIPP)**: FIPP are a set of guidelines for data collection and use. While data privacy is important in the context of IoT, FIPPs don't specifically address using IoT infrastructure for malicious purposes.
+- How are IoT devices used by the Chinese government to measure its citizens' social credit score? % A. By identifying the brand of products purchased at the market and online % B. By tracking compliance with prescribed social and economic obligations % C. By calculating the personal time taken off from work activities % D. By verifying the number of family members living in a residence
+  - **Correct Answer** - **By tracking compliance with prescribed social and economic obligations**: China's social credit system utilizes various data points to assess an individual's trustworthiness. IoT devices can be included in this data collection by:
+    Monitoring financial transactions to track repayments and responsible borrowing habits.
+    Tracking traffic violations or adherence to environmental regulations using cameras and sensors.
+    Recording interactions with public services to gauge an individual's cooperation.
+  - **Incorrect Answer**
+    - **By identifying the brand of products purchased at the market and online**: While purchase history might be a data point, brand names might not be as relevant to social credit scoring. The focus is more on responsible financial behavior.
+    - **By calculating the personal time taken off from work activities**: There's no widespread evidence of IoT devices directly monitoring personal work absence. Social credit scoring likely focuses on meeting financial obligations and civic duties.
+    - **By verifying the number of family members living in a residence**: Family size might be collected through traditional methods, not necessarily through IoT devices. Social credit scoring might consider an individual's responsibility within their family structure, but not necessarily the exact number of members.
+- A company is developing a self-driving car with IoT technology that will generate up to 6 GB of data per second. % Which component will analyze the data? % A. Centralized server % B. Edge computing % C. Peer-to-peer network % D. Meshed network
+  - **Correct Answer**
+    - **Edge computing**: Given the enormous volume of data (6 GB per second), real-time analysis is crucial for a self-driving car. Centralized servers wouldn't be feasible due to latency issues. Edge computing provides a more suitable solution. In edge computing, processing power and storage are placed closer to the data source (the car in this case). This allows for faster analysis of sensor data, enabling real-time decision-making for the car's autonomous navigation.
+  - **Incorrect Answer**
+    - **Centralized server**: Uploading 6 GB/second to a central server would be too slow for real-time decision-making in a self-driving car.
+    - **Peer-to-peer network**: Peer-to-peer networks are not ideal for this scenario due to the lack of centralized coordination and potential security concerns.
+    - **Meshed network**: Meshed networks can provide connectivity in some IoT applications, but they don't necessarily address real-time data analysis requirements. Edge computing offers a more focused approach for analyzing data generated by the self-driving car.
+- Which two reductions will occur when autonomous vehicle (AV) usage is widespread? % Choose 2 answers. % A. Car prices % B. Congestion % C. Car ownership % D. Emissions
+  - **Correct Answer**
+    - **Congestion**: AVs are expected to be programmed to follow traffic rules precisely and communicate with each other, potentially leading to smoother traffic flow and reduced congestion. This could significantly improve travel times in urban areas.
+    - **Emissions**: AVs, especially if powered by electricity, could contribute to reducing emissions compared to gasoline-powered vehicles. However, the overall impact depends on the energy sources used to generate electricity.
+  - **Incorrect Answer**
+    - **Car prices**: Initially, AV technology might be expensive, potentially leading to higher car prices. However, as the technology matures and economies of scale come into play, prices could eventually come down.
+    - **Car ownership**: With AVs, car ownership might not be necessary for everyone. Ride-hailing services utilizing AVs could become more prevalent, allowing people to access transportation without needing to own a vehicle.
+- A hospital plans to send data from intensive care unit (ICU) sensors to a central recording system. The data should be captured in transit for analysis in a database. % % Which component of the system should be used to capture the data? % A. Data agent % B. Data handling unit % C. Network data aggregator % D. Central data store
+  - **Correct Answer**
+    - **Network data aggregator**: A network data aggregator is designed to collect data from various sources across a network. In this case, it would be positioned strategically to capture the data transmitted from ICU sensors as it travels towards the central recording system. This allows for centralized collection and organization of the sensor data before it reaches the final storage destination (database).
+  - **Incorrect Answer**
+    - **Data agent**: Data agents are more focused on processing and manipulating data within a system, not necessarily capturing it from the network.
+    - **Data handling unit**: Data handling unit is a broad term and doesn't specifically point to network data capture. It could refer to a component that manages data storage or processing tasks.
+    - **Central data store**: The central data store (database) is the final destination for the captured data, not the component responsible for capturing it on the network.
+- A hospital unit takes care of high-risk patients who require constant monitoring through IoT devices. % Which condition identifies an actual emergency? % A. True positives % B. True negatives % C. False positives % D. False negatives
+  - **Correct Answer**
+    - **True positives**: This refers to a correct identification of a positive condition. In the hospital scenario, a true positive would be when an IoT device detects a real emergency situation requiring immediate attention (e.g., a significant drop in heart rate or oxygen levels).
+  - **Incorrect Answer**
+    - **True negatives**: This signifies a correct identification of a negative condition. In this case, a true negative would be when the IoT device indicates everything is within normal range, and the patient is indeed stable.
+    - **False positives**: This represents an incorrect identification of a positive condition. An example here could be a faulty sensor triggering an alarm for a critical situation even though the patient's vitals are normal. False positives can lead to unnecessary medical interventions.
+    - **False negatives**: This indicates an incorrect identification of a negative condition. In the context of high-risk patients, a false negative would be the most critical error. It occurs when the sensor fails to detect a real emergency, potentially delaying crucial medical attention.
+- A hospital uses legacy sensors to collect patients' data in its intensive care unit (ICU). The hospital deploys a network data aggregator in accordance with the principles of the openEHR (electronic health record) model. % What is the primary implication of this approach? % A. Eliminates the need to tamper with ICU sensors % B. Introduces the need to tamper with ICU sensors % C. Provides automatic access of patients' data to researchers % D. Transitions ownership of patients' data to researchers
+  - **Correct Answer**
+    - **Eliminates the need to tamper with ICU sensors**: openEHR is a standard for electronic health records (EHR) that promotes interoperability and ease of data exchange. A network data aggregator designed following openEHR principles should be able to collect data from various sources, including legacy sensors, without requiring modifications to the existing sensors themselves. This is because openEHR focuses on defining a common language for healthcare data, allowing different systems to exchange information seamlessly.
+  - **Incorrect Answer**
+    - **Introduces the need to tamper with ICU sensors**: As explained above, openEHR aims for compatibility, and the network data aggregator should be designed to work with existing sensors.
+    - **Provides automatic access of patients' data to researchers**: openEHR doesn't automatically grant access to researchers. Access controls and data privacy regulations would still apply.
+    - **Transitions ownership of patients' data to researchers**: openEHR doesn't change data ownership. Ownership likely remains with the hospital, and researchers would need proper authorization to access the data.
+- A company implements an IoT 5G smart grid to improve resiliency within its power grid. The company installs the virtual machine cloud machine (vMCM) function. % % Why is the vMCM function installed? % A. To monitor devices and cache information about daily consumption % B. To validate device identity to the gateway without mining operations % C. To verify the identity of a device with the OAuth2.0 service % D. To locate devices that provide a specific utility with OpenId Connect
+  - **Correct Answer**
+    - **To monitor devices and cache information about daily consumption**: A virtual machine cloud machine (vMCM) function in a smart grid often acts as an edge computing resource. In this context, it's likely deployed to:
+      Gather data from various connected devices within the grid (meters, sensors, etc.).
+      Process and store this data locally, potentially including caching daily consumption information. This cached data can be used for quick retrieval and analysis without relying solely on communication with a central server.
+  - **Incorrect Answer**
+    - **To validate device identity to the gateway without mining operations**: While device identity validation is crucial in IoT security, vMCM isn't typically used for mining operations (which is more associated with cryptocurrency).
+    - **To verify the identity of a device with the OAuth2.0 service**: OAuth2.0 is an authorization framework, and while it might be used for device identity verification in some scenarios, it's not the most likely primary function of vMCM in this context.
+    - **To locate devices that provide a specific utility with OpenId Connect**: OpenID Connect is another identity verification protocol, and while device location might be relevant in a smart grid, it's not the most likely explanation for vMCM's role here. The focus here seems to be on data monitoring and caching.
+- A utility company is planning to implement an advanced metering infrastructure (AMI) to transform its legacy network into a smart network. % % What is reduced by making this transformation? % A. Capital expenditure % B. Customer turnover % C. Operational costs % D. Power outages
+  - **Correct Answer**
+    - **Operational costs**: An AMI system automates meter reading and data collection. This eliminates the need for manual meter reading, reducing labor costs associated with sending meter readers to various locations. Additionally, AMI systems can provide real-time data on energy usage, allowing the utility company to identify and address inefficiencies in the grid, potentially leading to reduced energy waste and lower overall operational costs.
+  - **Incorrect Answer**
+    - **Capital expenditure**: While AMI implementation requires upfront investment, it can potentially lead to cost savings in the long run due to reduced operational expenses as explained above.
+    - **Customer turnover**: There's no direct link between AMI implementation and customer turnover. It might even improve customer satisfaction by enabling features like time-based billing or remote meter monitoring.
+    - **Power outages**: While AMI can provide data to help analyze the grid and identify potential weaknesses, it doesn't directly prevent power outages. However, data collected by AMI might be used for improved grid management and outage response times in the long run.
+- A power company integrates 5G in its advanced metering infrastructure as a service (AMIaaS) architecture. The company needs a virtual network function that provides digital ledger functionality. % % What should this company use? % A. Virtual mobility management entity (vMME) % B. Virtual authentication, authorization, and accounting (vAAA) % C. Virtual machine cloud machine (vMCM) % D. Virtual blockchain processing (vBCP)
+  - **Correct Answer**
+    - **Virtual blockchain processing (vBCP)**: In a scenario involving a digital ledger for an AMIaaS architecture, a virtual blockchain processing (vBCP) function is the ideal choice. Blockchain technology is well-suited for secure, transparent, and tamper-proof recording of transactions, which aligns perfectly with the needs of managing energy consumption data in an AMIaaS environment. vBCP facilitates the implementation of blockchain within a virtualized network, making it an efficient solution for the power company.
+  - **Incorrect Answer**
+    - **Virtual mobility management entity (vMME)**: A virtual mobility management entity (vMME) is primarily concerned with managing mobile device connections within a cellular network. While it might be involved in a 5G network, it doesn't directly address digital ledger functionality.
+    - **Virtual authentication, authorization, and accounting (vAAA)**: A virtual authentication, authorization, and accounting (vAAA) function handles user access and permissions within a network. It's not directly related to managing digital ledger transactions.
+    - **Virtual machine cloud machine (vMCM)**: A virtual machine cloud machine (vMCM) is a type of virtual computing environment that can be used for various purposes. While it could potentially be used to run blockchain applications, vBCP offers a more specialized solution specifically designed for blockchain processing within virtual networks.
+- A city is evaluating the World Bank's Sustainable Mobility for All (SuM4All) initiative in the development of a road traffic congestion solution. % % What are two objectives of the SuM4All initiative? % % Choose 2 answers. % A. Security % B. Safety % C. Efficiency % D. Deployment
+  - **Correct Answer**
+    - **Safety**: SuM4All aims to improve overall safety within transportation systems, aiming to reduce traffic crashes, injuries, and fatalities across all modes of transport. This can involve promoting safer road infrastructure, encouraging responsible driving behavior, and implementing advanced safety features in vehicles.
+    - **Efficiency**: SuM4All emphasizes increasing the efficiency of transport systems. This can encompass reducing traffic congestion, optimizing public transportation networks, and encouraging the use of more efficient modes of transport like cycling or walking.
+  - **Incorrect Answer**
+    - **Security**: Security is not a listed core objective of SuM4All. The focus is on accessibility, safety, efficiency, and environmental sustainability.
+    - **Deployment**: Deployment is not a direct objective. SuM4All provides a framework and resources for countries to implement their own sustainable mobility solutions.
+- Sensors with computer vision intelligence are embedded in a city's access road surfaces and in CCTV systems to enable drivers to find available parking spaces. % Which objective of the World Bank's Sustainable Mobility for All (SuM4All) initiative is being addressed? % A. Efficiency % B. Green mobility % C. Safety % D. Universal access
+  - **Correct Answer**
+    - **Efficiency**: This scenario promotes SuM4All's efficiency objective. By using computer vision to locate available parking spaces, drivers can reduce time spent searching for parking, leading to smoother traffic flow and potentially less congestion. This contributes to a more efficient transportation system within the city.
+  - **Incorrect Answer**
+    - **Green mobility**: While SuM4All promotes sustainable transportation, this specific scenario doesn't directly target eco-friendly practices like using electric vehicles.
+    - **Safety**: The focus here isn't on safety improvements but on locating parking spaces.
+    - **Universal access**: SuM4All's universal access objective aims to ensure everyone has access to transportation, but this scenario doesn't directly address accessibility concerns.
+- A company is evaluating how to reduce air pollution in places that lack IoT sensors. % Which two technologies can be used? % Choose 2 answers. % A. Gateway device % B. Access network % C. Machine learning % D. Artificial intelligence
+  - **Correct Answer**
+    - **Machine learning**: Machine learning algorithms can be trained on existing air quality data from nearby areas with sensors. This data can include factors like weather patterns, traffic information, and industrial activity. The trained model can then be used to estimate air quality in sensor-less locations, providing valuable insights for pollution reduction strategies.
+    - **Artificial intelligence**: Artificial intelligence (AI) encompasses various techniques, including machine learning. AI can be used to analyze vast datasets, including weather data, satellite imagery, and traffic patterns, to identify potential sources of air pollution and predict pollution levels in areas without sensors. This information can be used to implement targeted interventions to curb air pollution.
+  - **Incorrect Answer**
+    - **Gateway device**: Gateway devices are used to collect data from IoT sensors and connect them to a network. They wouldn't be helpful if there are no sensors to collect data from in the first place.
+    - **Access network**: An access network provides connectivity between devices and the internet. While it's necessary for transmitting data collected by sensors, it's not directly relevant to analyzing pollution without sensors.
