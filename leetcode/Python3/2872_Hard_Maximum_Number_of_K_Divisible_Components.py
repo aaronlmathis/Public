@@ -29,6 +29,7 @@ from typing import List
 from collections import defaultdict
 class Solution:
     def maxKDivisibleComponents(self, n: int, edges: List[List[int]], values: List[int], k: int) -> int:
+        # Build adjacency list from graph
         adj = [[] for _ in range(n)]
         for a, b in edges:
             adj[a].append(b)
