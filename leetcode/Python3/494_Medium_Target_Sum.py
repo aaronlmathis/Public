@@ -26,20 +26,23 @@ Output: 1
 from typing import List
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        dp = {}
-
-        def backtrack(i, total):
-            if i == len(nums):
-                return 1 if total == target else 0
-            if (i, total) in dp:
-                return dp[(i, total)]
-            
-            dp[(i, total)] = (backtrack(i + 1, total + nums[i]) +
-                              backtrack(i+1, total - nums[i])  )
-
-            return dp[(i, total)]
+        total_sum = 0
+        for num in nums:
+            total_sum += num
+        if abs(target) > total_sum or (target+total_sum) % 2 != 0:
+            return 0
         
-        return backtrack(0, 0)
+        sum = (total_sum + target) // 2
+        dp = [0] * (sum+1)
+
+        dp[0] = 1
+
+        for num in nums:
+            for j in range(sum, num-1, -1):
+                dp[j] += dp[j-num]
+
+        return dp[sum]
+    
 sol = Solution()
 nums = [1,1,1,1,1]
 target = 3
