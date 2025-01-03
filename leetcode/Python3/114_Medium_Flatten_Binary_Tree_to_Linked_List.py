@@ -76,7 +76,7 @@ class Solution:
         traverse(root)
         
         for i in range(len(nodes)):
-            root = nodes[i]
+
             root.left = None
             root.right = nodes[i+1] if i < len(nodes)-1 else None
             root = root.right

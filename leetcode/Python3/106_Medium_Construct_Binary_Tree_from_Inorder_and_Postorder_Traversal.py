@@ -20,50 +20,36 @@ class TreeNode:
         self.right = right
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
-        root_val = postorder[-1]
-        root_idx = inorder.index(root_val)
+        if not inorder or not postorder:
+            return None
 
-        left_tree = inorder[:root_idx]
-        right_tree = inorder[root_idx+1:]
+        # Create a hashmap to store value -> index relations for inorder traversal
+        inorder_index_map = {value: idx for idx, value in enumerate(inorder)}
+        
+        # Initialize a pointer to the last element in postorder traversal
+        self.post_idx = len(postorder) - 1
 
-        print(f"{left_tree} - {right_tree}")
+        def helper(in_left: int, in_right: int) -> Optional[TreeNode]:
+            if in_left > in_right:
+                return None
 
-        root = TreeNode(root_val)
+            # Pick the current root value from postorder traversal
+            root_val = postorder[self.post_idx]
+            self.post_idx -= 1
 
-        if len(left_tree) > 0:
-            root.left = TreeNode(left_tree[0])
-            queue = deque([root.left])
-            l_idx = 1
-            while queue:
-                curr_node = queue.popleft()
+            # Create the root node
+            root = TreeNode(root_val)
 
-                if len(left_tree) > l_idx and left_tree[l_idx]:
-                    curr_node.left = TreeNode(left_tree[l_idx])
-                    queue.append(curr_node.left)
-                l_idx+=1
-                
-                if len(left_tree) > l_idx and left_tree[l_idx]:
-                    curr_node.right = TreeNode(left_tree[l_idx])
-                    queue.append(curr_node.right)
-                l_idx+=1
+            # Root splits inorder list into left and right subtrees
+            index = inorder_index_map[root_val]
 
-        if len(right_tree) > 0:
-            root.right = TreeNode(right_tree[0])
-            queue = deque([root.right])
-            r_idx = 1
-            while queue:
-                curr_node = queue.popleft()
+            # Important: build the right subtree before the left subtree
+            root.right = helper(index + 1, in_right)
+            root.left = helper(in_left, index - 1)
 
-                if len(right_tree) > r_idx and right_tree[r_idx]:
-                    curr_node.right = TreeNode(right_tree[r_idx])
-                    queue.append(curr_node.right)
-                r_idx+=1
-                
-                if len(right_tree) > r_idx and right_tree[r_idx]:
-                    curr_node.right = TreeNode(right_tree[r_idx])
-                    queue.append(curr_node.right)
-                r_idx+=1                
-        return root
+            return root
+        
+        return helper(0, len(inorder) - 1)
 
 sol = Solution()
 inorder = [9,3,15,20,7]
