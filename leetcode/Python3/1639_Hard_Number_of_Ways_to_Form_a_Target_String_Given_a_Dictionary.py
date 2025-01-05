@@ -41,28 +41,37 @@ Iterate through each character of the target and, for each position in the words
 from typing import List
 class Solution:
     def numWays(self, words: List[str], target: str) -> int:
+        
+        # Quick exit if words is empty
         if not words or not words[0]:
             return 0
         
+        # Get lengths of target and words
         target_len = len(target)
         word_len = len(words[0])
 
+        # Return answer % MOD
         MOD = 10**9 + 7
 
+        # Precomputer letter_freq[i][j] = count (in words) where i = 0-26 (a-z) and j = the index in words. Count is the frequency of the letter at index j in any of the words.
         letter_freq = [[0] * word_len for _ in range(26)]
 
         for word in words:
             for idx, character in enumerate(word):
                 letter_freq[ord(character) - 97][idx]+=1
         
+        # Build DP Table
+        # Let dp[i][j] represent the number of ways to form the first i characters of the target using characters up to position j in the words.
         dp = [[0] * (word_len + 1) for _ in range(target_len + 1)]
         for j in range(word_len + 1):
             dp[0][j] = 1
 
+        # Iterate through each character of the target and, for each position in the words, multiply the frequency of the target character at that position by the number of ways to form the previous part of the target.
         for i in range(1, target_len + 1):
             for j in range(1, word_len + 1):
                 dp[i][j] = (dp[i][j-1] + (letter_freq[ord(target[i-1]) - 97][j-1] * dp[i-1][j- 1])) % MOD
 
+        # Return answer (last row, last col of dp)
         return dp[target_len][word_len]
 
 words = ["acca","bbbb","caca"]
