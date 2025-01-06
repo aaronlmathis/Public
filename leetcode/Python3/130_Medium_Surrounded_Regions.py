@@ -67,7 +67,7 @@ class Solution:
                     board[y][x] = 'X'  # Capture surrounded region
                 elif board[y][x] == 'S':
                     board[y][x] = 'O'  # Restore safe region
-        print(board)
+
 
 board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
 sol = Solution()
