@@ -34,14 +34,22 @@ There are two valid splits in nums:
 from typing import List
 class Solution:
     def waysToSplitArray(self, nums: List[int]) -> int:
+        # Let n be equal to the length of nums
         n = len(nums)
-        pre, total = 0, sum(nums)
+
+        # Let pre and suff be equal to 0 and the total sum of nums.
+        pre, suff = 0, sum(nums)
+
+        # Count the number of valid splits
         splits = 0
 
+        # Iterate through nums from index 0, stopping before last item
         for i in range(n-1):
+            # At each iteration, add nums[i] to prefix total, subtract nums[i] from suffix total
             pre+=nums[i]
-            total-=nums[i]
-            if pre >= total:
+            suff-=nums[i]
+            # Check if prefix is larger than or equal to suffix, increase split count if so.
+            if pre >= suff:
                 splits+=1
 
         return splits
