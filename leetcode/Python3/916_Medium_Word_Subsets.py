@@ -26,19 +26,28 @@ from typing import List
 from collections import defaultdict, Counter
 class Solution:
     def wordSubsets(self, words1: List[str], words2: List[str]) -> List[str]:
+        # Create set of words1 for quick retrieval
         ans = set(words1)
+
+        # Create hashmap for tracking character counts
         chars = {}
+
+        # Iterate through subsets in words2, then iterate through characters in subset
         for sub in words2:
             for char in sub:
+                # Take count of character freq in subset. If character is not in hashmap or the count is greater
+                # Add it to frequency count hasmap. This gets us the maximum frequency of a character in all subsets
                 count = sub.count(char)
                 if char not in chars or count > chars[char]:
                     chars[char] = count
+        # Iterate through words in words1, for every character in frequency hashmap, check if character appears less
+        # in word than it does in any of the subsets. If so, remove it from answer set.
         for word in words1:
             for char in chars:
                 if word.count(char) < chars[char]:
                     ans.remove(word)
                     break
-
+        # return answer as a list
         return list(ans)
 
 sol = Solution()
