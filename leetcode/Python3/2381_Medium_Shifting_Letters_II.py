@@ -82,8 +82,6 @@ class Solution:
             prefix[i] = diff[i] + prefix[i-1]
             letter_vals[i] = ((letter_vals[i] + prefix[i]) % 26) + 1
         
-
-        print(prefix)
         # You are now left with letter_vals array that has the letter vals 1-26 for the new string.
         # Build new string by calling chr(val + 96) to get ascii code for letters a-z
 
