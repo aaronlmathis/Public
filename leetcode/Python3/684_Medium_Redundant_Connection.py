@@ -14,38 +14,17 @@ Output: [1,4]
 """
 from typing import List
 from collections import defaultdict
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = n
+        self.rank = 
+
+
+
 class Solution:
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
-        # Dictionary to keep track of parent pointers
-        parent = {}
 
-        def find(x):
-            # Initialize the parent if not present
-            if parent[x] != x:
-                parent[x] = find(parent[x])  # Path compression
-            return parent[x]
-
-        def union(x, y):
-            # Find the leaders (parents) for x and y
-            rootX, rootY = find(x), find(y)
-            # If they are already connected, the edge (x, y) is redundant
-            if rootX == rootY:
-                return False
-            # Union the sets by connecting the roots
-            parent[rootX] = rootY
-            return True
-
-        # Process each edge
-        for u, v in edges:
-            # If a node is not in parent dictionary, initialize it
-            if u not in parent:
-                parent[u] = u
-            if v not in parent:
-                parent[v] = v
-
-            # If union returns False, we've found the redundant edge
-            if not union(u, v):
-                return [u, v]
 
 sol = Solution()
 edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]

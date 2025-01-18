@@ -31,37 +31,66 @@ Explanation: locked permits us to change s[0].
 Changing s[0] to either '(' or ')' will not make s valid.
 */
 
-package main 
+package main
 
 func canBeValid(s, locked string) bool {
 	n := len(s)
-	if n % 2 == 1{
+	if n%2 == 1 {
 		return false
 	}
 
 	leftLocked := []int{}
 	free := []int{}
 
-	for i:=0; i < n; i++ {
+	for i := 0; i < n; i++ {
 		if i == 0 {
 			if locked[i] == "0" {
 				free = append(free, i)
-			}else {
-				if s[i] == "(" {
-					if len(leftLocked) >0 {
-						leftLocked = leftLocked[:len(leftLocked)-1]
-					} else if len(free) > 0 {
-						free = free[:len(free)-1]
-					} else{
-						return false
-					}
-				} else {
-					leftLocked = append(leftLocked, i)
-				}
 			} else {
-				free = append(free, i)
+				if s[i] == "(" {
+					leftLocked = append(leftLocked, i)
+				} else {
+					return false
+				}
+				continue
 			}
 		}
+		if locked[i] == "1" {
+			if s[i] == ")" {
+				if len(leftLocked) > 0 {
+					leftLocked = leftLocked[:len(leftLocked)-1]
+				} else if len(free) > 0 {
+					free = free[:len(free)-1]
+				} else {
+					return false
+				}
+			} else {
+				leftLocked = append(leftLocked, i)
+			}
+		} else {
+			free = append(free, i)
+		}
+	}
+
+	if len(leftLocked) > len(free) {
+		return false
+	}
+
+	for i := 0; i < len(free); i++ {
+		if len(leftLocked) == 0 {
+			break
+		}
+
+		f := free[len(free)-1]
+		free = free[:len(free)-1]
+		l := leftLocked[len(leftLocked)-1]
+		leftLocked = leftLocked[:len(leftLocked)-1]
+		if f < l {
+			return false
+		}
+	}
+	if len(free)%2 == 1 {
+		return false
 	}
 }
 
