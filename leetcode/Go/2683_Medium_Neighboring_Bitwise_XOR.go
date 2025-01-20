@@ -42,6 +42,8 @@ package main
 import "fmt"
 
 func doesValidArrayExist(derived []int) bool {
+	// Calculate the sum of derived and then return if that sum is even or not.
+	// Any derivation would have to have an even number of 1', given the circular nature of the problem and of XOR
 	dsum := 0
 	for _, num := range derived {
 		dsum += num
