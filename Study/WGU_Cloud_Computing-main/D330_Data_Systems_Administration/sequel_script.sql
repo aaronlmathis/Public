@@ -1,1 +1,0 @@
-SELECT name, value FROM v$diag_info;

@@ -34,24 +34,26 @@ class Solution:
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
         n = len(graph)
         
-        # 0 - Unvisited
-        # 1 - Visited
-        # 2 - Safe
+        # 0 - Unvisited 1 - Visited 2 - Safe
         mark = [0] * n
 
+        # DFS function to do a depth first search from each node, marking the nodes as safe or return false if a cycle is detected.
         def dfs(node: int) -> bool:
             if mark[node] != 0:
                 return mark[node] == 2
             
-            mark[node] = 1
+            mark[node] = 1 # Mark node as visited
 
+            # Iterate through neighbors, checking if dfs() returns true or false. If false, a cycle was detected
             for neighbor in graph[node]:
                 if not dfs(neighbor):
                     return False
             
+            # Mark node as safe
             mark[node] = 2
             return True
         
+        # return list of nodes where calling dfs(node) returns true.
         return [node for node in range(n) if dfs(node)]
 
 
