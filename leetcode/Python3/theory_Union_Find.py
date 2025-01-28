@@ -15,9 +15,14 @@ class UnionFind:
 
 
     def find(self, x: int) -> int:
+        """
         if self.parent[x] == x:
             return x
         return self.find(self.parent[x])
+        """
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
     
     def join(self, x: int, y: int) -> None:
         self.parent[self.find(y)] = self.find(x)
@@ -28,10 +33,11 @@ class DisjointUnion:
         self.parent = list(range(n))
         self.rank = [0] * n
 
-    def find_with_path_compression(self, x: int) -> int:
+    def find(self, x: int) -> int:
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]    
+    
     def unionSets(self, x: int, y: int) -> None:
         xRoot = self.find(x)
         yRoot = self.find(y)

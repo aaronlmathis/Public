@@ -43,22 +43,16 @@ class Solution:
             adj_list[x-1].append(y-1)
             adj_list[y-1].append(x-1)
         
-
-        # Result array to store the flower types for each garden
         answer = [0] * n
-        
-        # Assign a flower type to each garden
+  
         for garden in range(n):
-            # Get the flower types already used by neighboring gardens
             used_colors = {answer[neighbor] for neighbor in adj_list[garden]}
-            
-            # Assign the first available flower type
             for flower in range(1, 5):
                 if flower not in used_colors:
                     answer[garden] = flower
                     break
-        
         return answer
+    
 sol = Solution()
 n = 4
 paths = [[1,2],[3,4]]
