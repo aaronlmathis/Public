@@ -18,12 +18,11 @@ import time
 
 def timed(function):
     def wrapper(*args, **kwargs):
-        before = time.time()
+        before = time.perf_counter()  # High-precision timing
         value = function(*args, **kwargs)
-        after =  time.time()
+        after = time.perf_counter()
         fname = function.__name__
-        print(f"{fname} took {round(after-before, 3)} seconds to execute!")
-        
+        print(f"{fname} took {after - before:.8f} seconds to execute!")  # Format for better precision
         return value
     return wrapper
 
