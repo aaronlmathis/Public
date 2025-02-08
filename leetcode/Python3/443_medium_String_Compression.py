@@ -62,6 +62,6 @@ class Solution:
         return write
 
 
-chars = ["a","a","b","b","c","c","c"]
+chars = ["a","b","b","b","b","b","b","b","b","b","b","b","b"]
 sol = Solution()
 print(sol.compress(chars))
