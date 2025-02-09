@@ -26,16 +26,25 @@ from collections import defaultdict
 from typing import List
 class Solution:
     def countBadPairs(self, nums: List[int]) -> int:
-        totals = defaultdict(int)
+        # Let n be the length of nums
         n = len(nums)
+        # Initialize `pair_totals` to track number of times the same total of `nums[i] - i` occurs.
+        # Initialize `total_possible`` to be the total number of pairs that can be made from 'n' numbers
+        # Set `total_good` to 0.
+        pair_totals = defaultdict(int)
         total_possible = n * (n-1) // 2
-        for i in range(len(nums)):
-            totals[nums[i]-i]+=1
-        
         total_good = 0
-        for _, v in totals.items():
+
+        # Iterate through nums taking a count of totals when calculating `nums[i] - i`.
+        for i in range(len(nums)):
+            pair_totals[nums[i]-i]+=1
+        
+        # Iterate through `pair_totals`. 
+        # If v is greater than 1, calculate how many pairs can be made from v and add it to `total_good`
+        for _, v in pair_totals.items():
             if v > 1:
                 total_good+= v * (v-1) //2
+        # Return `total_possible` - `total_good` to get total bad.
         return total_possible - total_good
 
 # Notice that (j - i != nums[j] - nums[i]) is the same as (nums[i] - i != nums[j] - j).
