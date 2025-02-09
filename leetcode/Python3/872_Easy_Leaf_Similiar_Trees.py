@@ -34,16 +34,7 @@ class TreeNode:
 class Solution:
     def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
          
-        def dfs(node):
-            if not node:
-                return []
-            if not node.left and not node.right:
-                return [node.val]  # Return a list containing the leaf value
-            
-            # Recursively collect leaves from left and right subtrees
-            return dfs(node.left) + dfs(node.right)
 
-        return dfs(root1) == dfs(root2)
 
 def create_tree(nodes: List[int]) -> TreeNode:
     if not nodes:  # Handle empty list case

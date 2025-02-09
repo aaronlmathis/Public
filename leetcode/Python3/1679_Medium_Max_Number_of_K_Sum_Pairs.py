@@ -35,14 +35,20 @@ from collections import Counter
 
 class Solution:
     def maxOperations(self, nums: List[int], k: int) -> bool:
+        # Take frequency count of nums
         num_count = Counter(nums)
         operations = 0
+        # Iterate through num_count but make it list first
         for x in list(num_count):
+            # let t be equal to k - x - the target number we are looking for that makes a pair.
             t = k - x
+            # If t and x are the same, add their count divided by 2 to operations.
             if t == x:
                 operations += num_count[x] // 2
+            # otherwise, if t is in num_count, calculate the number of pairs as the minimum count between x and t
             elif t in num_count:
                 pairs = min(num_count[x], num_count[t])
+                # Add these pairs to the operations and reduce num_count by number of pairs for t and x
                 operations+=pairs
                 num_count[x]-=pairs
                 num_count[t]-=pairs

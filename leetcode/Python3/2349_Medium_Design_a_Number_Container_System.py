@@ -12,7 +12,6 @@ int find(int number) Returns the smallest index for the given number, or -1 if t
  
 
 Example 1:
-
 Input
 ["NumberContainers", "find", "change", "change", "change", "change", "find", "change", "find"]
 [[], [10], [2, 10], [1, 10], [3, 10], [5, 10], [10], [1, 20], [10]]
@@ -29,33 +28,37 @@ nc.change(5, 10); // Your container at index 5 will be filled with number 10.
 nc.find(10); // Number 10 is at the indices 1, 2, 3, and 5. Since the smallest index that is filled with 10 is 1, we return 1.
 nc.change(1, 20); // Your container at index 1 will be filled with number 20. Note that index 1 was filled with 10 and then replaced with 20. 
 nc.find(10); // Number 10 is at the indices 2, 3, and 5. The smallest index that is filled with 10 is 2. Therefore, we return 2.
- 
 
 Constraints:
-
 1 <= index, number <= 109
 At most 105 calls will be made in total to change and find.
 """
 from collections import defaultdict
+import heapq
 class NumberContainers:
 
+class NumberContainers:
+    
     def __init__(self):
-        self.container = [-1] * 110
-        self.num_index = defaultdict(set)
+        self.container = defaultdict(list)  # Dictionary where each index maps to a heap
+        self.latest_value = {}  # Stores the most recent assigned value for each index
 
-    def change(self, index: int, number: int) -> None:
-        if self.container[index] != -1:
-            self.num_index[self.container[index]].remove(index)
-            if len(self.num_index[self.container[index]]) == 0:
-                self.num_index.pop(self.container[index])
-        self.container[index] = number
-        self.num_index[number].add(index)
+    def change(self, index: int, number: int):
+        heapq.heappush(self.container[index], number)  # Push number to the heap
+        self.latest_value[index] = number  # Track latest assigned value
 
-    def find(self, number: int) -> int:
-        if self.num_index[number]:
-            return min(self.num_index[number])
-        else:
-            return -1
+    def find(self, index: int) -> int:
+        if index not in self.container or not self.container[index]:
+            return -1  # No elements exist for this index
+
+        # Ensure we return the most recent valid value
+        while self.container[index] and self.container[index][0] != self.latest_value[index]:
+            heapq.heappop(self.container[index])  # Remove outdated values
+
+        return self.container[index][0] if self.container[index] else -1
+        
+
+
         
 
 
