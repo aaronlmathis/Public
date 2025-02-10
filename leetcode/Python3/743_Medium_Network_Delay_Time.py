@@ -37,7 +37,7 @@ class Solution:
             for neighbor, travel_time in graph[node]:
                 if neighbor not in dist:
                     heapq.heappush(min_heap, (time + travel_time, neighbor))
-        print(dist)
+
         # If not all nodes are reached, return -1.
         if len(dist) != n:
             return -1
