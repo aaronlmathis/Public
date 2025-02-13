@@ -28,12 +28,9 @@ class Solution:
         reached = set()
 
         def dfs(room: int):
-            
             if room in reached:
                 return
-            
             reached.add(room)
-
             for key in rooms[room]:
                 dfs(key)
 

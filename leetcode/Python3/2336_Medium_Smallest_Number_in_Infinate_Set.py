@@ -32,7 +32,6 @@ At most 1000 calls will be made in total to popSmallest and addBack.
 """
 import heapq
 class SmallestInfiniteSet:
-
     def __init__(self):
         self.pq = []
         self.numbers = set()

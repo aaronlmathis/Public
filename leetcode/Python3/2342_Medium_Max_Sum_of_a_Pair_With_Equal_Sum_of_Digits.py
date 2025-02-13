@@ -44,8 +44,10 @@ class Solution:
         def get_digit_sum(num: int) -> int:
             sum_total = 0
             while num:
+                print(num)
                 sum_total += num % 10
                 num //= 10
+                print(num)
             sum_total += num
             return sum_total
 
@@ -75,5 +77,5 @@ class Solution:
 
 sol = Solution()
 nums = [18,43,36,13,7]      
-nums = [10,12,19,14]  
+#nums = [10,12,19,14]  
 print(sol.maximumSum(nums))

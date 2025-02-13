@@ -50,7 +50,7 @@ func areAlmostEqual(s1 string, s2 string) bool {
 			return false
 		}
 	}
-	fmt.Println(diffs)
+
 	if len(diffs) == 1 {
 		return false
 	}

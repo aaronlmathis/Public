@@ -39,7 +39,9 @@ class Solution:
                 stack.append(-number)
 
             operation = (operation + 1) % 4
+        
         return sum(stack)
+    
 sol = Solution()
 n=10
 print(sol.clumsy(n))

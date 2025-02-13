@@ -32,14 +32,20 @@ s​​​​​​ and part consists of lowercase English letters.
 """
 class Solution:
     def removeOccurrences(self, s: str, part: str) -> str:
+        # Set `part_len` to the length of part and initialize `stack`
         part_len = len(part)
         stack = []
 
+        # Iterate through every character in `s`
         for ch in s:
+            # Append current character `ch` to `stack` 
             stack.append(ch)
-
+            # Check if stack is big enough to contain `part` yet and 
+            # if the last `part_len` characters equals `part` when joined into a string
             if len(stack) >= part_len and ''.join(stack[-part_len:]) == part:
+                # If so, delete that part of the stack.
                 del stack[-part_len:] 
+        # Return the joined string formed from `stack`
         return ''.join(stack)
 
 sol = Solution()
