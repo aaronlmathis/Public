@@ -21,7 +21,19 @@ Constraints:
 tiles consists of uppercase English letters.
 """
 from itertools import permutations, combinations
+import time
 
+def timed(function):
+    def wrapper(*args, **kwargs):
+        before = time.perf_counter()  # High-precision timing
+        value = function(*args, **kwargs)
+        after = time.perf_counter()
+        fname = function.__name__
+        print(f"{fname} took {after - before:.8f} seconds to execute!")  # Format for better precision
+        return value
+    return wrapper
+from collections import Counter
+from math import factorial
 class Solution:
     @staticmethod
     def get_possible(tiles) -> set:
@@ -32,31 +44,30 @@ class Solution:
                     unique_results.add("".join(perm))
         return unique_results
     
-
+    @timed
     def numTilePossibilities(self, tiles: str) -> int:
-        result = []
-        def backtrack(letter_count, state):
-            if state and state not in result:
-                result.append(state[:])
-            
-            for k, v in letter_count.items():
-                if v > 0:
-                    state.append(k)
-                    letter_count[k]-=1
-                    backtrack(letter_count, state)
-                
-                    state.pop()
-                    letter_count[k]+=1
-        
-        #print(f"Answer: {self.get_possible(tiles)}")
-        letter_count = {}
-        for c in tiles:
-            letter_count[c] = letter_count.get(c, 0) + 1
-        
-        print(f"Letter Count: {letter_count}")
-        backtrack(letter_count, [])
-        
-        return len(result)
+        remaining = list(Counter(tiles).values())
+        ans = 0
+        res = [0] * len(remaining)
+
+        def backtrack(i):
+            nonlocal ans
+            permutations = 1
+            for x in res:
+                if x > 0:
+                    permutations *= factorial(x)
+            ans += factorial(sum(res)) // permutations
+
+            for j in range(i, len(remaining)):
+                if remaining[j] > 0:
+                    res[j] += 1
+                    remaining[j] -= 1
+                    backtrack(j)
+                    res[j] -= 1
+                    remaining[j] += 1
+
+        backtrack(0)
+        return ans
 
 
 

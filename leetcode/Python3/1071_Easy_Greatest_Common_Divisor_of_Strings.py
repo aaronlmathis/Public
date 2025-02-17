@@ -34,14 +34,29 @@ from collections import Counter
 class Solution:
     @timed
     def gcdOfStrings(self, str1: str, str2: str) -> str:
+        # Set `s1, s2` equal to the lengths of `str1`` and `str2`
+        s1, s2 = len(str1), len(str2)
+        # Set `l_str`, `s_str` equal to the longer of `str1/str2` and the shorter of `str1/str2`
+        l_str, s_str = (str1, str2) if s1 > s2 else (str2, str1)
+
+        # set `gcd` to equal the greatest common divisor of s1, s2
         import math
+        gcd = math.gcd(s1, s2)
 
-        def gcd_of_strings(str1, str2):
-            if str1 + str2 != str2 + str1:  # If concatenation order changes the result, there's no common divisor
-                return ""
-
-            gcd_len = math.gcd(len(str1), len(str2))  # Compute the greatest common divisor of lengths
-            return str1[:gcd_len]  # The prefix of this length is the common divisor
+        # While the `gcd` is greater than one: take a slice of `s_str` from index 0 to index `gcd`. 
+        #   - If `slice` multiplied by the length of `l_str` divided by `gcd` is equal to `l_str` 
+        #       and `slice` multipled by the length of `s_str` divided by `gcd` equals `s_str`, 
+        #       return `slice` as the answer. 
+        #   - Decrement gcd to continue the loop trying a shorter divisor.
+        while gcd > 0:
+            slice = s_str[0:gcd]
+            if slice * (len(l_str) // gcd) == l_str and  \
+                slice * (len(s_str) // gcd) == s_str:
+                return slice
+            gcd-=1
+        
+        # Valid Divisor wasn't found, return ""
+        return ""
 
 str1 = "ABCABC"
 str2 = "ABC"
