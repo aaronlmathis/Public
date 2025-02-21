@@ -31,15 +31,23 @@ Constraints:
 from typing import List
 class Solution:
     def findDifference(self, nums1: List[int], nums2: List[int]) -> List[List[int]]:
-        nums1 = set(nums1)
-        nums2 = set(nums2)
+        counts = {}
+        n1, n2 = [], []
+        for num in nums1:
+            counts[num] = counts.get(num, 0) +1
 
-        answer = [[]] * 2
-        answer[0] = list(nums1 - nums2)
-        answer[1] = list(nums2 - nums1)
-        return answer
-sol = Solution()    
+        for num in nums2:
+            if num not in counts and num not in n2:
+                n2.append(num)
+            else:
+                counts[num] -= 1
+        
+        n1 = [k for k, v in counts.items() if v > 0]
+
+        return [n1, n2]
+sol = Solution()
 nums1 = [1,2,3]
 nums2 = [2,4,6]
-
+nums1 = [1,2,3,3]
+nums2 = [1,1,2,2]
 print(sol.findDifference(nums1,nums2))    
