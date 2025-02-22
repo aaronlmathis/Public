@@ -1,4 +1,0 @@
-host: "localhost"
-user: "root"
-database: "employees"
-port: 3306
