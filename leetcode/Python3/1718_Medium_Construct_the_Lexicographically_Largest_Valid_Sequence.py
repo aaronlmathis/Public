@@ -33,18 +33,17 @@ def timed(function):
     return wrapper
 from typing import List
 class Solution:
-    @timed
     def constructDistancedSequence(self, n: int) -> List[int]:
         size = 2 * n - 1
-        result = [0] * size  # Fixed-size list
-        used = [False] * (n + 1)  # Track used numbers
-        found = False  # Stop recursion early when solution is found
+        result = [0] * size  
+        used = [False] * (n + 1)  
+        found = False  
 
         def backtrack(index: int):
             nonlocal found
             if found:
-                return True  # Exit early when solution is found
-
+                return True 
+            
             # Skip filled positions
             while index < size and result[index] != 0:
                 index += 1
