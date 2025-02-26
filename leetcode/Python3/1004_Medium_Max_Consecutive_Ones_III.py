@@ -36,7 +36,7 @@ class Solution:
             else:
                 r_len+=1
                 k-=1
-                print(f"Zero hit at {i} - {k} - {r_len}")
+
                 if k < 0:
                     while nums[left] == 1:
                         r_len-=1
@@ -44,7 +44,7 @@ class Solution:
                     r_len-=1
                     left+=1
                     k+=1
-            print(r_len)
+
             if r_len > max_len:
                 max_len = r_len
         return max_len

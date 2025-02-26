@@ -16,9 +16,25 @@ Explanation: There is 1 choose 1 = 1 total combination.
 from typing import List
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        answer = []
 
-        def backtrack()
+        # List to store all possible combination lists.
+        combinations = []
+
+        # Helper backtracking function
+        def backtrack(start: int, path: set) -> None:
+            # Base case - `combo` is k size. Add to `combinations`
+            if len(path) == k:
+                combinations.append(list(path))
+                return
+
+            for i in range(start, n+1):
+                path.add(i)
+                backtrack(i+1, path)
+                path.remove(i)
+
+        backtrack(1, set())
+        return combinations
+
 n = 4
 k = 2        
 sol = Solution()
