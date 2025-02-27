@@ -22,14 +22,17 @@ class Solution:
 
         # Helper backtracking function
         def backtrack(start: int, path: set) -> None:
-            # Base case - `combo` is k size. Add to `combinations`
+            # Base case - `path` is k size. Add to `combinations`
             if len(path) == k:
                 combinations.append(list(path))
                 return
-
+            # Iterate through numbers from start to n+1
             for i in range(start, n+1):
+                # Add `i` to path
                 path.add(i)
+                # Explore further
                 backtrack(i+1, path)
+                # Remove i and backtrack
                 path.remove(i)
 
         backtrack(1, set())

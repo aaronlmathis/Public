@@ -28,6 +28,11 @@ digits[i] is a digit in the range ['2', '9'].
 from typing import List
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
+        # Return empty list if digits is null.
+        if not digits:
+            return []
+        
+        # Dictionary to store letter optons for each number key.
         phone_keypad = {
             '2': ['a', 'b', 'c'],
             '3': ['d', 'e', 'f'],
@@ -38,26 +43,34 @@ class Solution:
             '8': ['t', 'u', 'v'],
             '9': ['w', 'x', 'y', 'z']
         }
-
+        
+        # Create stack from digits (reversed) so we can pop the next number off stack.
         digits = list(digits[::-1])
+
+        # create empty list to store answers.
         combinations = []
 
+        # Backtrack function that explores every combo of letter by adding it to `combo`
+        # calling the backtrack function recursively, and removing it from `combo` to try next letter.
         def backtrack(combo, digits):
+            # Digits has been exhausted, add string generated from `combo` to `combinations`
             if not digits:
-                combinations.append(combo[:])
+                combinations.append(''.join(combo[:]))
                 return
-
+            # Get current digit
             digit = digits.pop()
 
-
+            # Iterate through every letter option for digit
             for letter in phone_keypad[digit]:
-                combo.append(letter)
+                combo.append(letter)    # Add to combo and explore further
                 backtrack(combo, digits)
-                combo.pop()
-            
+                combo.pop() # Remove letter and try a different one.
+            # Backtrack
             digits.append(digit)
+        
+        # Call initial backtrack method
         backtrack([], digits)
-        print(combinations)
+        return combinations
 
 digits = "2"
 sol = Solution()

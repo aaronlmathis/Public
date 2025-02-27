@@ -103,7 +103,6 @@ func countRestrictedPaths(n int, edges [][]int) int {
 		}
 	}
 
-	// Step 3: DP to Count Restricted Paths
 	dp := make([]int, n+1)
 	dp[n] = 1
 
@@ -112,7 +111,6 @@ func countRestrictedPaths(n int, edges [][]int) int {
 		nodes[i-1] = i
 	}
 
-	// Sort nodes by increasing distance (ensuring DP is processed in correct order)
 	sort.Slice(nodes, func(i, j int) bool {
 		return distance[nodes[i]] < distance[nodes[j]]
 	})

@@ -53,6 +53,8 @@ class Solution:
         dp = [0] * (n+1)
         dp[n] = 1
 
+        # Combine Dijkstra's formula (min heap + BFS) with DP
+
         pq = [(0, n)]   # Priority Queue (min-heap) for BFS
         # Process pq
         while pq:
@@ -65,6 +67,7 @@ class Solution:
             
             # Process next node's, updating the distance to next node if smaller than currently known paths.
             # If a shorter path is found, add the next node to min-heap/pq to process further.
+            # If current path distance is greater than shortest path to neighbor, update dp table
             for nweight, nnode in graph[node]:
                 new_weight = nweight + distance[node]
                 if new_weight < distance[nnode]:

@@ -42,15 +42,19 @@ class TreeNode:
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # If current node is None or p or q, return it. (either going to be a Treenode or None.)
         if not root or root == p or root == q:
             return root
-        
+        # Call function for left side of tree
         left = self.lowestCommonAncestor(root.left, p, q)
+        # Call function for right side of tree.
         right = self.lowestCommonAncestor(root.right, p, q)
 
+        # If both left and right are not None, return this node
         if left and right:
             return root
         
+        # Otherwise, return the non-null child
         return left if left else right
 
 def build_tree(nodes):
