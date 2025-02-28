@@ -45,9 +45,10 @@ class Solution:
                 else:
                     cur[j+1] = max(dp[j+1], cur[j])
             dp = cur
+        print(dp)
         return dp[N]
 
 sol = Solution()
-text1 = "abcde"
-text2 = "ace" 
+text1 = "abac"
+text2 = "cab" 
 print(sol.longestCommonSubsequence(text1, text2))
