@@ -44,16 +44,13 @@ class Solution:
             (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')
         ]
         res = []
-
-        for value, symbol in value_symbols:
-            if num == 0:
-                break
-            count = num // value
-            res.append(symbol * count)
-            num -= count * value
-
-        return ''.join(res)      
-
+        for a, s in value_symbols:
+            if num < a:
+                continue
+            while num >= a:
+                res.append(s)
+                num-=a
+        return ''.join(res)
 
 sol = Solution()
 num = 3749
