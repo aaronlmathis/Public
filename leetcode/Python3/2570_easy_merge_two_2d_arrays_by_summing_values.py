@@ -26,17 +26,28 @@ Input: nums1 = [[2,4],[3,6],[5,5]], nums2 = [[1,3],[4,3]]
 Output: [[1,3],[2,4],[3,6],[4,3],[5,5]]
 Explanation: There are no common ids, so we just include each id with its value in the resulting list.
 """
+from typing import List
+from collections import defaultdict
+from itertools import zip_longest
 class Solution:
     def mergeArrays(self, nums1: list[list[int]], nums2: list[list[int]]) -> list[list[int]]:
-        values = {}
-        for num in nums1:
-            values[num[0]] = values.get(num[0], 0)+ num[1]
-        for num in nums2:
-            values[num[0]] = values.get(num[0], 0)+ num[1]
-        res = []
-        for k, v in sorted(values.items()):
-            res.append([k, v])
-        return res
+        # Build hashmap for id:val combos.
+        val_map = defaultdict(int)
+        # Use itertools.zip_longest to iterate over both lists (without stopping at end of shortest like zip())
+        # If there is no value, it defaults to None. So we check if n1 or n2 is not None before adding to hashmap
+        for n1, n2 in zip_longest(nums1, nums2, fillvalue=None):
+            if n1 is not None:
+                val_map[n1[0]]+=n1[1]
+            if n2 is not None:
+                val_map[n2[0]]+=n2[1]
+            
+        # Unlike other languages, Python v 3.7+ maintains insertion order in dictionaries. No need to sort.
+        # We could write this out in full form:
+        # for k, v in val_map.items():
+        #   answer.append([k, v])
+        # Or just return a list comprehension....
+        return [[k, val_map[k]] for k in sorted(val_map.keys())]
+            
 
 
 sol = Solution()

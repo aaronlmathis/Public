@@ -75,10 +75,11 @@ class Solution:
         middle = math.floor(count / 2)
 
         curr = head
-        print(middle)
+        #print(middle)
         for _ in range(middle-1):
             curr = curr.next
-        print(curr.val)
+        curr.next = curr.next.next
+
         return head
 
 
