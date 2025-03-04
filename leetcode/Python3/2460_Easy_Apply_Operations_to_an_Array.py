@@ -49,7 +49,7 @@ class Solution:
             if nums[k]!=0:
                 nums[k],nums[j]=nums[j],nums[k]
                 j+=1
-            print(nums)
+            print
         return nums
 sol = Solution()
 nums = [1,2,2,1,1,0]

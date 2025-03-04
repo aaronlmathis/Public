@@ -41,10 +41,10 @@ class Solution:
             if n2 is not None:
                 val_map[n2[0]]+=n2[1]
             
-        # Unlike other languages, Python v 3.7+ maintains insertion order in dictionaries. No need to sort.
+        # Now - we simply need to build answer list by sorting val_map keys and appending [k, val_map[k]] to answer.
         # We could write this out in full form:
-        # for k, v in val_map.items():
-        #   answer.append([k, v])
+        # for k in sorted(val_map.keys()):
+        #   answer.append([k, val_map[k]])
         # Or just return a list comprehension....
         return [[k, val_map[k]] for k in sorted(val_map.keys())]
             

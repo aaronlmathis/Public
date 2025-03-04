@@ -31,7 +31,6 @@ pivot equals to an element of nums.
 from typing import List
 class Solution:
     def pivotArray(self, nums: List[int], pivot: int) -> List[int]:
-        nums_copy = nums[:]
         pre, suff, mid = [], [], []
         for i in range(len(nums)):
             if nums[i] < pivot:
