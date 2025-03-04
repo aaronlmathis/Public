@@ -28,32 +28,18 @@ from typing import List
 
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        # Helper function - Binary Search
-        def bsearch(val) -> bool:
-            left, right = 0, (R * C - 1)    # Left: first index  Right: last index
-            while left <= right:
-                middle = (left + right) // 2
-                if matrix_1D[middle] == val:
-                    return True
-                elif matrix_1D[middle] > val:
-                    right = middle-1
-                else:
-                    left = middle+1
-            return False
-
-        # Target 5 is at matrix[1][1]
-
         R, C = len(matrix), len(matrix[0])
         row, col = 0, C-1
         while 0 <= row < R and 0 <= col < C:
             curr = matrix[row][col]
-
             if curr == target:
                 return True
             elif curr > target:
-                c-=1
+                # Get rid of entire last column
+                col-=1
             else:
-                r+=1
+                # Get rid of entire top row
+                row+=1
         
         return False
         
