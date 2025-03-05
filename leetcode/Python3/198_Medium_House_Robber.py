@@ -39,7 +39,8 @@ class Solution:
         for i in range(2, n+1):
             dp[i] = max(dp[i-2] + nums[i-1], dp[i-1])
         
-        print(dp)
+        return dp[-1]
+    
 sol = Solution()
 nums = [2,7,9,3,1]
 nums = [2,1,1,2]

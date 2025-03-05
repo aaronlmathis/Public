@@ -92,7 +92,7 @@ class WordDictionary:
                 else:
                     stack.append((curr.children[i], idx+1))
         
-    @timed
+
     def search_recursive(self, word: str, node=None, idx=0) -> bool:
         if node is None:
             node = self.root  # Start from root on initial call
