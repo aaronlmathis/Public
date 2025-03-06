@@ -90,7 +90,7 @@ class Codec:
             return None
         
         nodes = data.split('&')
-        print(nodes)
+
         n = len(nodes)
         idx = 1
         root = TreeNode(nodes[0])
