@@ -35,6 +35,7 @@ class Solution:
             if primes[i]:
                 for j in range(i*i, right+1, i):
                     primes[j] = False
+        print(primes)
         candidates = [index for index, val in enumerate(primes) if val == True and index >= left]
         min_diff = float('inf')
         answer = [-1, -1]
@@ -49,5 +50,5 @@ class Solution:
             
 
 sol = Solution()
-left, right = 4, 6
+left, right = 10, 19
 print(sol.closestPrimes(left, right))            

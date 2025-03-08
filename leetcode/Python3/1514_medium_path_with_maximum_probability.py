@@ -4,42 +4,50 @@ import heapq
 class Solution:
     def maxProbability(self, n: int, edges: list[list[int]], succProb: list[float], start_node: int, end_node: int) -> float:
         adj = collections.defaultdict(list)
-        for i in range(len(edges)):
-            src, dst = edges[i]
-            adj[src].append([dst, succProb[i]])
-            adj[dst].append([dst, succProb[i]])
+        for (src, dst), prob in zip(edges, succProb):
+            adj[src].append((dst, prob))
+            adj[dst].append((src, prob))
+
+        max_heap = [(-1.0, start_node)]  
+        visited = set()
+        max_prob = {start_node: 1.0}  
         
-        pq = [(-1, start)]
-        visit = set()
+        while max_heap:
+            prob, cur = heapq.heappop(max_heap)
+            prob = -prob  
 
-        while pq:
-            prob, cur = heapq.heappop(pq)
-            visit.add(cur)
+            if cur in visited:
+                continue  
+            visited.add(cur)
 
-            if cur == end:
-                return prob * -1
-            for nei, edgeProb in adj[cur]:
-                if nei not in visit:
-                    heapq.heappush(pq, (prob * edgeProb, nei))
+            if cur == end_node:
+                return prob  
 
+            for nei, edge_prob in adj[cur]:
+                new_prob = prob * edge_prob
+                if new_prob > max_prob.get(nei, 0): 
+                    max_prob[nei] = new_prob
+                    heapq.heappush(max_heap, (-new_prob, nei))
+
+        return 0.0
 
 sol = Solution()
 
-n = 3
-edges = [[0,1],[1,2],[0,2]]
-succProb = [0.5,0.5,0.2]
-start = 0
-end = 2
+n = 5
+edges = [[1,4],[2,4],[0,4],[0,3],[0,2],[2,3]]
+succProb =[0.37,0.17,0.93,0.23,0.39,0.04]
+start = 3
+end =4
 
 print(sol.maxProbability(n, edges, succProb, start, end))
 
 n = 3
-edges = [[0,1],[1,2],[0,2]]
-succProb = [0.5,0.5,0.3]
+edges =[[0,1]]
+succProb =[0.5]
 start = 0
 end = 2
 
-print(sol.maxProbability(n, edges, succProb, start, end))
+#print(sol.maxProbability(n, edges, succProb, start, end))
 
 """
 You are given an undirected weighted graph of n nodes (0-indexed), represented by an edge list where edges[i] = [a, b] is an undirected edge 

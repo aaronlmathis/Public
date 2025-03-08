@@ -48,50 +48,56 @@ from typing import List
 from collections import defaultdict
 class Solution:
     def numberOfGoodPaths(self, vals: List[int], edges: List[List[int]]) -> int:
-        n = len(vals)
-        paths = set()
-        for i in range(n):
-            paths.add(frozenset({i}))
-        graph = {x: set() for x in range(n)}
-        for u, v in edges:
-            graph[u].add(v)
-            graph[v].add(u)
+        # Function to find the root (with path compression for efficiency)
+        def find_root(node):
+            if parent[node] != node:
+                parent[node] = find_root(parent[node])  # Path compression
+            return parent[node]
 
-          
-        val_map = defaultdict(set)
-        for i, val in enumerate(vals):
-            val_map[val].add(i)
-        val_map = sorted(((k,v) for k, v in val_map.items() if len(v) >= 2), reverse=True)
-        print(paths)
-        print(val_map)
-        print(graph)
+        # Function to merge two sets and count "good paths"
+        def union(node1, node2):
+            root1, root2 = find_root(node1), find_root(node2)
 
-        def dfs(start, curr, path):
-            print(f"Start: {start}\tCurrent: {curr}")
-            print(f"Path: {path}")
-            if vals[start] == vals[curr]:
-                print(f"Good path found: {path}")
-                paths.add(frozenset(path.copy()))
-                       
-            if vals[curr] > vals[start]:
-                return
-            
-            for neighbor in graph[curr]:
-                if neighbor not in path:
-                    path.add(neighbor)
-                    dfs(start, neighbor, path)
-                    path.remove(neighbor)
-        
+            if root1 != root2:  # Only merge if they are in different sets
+                # Ensure root1 is the larger set (union by size)
+                if size[root1] < size[root2]:
+                    root1, root2 = root2, root1
+
+                # Merge root2 into root1
+                parent[root2] = root1
+                size[root1] += size[root2]
+
+                # If both roots had the same value, count good paths
+                if max_value[root1] == max_value[root2]:
+                    path_count = count[root1] * count[root2]
+                    count[root1] += count[root2]
+                    return path_count
                 
-        for _, nodes in val_map:
-            for node in nodes:
-                dfs(node, node, {node})
+                # If root2 has a higher value, update root1's max value & count
+                elif max_value[root1] < max_value[root2]:
+                    max_value[root1], count[root1] = max_value[root2], count[root2]
+                    
+            return 0  # No new paths formed
 
-        print(paths)
-        return len(paths)
+        # Initialization
+        n = len(vals)
+        total_paths = n  # Each node is a trivial "good path" by itself
+        parent = list(range(n))  # Union-Find parent array
+        size = [1] * n  # Size of each component
+        max_value = vals[:]  # Track max value in each component
+        count = [1] * n  # Number of nodes with max value in each component
+
+        # Sort edges by the **maximum** node value in each pair
+        edges.sort(key=lambda e: max(vals[e[0]], vals[e[1]]))
+
+        # Process edges in order, merging components and counting good paths
+        for node1, node2 in edges:
+            total_paths += union(node1, node2)
+
+        return total_paths
 sol = Solution()
 vals = [1,3,2,1,3]
 edges = [[0,1],[0,2],[2,3],[2,4]]        
-vals =[2,2,5,5]
-edges =[[1,0],[0,2],[3,2]]
+#vals =[2,2,5,5]
+#edges =[[1,0],[0,2],[3,2]]
 print(sol.numberOfGoodPaths(vals, edges))
