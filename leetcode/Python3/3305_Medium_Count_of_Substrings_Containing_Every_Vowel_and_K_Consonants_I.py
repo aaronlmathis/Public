@@ -31,66 +31,41 @@ Constraints:
 word consists only of lowercase English letters.
 0 <= k <= word.length - 5
 """
-from collections import defaultdict
+from collections import defaultdict, Counter
 class Solution:
     def countOfSubstrings(self, word: str, k: int) -> int:
-
-        n = len(word)
-        
-        # Dictionary for char counts and hashset for O(1) lookup of vowels.
-        char_count = defaultdict(int)
-        vowels = {'a', 'e','i','o','u'}
-
-        substrings = 0
-
-        # Count the first letter in word
-        char = word[0]
-        if char in vowels:
-            char_count['vowels'] += 1
-            char_count[char] += 1
-        else:
-            char_count['consts'] += 1
-
-        # Dynamic Sliding-Window
-        # - Left: 0, R: 1. Iterate R to n-1.
-        # - Every iteration:
-        #   - Take count of total consonants and individual vowels.
-        #   - If consonants reach or equal k, and vowels have at least one each, increase count.
-        #   - If consonants exceed k, shrink window by moving left to the index first consonant + 1, increase count
-        left = 0
-        
-        for right in range(1, n):
-            print(f"{left} - {right}")
-            char = word[right]
-            if char in vowels:
-                char_count['vowels']+=1
-                char_count[char] += 1
-            else:
-                char_count['consts'] += 1
+        def f(min_consonants: int) -> int:
+            vowel_count = Counter()
+            substring_count = 0
+            left_pointer = 0
+            consonant_count = 0
             
-            if right - left + 1 >= 5 + k and char_count['consts'] == k:       # k reached, suitable window size
-                # Check that all vowels are at least 1
-                if all(char_count[x] > 0 for x in vowels):
-                    print('Valid Substring:1')
-                    substrings+=1
+            for right_pointer in range(len(word)):
+                current_char = word[right_pointer]
                 
-                # Now shrink window until left is on the first consonant. Remove it from count and increase left once more.
-                while left != n-1 and word[left] in vowels:
-                    left+=1
-                    print(f"{left} - {right} shrink")
-                    if right - left + 1 >= 5 + k:
-                        if all(char_count[x] > 0 for x in vowels):
-                            substrings+=1
-
-                char_count['consts']-=1
-                left+=1
+                if current_char in "aeiou":
+                    vowel_count[current_char] += 1
+                else:
+                    consonant_count += 1
+                
+                while consonant_count >= min_consonants and len(vowel_count) == 5:
+                    char_at_left = word[left_pointer]
+                    
+                    if char_at_left in "aeiou":
+                        vowel_count[char_at_left] -= 1
+                        if vowel_count[char_at_left] == 0:
+                            del vowel_count[char_at_left]
+                    else:
+                        consonant_count -= 1
+                    
+                    left_pointer += 1
+                
+                substring_count += left_pointer
             
-            if right - left + 1 >= 5 + k and char_count['consts'] == k:       # k reached, suitable window size
-                # Check that all vowels are at least 1
-                if all(char_count[x] > 0 for x in vowels):
-                    print('Valid Substring:1')
-                    substrings+=1
-        return substrings
+            return substring_count
+        
+        return (f(k) - f(k + 1))
+
  
 
 
@@ -98,13 +73,25 @@ sol = Solution()
 
 k = 1
 word = "aeioqq"
-k = 1
-word = "aeiou"
+print(sol.countOfSubstrings(word, k))
+print()
+
 k = 0
+word = "aeiou"
+
+print(sol.countOfSubstrings(word, k))
+print()
 
 word = "ieaouqqieaouqq"
 k = 1
-
-#word ="iqeaouqi"
-#k=2
 print(sol.countOfSubstrings(word, k))
+print()
+
+word ="iqeaouqi"
+k=2
+print(sol.countOfSubstrings(word, k))
+print()
+word ="auaroiuerg"
+k=3
+print(sol.countOfSubstrings(word, k))
+print()

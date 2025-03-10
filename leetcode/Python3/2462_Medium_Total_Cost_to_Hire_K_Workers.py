@@ -39,25 +39,32 @@ Constraints:
 """
 import heapq
 from typing import List
-class Solution:
+class Solution:    
     def totalCost(self, costs: List[int], k: int, candidates: int) -> int:
-        while k > 0:
-
-            pool1, pool2 = costs[:candidates], costs[len(costs)-candidates:]
-            print(f"{pool1} {pool2}")
-            min_heap1, min_heap2 = [[None] * candidates, [None] * candidates]
-            x=candidates
-            for i in range(candidates):
-                min_heap1[i] = (costs[i], i)
-                min_heap2[i] =(costs[len(costs)-x], len(costs)-x)
-                x-=1
-            print(min_heap1)
-            print(min_heap2)
-
-
-            k-=1
+        n = len(costs)
+        if candidates * 2 + k > n:
+            costs.sort()
+            return sum(costs[:k])
+        g1 = costs[:candidates]
+        g2 = costs[-candidates:]
+        heapq.heapify(g1)
+        heapq.heapify(g2)
+        ans = 0
+        i, j = candidates, n - 1 - candidates
+        for _ in range(k):
+            if g1[0] <= g2[0]:
+                ans += heapq.heapreplace(g1, costs[i])
+                i += 1
+            else:
+                ans += heapq.heapreplace(g2, costs[j])
+                j -= 1
+        return ans
+            
 sol = Solution()
 costs = [17,12,10,2,7,2,11,20,8]
 k = 3
 candidates = 4        
+costs = [1,2,4,1]
+k=3
+candidates=3
 print(sol.totalCost(costs,k,candidates))
