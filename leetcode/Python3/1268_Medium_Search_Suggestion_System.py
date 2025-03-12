@@ -65,7 +65,7 @@ class Solution:
             node = node.children[char]
             if len(node.words) < 3:
                 node.words.append(word)
-    @timed
+
     def search_prefix(self, prefix: str) -> List[str]:
         node = self.root
         for char in prefix:

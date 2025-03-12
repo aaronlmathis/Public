@@ -34,7 +34,6 @@ At most 3 * 104 calls in total will be made to insert, search, and startsWith.
 """
 
 class Trie:
-
     def __init__(self):
         self.root = {}
 
