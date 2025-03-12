@@ -30,19 +30,40 @@ Constraints:
 word consists only of lowercase English letters.
 0 <= k <= word.length - 5
 """
-from collections import defaultdict
+from collections import defaultdict, Counter
 class Solution:
     def countOfSubstrings(self, word: str, k: int) -> int:
-        char_count = defaultdict(int)
-        vowels = {'a', 'e','i','o','u'}
-        consts = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'}
-        for char in word:
-            if char in vowels:
-                char_count['vowels'] += 1
-                char_count[char] += 1
-            else:
-                char_count['consts'] += 1
-        print(char_count)
+        def f(min_consonants: int) -> int:
+            vowel_count = Counter()
+            substring_count = 0
+            left_pointer = 0
+            consonant_count = 0
+            
+            for right_pointer in range(len(word)):
+                current_char = word[right_pointer]
+                
+                if current_char in "aeiou":
+                    vowel_count[current_char] += 1
+                else:
+                    consonant_count += 1
+                
+                while consonant_count >= min_consonants and len(vowel_count) == 5:
+                    char_at_left = word[left_pointer]
+                    
+                    if char_at_left in "aeiou":
+                        vowel_count[char_at_left] -= 1
+                        if vowel_count[char_at_left] == 0:
+                            del vowel_count[char_at_left]
+                    else:
+                        consonant_count -= 1
+                    
+                    left_pointer += 1
+                
+                substring_count += left_pointer
+            
+            return substring_count
+        
+        return (f(k) - f(k + 1))
 
 sol = Solution()
 word = "ieaouqqieaouqq"
