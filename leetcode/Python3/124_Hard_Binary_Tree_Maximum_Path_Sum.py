@@ -45,8 +45,10 @@ class Solution:
             left = max(find_path(node.left), 0)
             right = max(find_path(node.right), 0)
 
+            # is node.val + left + right the max seen?
             max_path = max(max_path, node.val + left + right)
 
+            # Each recursive call should return the node.val + the larger of it's left or right.
             return node.val + max(left, right)
         
         find_path(root)
