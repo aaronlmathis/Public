@@ -16,7 +16,7 @@ Choice 2: Start a new subarray starting from the current element. If the maximum
 This means that maxEnding at index i = max(maxEnding at index (i – 1) + arr[i], arr[i]) and the maximum value of maxEnding at any index will be our answer. 
 
 """
-arr = [2, 4, 5, -2, 4, 6]
+arr = [-1,2,6,-3,5,4,3]
 n = len(arr)
 max_sum = [0] * n
 for i in range(n):

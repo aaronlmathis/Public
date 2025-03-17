@@ -35,7 +35,7 @@ class Solution:
                 right = mid
             else:
                 left = mid+1
-        return left
+        return nums[left]
     
 nums = [1,2,1,3,5,6,4]
 sol = Solution()

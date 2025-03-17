@@ -26,7 +26,7 @@ The number of nodes in the list is in the range [1, 5 * 104].
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-from utils.single_linked_list import SingleLinkedList, ListNode
+from Python3.utils.single_linked_list import SingleLinkedList, ListNode
 from typing import List, Optional
 
 class Solution:

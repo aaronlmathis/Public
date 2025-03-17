@@ -32,103 +32,31 @@ from utils.binary_tree import TreeNode, BinaryTree
 
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
-        if not root.left and not root.right:
-            return root.val
-        """max_path = float('-inf')
-        roots = {root}
-        def find_path(parent, node, total, visited):
-            nonlocal max_path
-
-            max_path = max(max_path, total)
-
-            # Choice 1 - left
-            if node.left:
-                if node.left not in visited:
-                    visited.add(node.left)
-                    find_path(node, node.left, total+node.left.val, visited)
-                    visited.remove(node.left)
-                if node.left not in roots:
-                    roots.add(node.left)    
-                    find_path(node, node.left, node.left.val, {node.left})
-                
-
-            # Choice 2 - right
-            if node.right:
-                if node.right not in visited:
-                    visited.add(node.right)
-                    find_path(node, node.right, total+node.right.val, visited)
-                    visited.remove(node.right)
-                if node.right not in roots:
-                    roots.add(node.right)
-                    find_path(node, node.right, node.right.val, {node.right})    
-            
-            
-            # Choice 3 - Up
-            if parent is not None:
-                if parent not in visited:
-                    visited.add(parent)
-                    find_path(node, parent, total+parent.val, visited)
-                    visited.remove(parent)
-                if parent not in roots:
-                    roots.add(parent)
-                    find_path(None, parent, parent.val, {parent})
-            
-        find_path(None, root, root.val, {root})
-        return max_path        
-"""     
+        
         max_path = float('-inf')
-        roots = {root}
-        def find_path(start, parent, node, total, visited, path):
+
+        def find_path(node):
             nonlocal max_path
 
-            max_path = max(max_path, total)
-            print(f"start: {start.val} crr: {node.val} {path} Total: {total}")
+            if not node:
+                return 0
+            
+            # Return max path of left tree, exclude negatives
+            left = max(find_path(node.left), 0)
+            right = max(find_path(node.right), 0)
 
-            right, left = 0,0
-            # Choice 1 - left
-            if node.left and node.left not in visited:
-                visited.add(node.left)
-                path.append(node.left.val)
-                find_path(start, node, node.left, total+node.left.val, visited, path)
-                visited.remove(node.left)
-                path.pop()
-            if node.left and node.left not in roots:
-                roots.add(node.left)    
-                find_path(node.left, node, node.left, node.left.val, {node.left}, [node.left.val])
-                
+            # is node.val + left + right the max seen?
+            max_path = max(max_path, node.val + left + right)
 
-            # Choice 2 - right
-            if node.right and node.right not in visited:
-                visited.add(node.right)
-                path.append(node.right.val)
-                find_path(start, node, node.right, total+node.right.val, visited, path)
-                path.pop()
-                visited.remove(node.right)
-            if node.right and node.right not in roots:
-                roots.add(node.right)
-                find_path(node.right, node, node.right, node.right.val, {node.right}, [node.right.val])    
-            
-            
-            # Choice 3 - Up
-            if parent is not None:
-                if parent not in visited:
-                    visited.add(parent)
-                    path.append(parent.val)
-                    find_path(start, node, parent, total+parent.val, visited, path)
-                    visited.remove(parent)
-                    path.pop()
-                if parent not in roots:
-                    roots.add(parent)
-                    find_path(parent, None, parent, parent.val, {parent}, [parent.val])
-            
-        find_path(root, None, root, root.val, {root}, [root.val])
+            # Each recursive call should return the node.val + the larger of it's left or right.
+            return node.val + max(left, right)
+        
+        find_path(root)
         return max_path
-
 
 nodes = [-10,9,20,None,None,15,7]   
 nodes = [5,4,8,11,None,13,4,7,2,None,None,None,1]
+nodes = [-10,9,20,None,None,15,7]   
 root = BinaryTree.build_tree(nodes)
 sol = Solution()
 print(sol.maxPathSum(root))
