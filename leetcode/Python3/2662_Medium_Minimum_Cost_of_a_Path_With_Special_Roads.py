@@ -28,95 +28,34 @@ Example 3:
 Input: start = [1,1], target = [10,4], specialRoads = [[4,2,1,1,3],[1,2,7,4,4],[10,3,6,1,2],[6,1,1,2,3]]
 Output: 8
 Explanation:
+
 (1,1) to (1,2) with a cost of |1 - 1| + |2 - 1| = 1.
 (1,2) to (7,4). Use specialRoads[1] with the cost 4.
 (7,4) to (10,4) with a cost of |10 - 7| + |4 - 4| = 3.
+ 
+
+Constraints:
+
+start.length == target.length == 2
+1 <= startX <= targetX <= 105
+1 <= startY <= targetY <= 105
+1 <= specialRoads.length <= 200
+specialRoads[i].length == 5
+startX <= x1i, x2i <= targetX
+startY <= y1i, y2i <= targetY
+1 <= costi <= 105
 """
-import time
-
-def timed(function):
-    def wrapper(*args, **kwargs):
-        before = time.perf_counter()  # High-precision timing
-        value = function(*args, **kwargs)
-        after = time.perf_counter()
-        fname = function.__name__
-        print(f"{fname} took {after - before:.8f} seconds to execute!")  # Format for better precision
-        return value
-    return wrapper
-
-from heapq import heappop, heappush
 from typing import List
-
+from collections import defaultdict
 class Solution:
     def minimumCost(self, start: List[int], target: List[int], specialRoads: List[List[int]]) -> int:
-        # Convert start and target to tuples for consistency in dictionary keys
-        start, target = tuple(start), tuple(target)
+        nodes = (target[0] - start[0] + 1) * (target[1] - start[1] +1)
+        graph = defaultdict(list)
+        for i in range
+        print(nodes)        
 
-        # Compute direct Manhattan distance from start to target (reference distance)
-        refD = abs(target[0] - start[0]) + abs(target[1] - start[1])
-
-        # Filter out special roads where the special cost is greater than or equal to direct Manhattan cost
-        filtered_roads = [
-            (x1, y1, x2, y2, c) 
-            for x1, y1, x2, y2, c in specialRoads 
-            if c < abs(x2 - x1) + abs(y2 - y1)
-        ]
-        
-        # Add an identity road to allow direct movement
-        filtered_roads.append((*start, *start, 0))
-
-        # Priority queue (Min-Heap) for Dijkstra’s traversal, starting from target
-        pq = [(0, target[0], target[1])]
-
-        # Set to track visited nodes
-        seen = set()
-
-        # Process the priority queue
-        while pq:
-            cost, x, y = heappop(pq)
-
-            # If we reach the start, return the total cost
-            if (x, y) == start:
-                return cost
-            
-            # Skip if already processed
-            if (x, y) in seen:
-                continue
-            
-            # Mark the node as visited
-            seen.add((x, y))
-
-            # Traverse valid special roads and compute new costs
-            for x1, y1, x2, y2, c in filtered_roads:
-                new_cost = cost + c + abs(x2 - x) + abs(y2 - y)
-
-                # Only push into heap if within the reference distance
-                if new_cost <= refD:
-                    heappush(pq, (new_cost, x1, y1))
-
-        # If no valid path found, return -1
-        return -1
-
-
-sol = Solution()
-start = [1,1]
+sol =Solution()
+start = [1,1] 
 target = [4,5]
 specialRoads = [[1,2,3,3,2],[3,4,4,5,1]]
-print(sol.minimumCost(start,target,specialRoads))
-start = [3,2]
-target = [5,7]
-specialRoads = [[5,7,3,2,1],[3,2,3,4,4],[3,3,5,5,5],[3,4,5,6,6]]
-print(sol.minimumCost(start,target,specialRoads))
-start = [1,1]
-target = [10,4]
-specialRoads =[[4,2,1,1,3],     #(4,2)->(1,1)
-               [1,2,7,4,4],     #(1,2)->(7,4)
-               [10,3,6,1,2],    #(10,3)->(6,1)
-               [6,1,1,2,3]]     #(6,1)->(1,2)
-
-print(sol.minimumCost(start,target,specialRoads))
-start = [1,1]
-target = [4, 6]
-specialRoads = [[3,4,2,4,1],[2,5,4,2,5],[3,2,1,6,3]]
-
-print(sol.minimumCost(start,target,specialRoads))
+print(sol.minimumCost(start, target, specialRoads))
