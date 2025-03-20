@@ -39,7 +39,6 @@ class Solution:
                 best = mid
                 right = mid-1
             else:
-
                 left = mid+1
         
         return best
