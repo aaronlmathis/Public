@@ -39,63 +39,154 @@ Each ingredients[i] does not contain any duplicate values.
 */
 package main
 
-import "fmt"
-
-func contains(slice []string, str string) bool {
-	for _, s := range slice {
-		if s == str {
-			return true
-		}
-	}
-	return false
-}
+import (
+	"fmt"
+)
 
 func findAllRecipes(recipes []string, ingredients [][]string, supplies []string) []string {
+	n := len(recipes)
+	// Build Hashmaps for the graph depends[ingredient]->recipe
+	depends := make(map[string][]string, n*2)
+	// Build hashmap to track inDegree of every recipe.
+	inDegree := make(map[string]int, n)
+	// Hash map for quick lookup of ingredients in the pantry (what we have)
+	pantry := make(map[string]struct{}, n+len(supplies))
+	// Answer string slice.
+	answer := []string{}
 
-	dependencies := make(map[string][]string, 0)
-
-	inDegree := make(map[string]int, 0)
-	canMake := make(map[string]int, 0)
-	pantry := make(map[string]int, 0)
-
-	for _, supply := range supplies {
-		pantry[supply] += 1
+	// Build map of recipe->index
+	recipeIndex := make(map[string]int, len(recipes))
+	for i, recipe := range recipes {
+		recipeIndex[recipe] = i
 	}
-	for rid, recipe := range recipes {
-		for _, ingredient := range ingredients[rid] {
-			dependencies[recipe] = append(dependencies[recipe], ingredient)
+
+	// Build Graph of dependencies.
+	for i, recipe := range recipes {
+		inDegree[recipe] = len(ingredients[i])
+		for _, ingredient := range ingredients[i] {
+			depends[ingredient] = append(depends[ingredient], recipe)
 		}
-		canMake[recipe] = 0
 	}
-	for recipe, ingredients := range dependencies {
-		d := false
-		for _, ingredient := range ingredients {
-			if contains(recipes, ingredient) {
-				d = true
+
+	// Fill pantry
+	for _, supply := range supplies {
+		pantry[supply] = struct{}{}
+	}
+
+	// Queue for BFS traversal
+	queue := []string{}
+
+	// Fill queue with recipes that have an inDegree of 0 OR have everything required in pantry already
+	for i, recipe := range recipes {
+		if inDegree[recipe] == 0 {
+			queue = append(queue, recipe)
+		} else {
+			haveIngredients := true
+			for _, ingredient := range ingredients[i] {
+				if _, ok := pantry[ingredient]; !ok {
+					haveIngredients = false
+				}
+			}
+			if haveIngredients {
+				queue = append(queue, recipe)
 			}
 		}
-		if d {
-			inDegree[recipe] += 1
-		} else {
-			inDegree[recipe] = 0
+	}
+	// Process the queue using BFS.
+	for len(queue) > 0 {
+		recipe := queue[0]
+		queue = queue[1:]
+
+		// It's assumed that if a recipe makes it to queue, it can be made, so add it to answer.
+		answer = append(answer, recipe)
+		// Add recipe as ingredient in pantry
+		pantry[recipe] = struct{}{}
+
+		// Find other recipes that can now be made and add them to queue.
+		if _, ok := depends[recipe]; ok {
+			for _, drecipe := range depends[recipe] {
+				inDegree[drecipe]--
+				if inDegree[drecipe] == 0 {
+					queue = append(queue, drecipe)
+				} else {
+					haveIngredients := true
+					for _, ingredient := range ingredients[recipeIndex[drecipe]] {
+						if _, ok := pantry[ingredient]; !ok {
+							haveIngredients = false
+						}
+					}
+					if haveIngredients {
+						queue = append(queue, drecipe)
+					}
+				}
+			}
 		}
 	}
-	fmt.Println(dependencies)
-	fmt.Println(inDegree)
-	fmt.Println(canMake)
-	fmt.Println(pantry)
 
-	return []string{}
+	return answer
 }
 
-func main() {
-	recipes := []string{"bread"}
-	ingredients := [][]string{{"yeast", "flour"}}
-	supplies := []string{"yeast", "flour", "corn"}
+func findAllRecipesDFS(recipes []string, ingredients [][]string, supplies []string) []string {
+	n := len(recipes)
+	ms := make(map[string]bool)
+	mr := make(map[string]int)
 
-	//recipes := []string{"bread", "sandwich", "burger"}
-	//ingredients := [][]string{{"yeast", "flour"}, {"bread", "meat"}, {"sandwich", "meat", "bread"}}
-	//supplies := []string{"yeast", "flour", "meat"}
+	for _, sup := range supplies {
+		ms[sup] = true
+	}
+	for i, rec := range recipes {
+		mr[rec] = i
+	}
+
+	good := make([]bool, n)
+	vis := make([]bool, n)
+
+	var dfs func(index int) bool
+	dfs = func(index int) bool {
+		if vis[index] {
+			return good[index]
+		}
+		vis[index] = true
+
+		for _, ing := range ingredients[index] {
+			if ms[ing] {
+				continue
+			}
+			idx, ok := mr[ing]
+			if !ok {
+				return false
+			}
+			if !vis[idx] {
+				if !dfs(idx) {
+					return false
+				}
+			}
+			if vis[idx] && !good[idx] {
+				return false
+			}
+		}
+
+		good[index] = true
+		return true
+	}
+
+	res := make([]string, 0)
+	for i := 0; i < n; i++ {
+		if dfs(i) {
+			res = append(res, recipes[i])
+		}
+	}
+
+	return res
+}
+func main() {
+	//recipes := []string{"bread"}
+	//ingredients := [][]string{{"yeast", "flour"}}
+	//supplies := []string{"yeast", "flour", "corn"}
+
+	recipes := []string{"bread", "sandwich", "burger"}
+	ingredients := [][]string{{"yeast", "flour"}, {"bread", "meat"}, {"sandwich", "meat", "bread"}}
+	supplies := []string{"yeast", "flour", "meat"}
 
 	fmt.Println(findAllRecipes(recipes, ingredients, supplies))
 }

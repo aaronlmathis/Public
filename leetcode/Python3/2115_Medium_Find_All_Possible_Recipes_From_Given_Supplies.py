@@ -42,33 +42,61 @@ from collections import deque, defaultdict
 import heapq
 class Solution:
     def findAllRecipes(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
-        pantry = defaultdict(int)
+        pantry = set(supplies)
         inDegree = defaultdict(int)
         depends = defaultdict(list)
-        for r in range(len(ingredients)):
-            for ingredient in ingredients[r]:
-                depends[recipes[r]].append(ingredient)
-        
-        for recipe, ingredients in depends.items():
-            d = False
-            for ingredient in ingredients:
-                if ingredient in recipes:
-                    d=True
-            if d:
-                inDegree[recipe]+=1
-            else:
-                inDegree[recipe]=0
+        answer = []
 
-        for supply in supplies:
-            pantry[supply]+=1
+        for recipe, ing_list in zip(recipes, ingredients):
+            inDegree[recipe] = len(ing_list)
+            for ing in ing_list:
+                if ing not in depends:
+                    depends[ing] = []
+                depends[ing].append(recipe)
+  
+        queue = deque()
+        for recipe in recipes:
+            if inDegree[recipe] == 0 or all(ing in pantry for ing in ingredients[recipes.index(recipe)]):
+                queue.append(recipe)
 
-        
+        while queue:
+            recipe = queue.popleft()
+            answer.append(recipe)
+            pantry.add(recipe)
 
-        print(f"Pantry: {pantry}")
-        print(f"inDegree: {inDegree}")
-        print(f"Depends: {depends}")
+            if recipe in depends:
+                for drecipe in depends[recipe]:
+                    inDegree[drecipe] -=1
+                    if inDegree[drecipe] == 0 or all(ing in pantry for ing in ingredients[recipes.index(drecipe)]):
+                        queue.append(drecipe)
+        return answer
 sol = Solution()
 recipes = ["bread","sandwich","burger"]
 ingredients = [["yeast","flour"],["bread","meat"],["sandwich","meat","bread"]]
 supplies = ["yeast","flour","meat"]     
 print(sol.findAllRecipes(recipes, ingredients, supplies))   
+
+
+"""        for r in range(len(ingredients)):
+            for ingredient in ingredients[r]:
+                depends[recipes[r]].append(ingredient)
+        
+        for recipe, ingredients in depends.items():
+            d,c = False,0
+            for ingredient in ingredients:
+                if ingredient in recipes:
+                    d=True
+                    c+=1
+            if d:
+                inDegree[recipe]+=c
+            else:
+                inDegree[recipe]=0
+            
+
+        for supply in supplies:
+            pantry[supply]+=1
+
+        queue = deque([r for r, d in inDegree.items() if d == 0])
+        while queue:
+            curr = queue.popleft()
+            print(curr)"""
