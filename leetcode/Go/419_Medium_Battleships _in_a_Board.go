@@ -32,10 +32,8 @@ func countBattleships(board [][]byte) int {
 		for c := 0; c < n; c++ {
 			if board[r][c] == 'X' {
 				battleShips++
-
 				if (r > 0 && board[r-1][c] == 'X') || (c > 0 && board[r][c-1] == 'X') {
 					battleShips--
-					fmt.Printf("Removing at board[%v][%v]", r, c)
 				}
 			}
 		}
